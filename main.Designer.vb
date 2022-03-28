@@ -60,11 +60,14 @@ Partial Class Main
         '
         'BtStart
         '
+        Me.BtStart.BackColor = System.Drawing.Color.Transparent
         Me.BtStart.BackgroundImage = CType(resources.GetObject("BtStart.BackgroundImage"), System.Drawing.Image)
         Me.BtStart.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
-        Me.BtStart.Location = New System.Drawing.Point(504, 16)
+        Me.BtStart.FlatAppearance.BorderSize = 0
+        Me.BtStart.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.BtStart.Location = New System.Drawing.Point(481, 8)
         Me.BtStart.Name = "BtStart"
-        Me.BtStart.Size = New System.Drawing.Size(31, 33)
+        Me.BtStart.Size = New System.Drawing.Size(49, 48)
         Me.BtStart.TabIndex = 3
         Me.BtStart.UseVisualStyleBackColor = True
         '
@@ -98,13 +101,16 @@ Partial Class Main
         '
         'BtStop
         '
+        Me.BtStop.BackColor = System.Drawing.Color.Transparent
         Me.BtStop.BackgroundImage = CType(resources.GetObject("BtStop.BackgroundImage"), System.Drawing.Image)
         Me.BtStop.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
-        Me.BtStop.Location = New System.Drawing.Point(545, 15)
+        Me.BtStop.FlatAppearance.BorderSize = 0
+        Me.BtStop.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.BtStop.Location = New System.Drawing.Point(536, 7)
         Me.BtStop.Name = "BtStop"
-        Me.BtStop.Size = New System.Drawing.Size(33, 33)
+        Me.BtStop.Size = New System.Drawing.Size(48, 48)
         Me.BtStop.TabIndex = 4
-        Me.BtStop.UseVisualStyleBackColor = True
+        Me.BtStop.UseVisualStyleBackColor = False
         '
         'TimerCountDown
         '
@@ -224,7 +230,7 @@ Partial Class Main
         Me.Name = "Main"
         Me.ShowIcon = False
         Me.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide
-        Me.Text = "FreeStylizedMe"
+        Me.Text = "freestylizedme"
         Me.ResumeLayout(False)
         Me.PerformLayout()
 

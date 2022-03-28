@@ -6,21 +6,17 @@ Imports System.Text
 Imports System.Text.RegularExpressions
 Imports VB = Microsoft.VisualBasic
 Imports WMPLib
-Imports Shell32
 
 
 Public Class Main
-    Dim MyWords As String = My.Computer.FileSystem.ReadAllText(IO.Directory.GetCurrentDirectory & "\MyWords.txt")
-    Dim arr As String() = Split(MyWords, vbNewLine)
-    Dim files() As String = Directory.GetFiles(IO.Directory.GetCurrentDirectory, "*.mp3", SearchOption.AllDirectories)
-    Dim Player As WindowsMediaPlayer = New WindowsMediaPlayer
-    Dim StopBattle As Boolean = False
     Private rnd As New Random()
-
     Private TargetDT As DateTime
     Private CountDownFrom As TimeSpan = TimeSpan.FromSeconds(60) '76
     Private Sub Main_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        CbBattleType.SelectedIndex = 0
+        InitProgram()
+    End Sub
+    Sub InitProgram()
+        CbBattleType.SelectedIndex = 1
         CbDuration.SelectedIndex = 0
         LbWord.Text = ""
         LblCountDown.Text = ""
@@ -31,9 +27,7 @@ Public Class Main
         LbWord.Top = (LbWord.Parent.Height \ 2) - (LbWord.Height \ 2) + 250
         LblCountDown.Left = (LblCountDown.Parent.Width \ 2) - (LblCountDown.Width \ 2)
         LblCountDown.Top = (LblCountDown.Parent.Height \ 2) - (LblCountDown.Height \ 2) - 200
-
     End Sub
-
     Public Sub CenterItems()
         Try
             LbWord.Left = (LbWord.Parent.Width \ 2) - (LbWord.Width \ 2)
@@ -103,8 +97,8 @@ Public Class Main
     End Sub
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles BtStart.Click
-        Shuffle(files)
-        Shuffle(arr)
+        Shuffle(vars.files)
+        Shuffle(vars.arr)
         CenterItems()
         Dim Mode As String = CbBattleType.SelectedIndex
         Select Case Mode
@@ -136,52 +130,41 @@ Public Class Main
     End Sub
 
     Function PlayBattle(Mode, WordsWaittoStart, Song)
-        Try
-            CenterItems()
-        Catch
-        End Try
-
-        For Each u In files
-            Player.URL = u
-            Player.controls.play()
+        CenterItems()
+        For Each u In vars.files
+            vars.Player.URL = u
+            vars.Player.controls.play()
         Next
 
         Dim settimer As Boolean = False
 
         TargetDT = DateTime.Now.Add(CountDownFrom)
-        TimerCountDown.Interval = CInt(CInt(Mode))
+        TimerCountDown.Interval = CInt(Mode)
         TimerCountDown.Start()
         Dim a = CInt(CountDownFrom.TotalSeconds + WordsWaittoStart)
         Dim ts As TimeSpan = TargetDT.Subtract(DateTime.Now)
         Dim b = CInt(ts.TotalSeconds)
 
-        'aqui saca una palabra
-
+        Dim arr = vars.arr
         If Mode <> 3 Then ' si no es el modo de sacar varias, y solo saca una....
 
             For Each w In arr
 
                 ts = TargetDT.Subtract(DateTime.Now)
                 b = CInt(ts.TotalSeconds)
-
-                'If b <= a Then
                 LbWord.Text = UCase(w)
                 wait(CInt(Mode))
-                'Else
-                '    wait(1)
-                'End If
+
 
                 If settimer = False Then
-
                     ProgressBar1.Minimum = 0
                     ProgressBar1.Maximum = CInt(Mode)
                     settimer = True
-                    'End If
                     CenterItems()
                 End If
 
-                If StopBattle Then
-                    StopBattle = False
+                If vars.StopBattle Then
+                    vars.StopBattle = False
                     Exit Function
                 End If
             Next
@@ -191,12 +174,6 @@ Public Class Main
 
 
             Dim CountWords As Integer = 0
-            'varias palabras
-            '//////////////////
-            Dim severalwords As String()
-            'hago un for de 4 palabras
-
-            'creo un nuevo array copiando el otro
             Dim cadena As String = ""
             Dim salir As Integer = 0
 
@@ -228,16 +205,8 @@ Public Class Main
                 ts = TargetDT.Subtract(DateTime.Now)
                 b = CInt(ts.TotalSeconds)
 
-                'If b <= a Then
-                'LbWord.Text = UCase(w)
                 LbWord.Text = UCase(w)
-                'aqui muestro las 4 y hago la espera
-
                 wait(10)
-                'Else
-                '    wait(1)
-                'End If
-
                 If settimer = False Then
 
                     ProgressBar1.Minimum = 0
@@ -247,8 +216,8 @@ Public Class Main
                     CenterItems()
                 End If
 
-                If StopBattle Then
-                    StopBattle = False
+                If vars.StopBattle Then
+                    vars.StopBattle = False
                     Exit Function
                 End If
             Next
@@ -267,7 +236,7 @@ Public Class Main
     End Function
 
     Public Sub wait(ByVal seconds As Single)
-        If StopBattle <> True Then
+        If vars.StopBattle <> True Then
             Static start As Single
             start = VB.Timer()
             Do While VB.Timer() < start + seconds
@@ -283,13 +252,13 @@ Public Class Main
     End Sub
 
     Private Shared Sub StopBattleFunctions()
-        Main.StopBattle = True
+        vars.StopBattle = True
         Main.LblCountDown.Text = ""
         Main.TimerCountDown.Stop()
         Main.LbWord.Text = ""
         Main.TimerWord.Stop()
         Main.wait(5)
-        Main.Player.controls.stop()
+        vars.Player.controls.stop()
         Main.CenterItems()
     End Sub
 
@@ -312,7 +281,7 @@ Public Class Main
 
         If ts.TotalMilliseconds <= 0 Then
             TimerCountDown.Stop()
-            StopBattle = True
+            vars.StopBattle = True
             StopBattleFunctions()
         End If
     End Sub

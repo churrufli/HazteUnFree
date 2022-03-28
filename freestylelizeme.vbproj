@@ -6,13 +6,28 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{E8AF5E1C-7303-49A4-8F2D-8BFFC52BB38E}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <StartupObject>Freestyler.My.MyApplication</StartupObject>
-    <RootNamespace>Freestyler</RootNamespace>
-    <AssemblyName>Freestyler</AssemblyName>
+    <StartupObject>freestylelizeme.My.MyApplication</StartupObject>
+    <RootNamespace>freestylelizeme</RootNamespace>
+    <AssemblyName>freestylelizeme</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>WindowsForms</MyType>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <PublishUrl>publicar\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -20,9 +35,11 @@
     <DebugType>full</DebugType>
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DocumentationFile>Freestyler.xml</DocumentationFile>
+    <OutputPath>..\..\..\..\..\..\Freestylelizedme\</OutputPath>
+    <DocumentationFile>
+    </DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -31,7 +48,8 @@
     <DefineTrace>true</DefineTrace>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DocumentationFile>Freestyler.xml</DocumentationFile>
+    <DocumentationFile>
+    </DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup>
@@ -88,6 +106,7 @@
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
       <DependentUpon>Application.myapp</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="My Project\Resources.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -113,6 +132,11 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include=".gitattributes" />
+    <None Include=".gitignore" />
+    <None Include="bin\Debug\freestylelizeme.exe.config" />
+    <None Include="bin\Debug\Freestyler.exe.config" />
+    <None Include="bin\Debug\Freestyler.vshost.exe.config" />
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>
@@ -123,7 +147,15 @@
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
     <None Include="App.config" />
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="packages\HtmlAgilityPack.1.11.42\.signature.p7s" />
+    <None Include="packages\HtmlAgilityPack.1.11.42\HtmlAgilityPack.1.11.42.nupkg" />
+    <None Include="packages\HtmlAgilityPack.1.11.42\lib\netstandard1.3\HtmlAgilityPack.deps.json" />
+    <None Include="packages\HtmlAgilityPack.1.11.42\lib\netstandard1.6\HtmlAgilityPack.deps.json" />
+    <None Include="packages\HtmlAgilityPack.1.11.42\lib\netstandard2.0\HtmlAgilityPack.deps.json" />
+    <None Include="packages\HtmlAgilityPack.1.11.42\lib\uap10.0\HtmlAgilityPack.pri" />
   </ItemGroup>
   <ItemGroup>
     <COMReference Include="WMPLib">
@@ -135,6 +167,92 @@
       <Isolated>False</Isolated>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </COMReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="bin\Debug\AlbumArtSmall.jpg" />
+    <Content Include="bin\Debug\backup.txt" />
+    <Content Include="bin\Debug\Folder.jpg" />
+    <Content Include="bin\Debug\freestylelizeme.exe" />
+    <Content Include="bin\Debug\freestylelizeme.pdb" />
+    <Content Include="bin\Debug\Freestyler.exe" />
+    <Content Include="bin\Debug\Freestyler.pdb" />
+    <Content Include="bin\Debug\Freestyler.vshost.exe" />
+    <Content Include="bin\Debug\Freestyler.xml" />
+    <Content Include="bin\Debug\HtmlAgilityPack.dll" />
+    <Content Include="bin\Debug\HtmlAgilityPack.pdb" />
+    <Content Include="bin\Debug\HtmlAgilityPack.xml" />
+    <Content Include="bin\Debug\MyWords.txt" />
+    <Content Include="bin\Debug\pexels-rostislav-uzunov-5453622.mp4" />
+    <Content Include="bin\Debug\Red Bull Batalla - King s Throne.mp3" />
+    <Content Include="bin\Debug\Red Bull Batalla - New Ages.mp3" />
+    <Content Include="bin\Debug\Red Bull Batalla - Patiando la Puerta.mp3" />
+    <Content Include="bin\Debug\Red Bull Batalla - West Nicest.mp3" />
+    <Content Include="bin\Debug\Red Bull Batalla de los Gallos - Apollo.mp3" />
+    <Content Include="bin\Debug\Red Bull Batalla de los Gallos - Bang.mp3" />
+    <Content Include="bin\Debug\Red Bull Batalla de los Gallos - Collapse.mp3" />
+    <Content Include="bin\Debug\Red Bull Batalla de los Gallos - Don t Like.mp3" />
+    <Content Include="bin\Debug\Red Bull Batalla de los Gallos - Drunky.mp3" />
+    <Content Include="bin\Debug\Red Bull Batalla de los Gallos - El Bufalo Blanco.mp3" />
+    <Content Include="bin\Debug\Red Bull Batalla de los Gallos - End.mp3" />
+    <Content Include="bin\Debug\Red Bull Batalla de los Gallos - Hate.mp3" />
+    <Content Include="bin\Debug\Red Bull Batalla de los Gallos - Honey.mp3" />
+    <Content Include="bin\Debug\Red Bull Batalla de los Gallos - Hypnotic Dance.mp3" />
+    <Content Include="bin\Debug\Red Bull Batalla de los Gallos - Kanna.mp3" />
+    <Content Include="bin\Debug\Red Bull Batalla de los Gallos - Madison.mp3" />
+    <Content Include="bin\Debug\Red Bull Batalla de los Gallos - Moses.mp3" />
+    <Content Include="bin\Debug\Red Bull Batalla de los Gallos - Pandemia.mp3" />
+    <Content Include="bin\Debug\Red Bull Batalla de los Gallos - Pianic.mp3" />
+    <Content Include="bin\Debug\Red Bull Batalla de los Gallos - Rebellious.mp3" />
+    <Content Include="bin\Debug\Red Bull Batalla de los Gallos - Round   Round.mp3" />
+    <Content Include="packages\HtmlAgilityPack.1.11.42\lib\Net35\HtmlAgilityPack.dll" />
+    <Content Include="packages\HtmlAgilityPack.1.11.42\lib\Net35\HtmlAgilityPack.pdb" />
+    <Content Include="packages\HtmlAgilityPack.1.11.42\lib\Net35\HtmlAgilityPack.xml" />
+    <Content Include="packages\HtmlAgilityPack.1.11.42\lib\Net40-client\HtmlAgilityPack.dll" />
+    <Content Include="packages\HtmlAgilityPack.1.11.42\lib\Net40-client\HtmlAgilityPack.pdb" />
+    <Content Include="packages\HtmlAgilityPack.1.11.42\lib\Net40-client\HtmlAgilityPack.xml" />
+    <Content Include="packages\HtmlAgilityPack.1.11.42\lib\Net40\HtmlAgilityPack.dll" />
+    <Content Include="packages\HtmlAgilityPack.1.11.42\lib\Net40\HtmlAgilityPack.pdb" />
+    <Content Include="packages\HtmlAgilityPack.1.11.42\lib\Net40\HtmlAgilityPack.XML" />
+    <Content Include="packages\HtmlAgilityPack.1.11.42\lib\Net45\HtmlAgilityPack.dll" />
+    <Content Include="packages\HtmlAgilityPack.1.11.42\lib\Net45\HtmlAgilityPack.pdb" />
+    <Content Include="packages\HtmlAgilityPack.1.11.42\lib\Net45\HtmlAgilityPack.XML" />
+    <Content Include="packages\HtmlAgilityPack.1.11.42\lib\NetCore45\HtmlAgilityPack.dll" />
+    <Content Include="packages\HtmlAgilityPack.1.11.42\lib\NetCore45\HtmlAgilityPack.pdb" />
+    <Content Include="packages\HtmlAgilityPack.1.11.42\lib\NetCore45\HtmlAgilityPack.XML" />
+    <Content Include="packages\HtmlAgilityPack.1.11.42\lib\netstandard1.3\HtmlAgilityPack.dll" />
+    <Content Include="packages\HtmlAgilityPack.1.11.42\lib\netstandard1.3\HtmlAgilityPack.pdb" />
+    <Content Include="packages\HtmlAgilityPack.1.11.42\lib\netstandard1.3\HtmlAgilityPack.xml" />
+    <Content Include="packages\HtmlAgilityPack.1.11.42\lib\netstandard1.6\HtmlAgilityPack.dll" />
+    <Content Include="packages\HtmlAgilityPack.1.11.42\lib\netstandard1.6\HtmlAgilityPack.pdb" />
+    <Content Include="packages\HtmlAgilityPack.1.11.42\lib\netstandard1.6\HtmlAgilityPack.xml" />
+    <Content Include="packages\HtmlAgilityPack.1.11.42\lib\netstandard2.0\HtmlAgilityPack.dll" />
+    <Content Include="packages\HtmlAgilityPack.1.11.42\lib\netstandard2.0\HtmlAgilityPack.pdb" />
+    <Content Include="packages\HtmlAgilityPack.1.11.42\lib\netstandard2.0\HtmlAgilityPack.xml" />
+    <Content Include="packages\HtmlAgilityPack.1.11.42\lib\portable-net45+netcore45+wp8+MonoAndroid+MonoTouch\HtmlAgilityPack.dll" />
+    <Content Include="packages\HtmlAgilityPack.1.11.42\lib\portable-net45+netcore45+wp8+MonoAndroid+MonoTouch\HtmlAgilityPack.pdb" />
+    <Content Include="packages\HtmlAgilityPack.1.11.42\lib\portable-net45+netcore45+wp8+MonoAndroid+MonoTouch\HtmlAgilityPack.XML" />
+    <Content Include="packages\HtmlAgilityPack.1.11.42\lib\portable-net45+netcore45+wpa81+wp8+MonoAndroid+MonoTouch\HtmlAgilityPack.dll" />
+    <Content Include="packages\HtmlAgilityPack.1.11.42\lib\portable-net45+netcore45+wpa81+wp8+MonoAndroid+MonoTouch\HtmlAgilityPack.pdb" />
+    <Content Include="packages\HtmlAgilityPack.1.11.42\lib\portable-net45+netcore45+wpa81+wp8+MonoAndroid+MonoTouch\HtmlAgilityPack.XML" />
+    <Content Include="packages\HtmlAgilityPack.1.11.42\lib\uap10.0\HtmlAgilityPack.dll" />
+    <Content Include="packages\HtmlAgilityPack.1.11.42\lib\uap10.0\HtmlAgilityPack.pdb" />
+    <Content Include="packages\HtmlAgilityPack.1.11.42\lib\uap10.0\HtmlAgilityPack.XML" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="bin\Release\" />
+    <Folder Include="obj\" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.5.2">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.5.2 %28x86 y x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
