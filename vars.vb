@@ -1,17 +1,16 @@
-﻿Imports System.Diagnostics.Contracts
-Imports System.Globalization
-Imports System.IO
-Imports System.Runtime.CompilerServices
-Imports System.Text
-Imports System.Text.RegularExpressions
-Imports VB = Microsoft.VisualBasic
+﻿Imports System.IO
 Imports WMPLib
-Imports Shell32
 Public Class vars
-    Public Shared MyWords As String = My.Computer.FileSystem.ReadAllText(IO.Directory.GetCurrentDirectory & "\MyWords.txt")
-    Public Shared arr As String() = Split(MyWords, vbNewLine)
+    Public Shared MyWords As String
+    Public Shared MyWordsFileName As String = "MyWords.txt"
+    Public Shared MySettings As String
+    Public Shared MySettingsFileName As String = "MySettings.txt"
+
+    Public Shared arr As String()
     Public Shared files() As String = Directory.GetFiles(IO.Directory.GetCurrentDirectory, "*.mp3", SearchOption.AllDirectories)
     Public Shared Player As WindowsMediaPlayer = New WindowsMediaPlayer
     Public Shared StopBattle As Boolean = False
     Public Shared rnd As New Random()
+
+    Public Shared UserDir = IO.Directory.GetCurrentDirectory & "\"
 End Class

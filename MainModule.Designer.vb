@@ -28,20 +28,15 @@ Partial Class MainModule
         Me.TimerGetWords = New System.Windows.Forms.Timer(Me.components)
         Me.Button3 = New System.Windows.Forms.Button()
         Me.TimerWord = New System.Windows.Forms.Timer(Me.components)
-        Me.TimerCountDown = New System.Windows.Forms.Timer(Me.components)
+        Me.TimerVisualCountDown = New System.Windows.Forms.Timer(Me.components)
         Me.ProgressBar1 = New System.Windows.Forms.ProgressBar()
-        Me.MenuStrip1 = New System.Windows.Forms.MenuStrip()
-        Me.BattleTypeToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.EasyModeToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.HardModeToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ExtremeModeToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.WordsIn10ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolTip1 = New System.Windows.Forms.ToolTip(Me.components)
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.LbWord = New System.Windows.Forms.Label()
         Me.Panel2 = New System.Windows.Forms.Panel()
         Me.LblCountDown = New System.Windows.Forms.Label()
-        Me.MenuStrip1.SuspendLayout()
+        Me.TimerProgressBar = New System.Windows.Forms.Timer(Me.components)
+        Me.Label1 = New System.Windows.Forms.Label()
         Me.Panel1.SuspendLayout()
         Me.Panel2.SuspendLayout()
         Me.SuspendLayout()
@@ -50,22 +45,21 @@ Partial Class MainModule
         '
         Me.Button2.BackgroundImage = CType(resources.GetObject("Button2.BackgroundImage"), System.Drawing.Image)
         Me.Button2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
-        Me.Button2.Location = New System.Drawing.Point(1278, 30)
+        Me.Button2.Location = New System.Drawing.Point(65, 46)
         Me.Button2.Name = "Button2"
         Me.Button2.Size = New System.Drawing.Size(33, 33)
         Me.Button2.TabIndex = 2
         Me.Button2.UseVisualStyleBackColor = True
-        Me.Button2.Visible = False
         '
         'TimerGetWords
         '
-        Me.TimerGetWords.Interval = 10000
+        Me.TimerGetWords.Interval = 5000
         '
         'Button3
         '
         Me.Button3.BackgroundImage = CType(resources.GetObject("Button3.BackgroundImage"), System.Drawing.Image)
         Me.Button3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
-        Me.Button3.Location = New System.Drawing.Point(1317, 30)
+        Me.Button3.Location = New System.Drawing.Point(104, 46)
         Me.Button3.Name = "Button3"
         Me.Button3.Size = New System.Drawing.Size(33, 33)
         Me.Button3.TabIndex = 3
@@ -76,61 +70,16 @@ Partial Class MainModule
         '
         Me.TimerWord.Interval = 50000
         '
-        'TimerCountDown
+        'TimerVisualCountDown
         '
         '
         'ProgressBar1
         '
-        Me.ProgressBar1.Location = New System.Drawing.Point(1162, 69)
+        Me.ProgressBar1.Location = New System.Drawing.Point(54, 107)
         Me.ProgressBar1.Name = "ProgressBar1"
         Me.ProgressBar1.Size = New System.Drawing.Size(281, 20)
         Me.ProgressBar1.TabIndex = 37
         Me.ProgressBar1.Visible = False
-        '
-        'MenuStrip1
-        '
-        Me.MenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BattleTypeToolStripMenuItem})
-        Me.MenuStrip1.Location = New System.Drawing.Point(0, 0)
-        Me.MenuStrip1.Name = "MenuStrip1"
-        Me.MenuStrip1.ShowItemToolTips = True
-        Me.MenuStrip1.Size = New System.Drawing.Size(1512, 24)
-        Me.MenuStrip1.TabIndex = 1
-        Me.MenuStrip1.Text = "MenuStrip1"
-        Me.MenuStrip1.Visible = False
-        '
-        'BattleTypeToolStripMenuItem
-        '
-        Me.BattleTypeToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.EasyModeToolStripMenuItem, Me.HardModeToolStripMenuItem, Me.ExtremeModeToolStripMenuItem, Me.WordsIn10ToolStripMenuItem})
-        Me.BattleTypeToolStripMenuItem.Name = "BattleTypeToolStripMenuItem"
-        Me.BattleTypeToolStripMenuItem.Size = New System.Drawing.Size(76, 20)
-        Me.BattleTypeToolStripMenuItem.Text = "Battle Type"
-        '
-        'EasyModeToolStripMenuItem
-        '
-        Me.EasyModeToolStripMenuItem.Name = "EasyModeToolStripMenuItem"
-        Me.EasyModeToolStripMenuItem.Size = New System.Drawing.Size(182, 22)
-        Me.EasyModeToolStripMenuItem.Text = "Easy Mode"
-        Me.EasyModeToolStripMenuItem.ToolTipText = "1 word each 10''"
-        '
-        'HardModeToolStripMenuItem
-        '
-        Me.HardModeToolStripMenuItem.Name = "HardModeToolStripMenuItem"
-        Me.HardModeToolStripMenuItem.Size = New System.Drawing.Size(182, 22)
-        Me.HardModeToolStripMenuItem.Text = "Hard Mode"
-        Me.HardModeToolStripMenuItem.ToolTipText = "1 word each 5''"
-        '
-        'ExtremeModeToolStripMenuItem
-        '
-        Me.ExtremeModeToolStripMenuItem.Name = "ExtremeModeToolStripMenuItem"
-        Me.ExtremeModeToolStripMenuItem.Size = New System.Drawing.Size(182, 22)
-        Me.ExtremeModeToolStripMenuItem.Text = "Extreme Mode"
-        Me.ExtremeModeToolStripMenuItem.ToolTipText = "1 word each 2''"
-        '
-        'WordsIn10ToolStripMenuItem
-        '
-        Me.WordsIn10ToolStripMenuItem.Name = "WordsIn10ToolStripMenuItem"
-        Me.WordsIn10ToolStripMenuItem.Size = New System.Drawing.Size(182, 22)
-        Me.WordsIn10ToolStripMenuItem.Text = "4 words set each 10''"
         '
         'Panel1
         '
@@ -153,7 +102,7 @@ Partial Class MainModule
         Me.LbWord.Name = "LbWord"
         Me.LbWord.Size = New System.Drawing.Size(1900, 350)
         Me.LbWord.TabIndex = 3
-        Me.LbWord.Text = "FREESTYLELIZEDME"
+        Me.LbWord.Text = "BatallaRAAP"
         Me.LbWord.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'Panel2
@@ -185,6 +134,20 @@ Partial Class MainModule
         Me.LblCountDown.Text = "00"
         Me.LblCountDown.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
+        'TimerProgressBar
+        '
+        '
+        'Label1
+        '
+        Me.Label1.AutoSize = True
+        Me.Label1.ForeColor = System.Drawing.SystemColors.ButtonHighlight
+        Me.Label1.Location = New System.Drawing.Point(59, 146)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(39, 13)
+        Me.Label1.TabIndex = 41
+        Me.Label1.Text = "Label1"
+        Me.Label1.Visible = False
+        '
         'MainModule
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -192,21 +155,18 @@ Partial Class MainModule
         Me.BackColor = System.Drawing.SystemColors.WindowText
         Me.BackgroundImage = CType(resources.GetObject("$this.BackgroundImage"), System.Drawing.Image)
         Me.ClientSize = New System.Drawing.Size(1512, 761)
+        Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.Panel1)
         Me.Controls.Add(Me.Panel2)
         Me.Controls.Add(Me.ProgressBar1)
         Me.Controls.Add(Me.Button3)
         Me.Controls.Add(Me.Button2)
-        Me.Controls.Add(Me.MenuStrip1)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
-        Me.MainMenuStrip = Me.MenuStrip1
         Me.Name = "MainModule"
         Me.ShowIcon = False
         Me.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "Main Screen - FreeStylelizedMe"
-        Me.MenuStrip1.ResumeLayout(False)
-        Me.MenuStrip1.PerformLayout()
+        Me.Text = "Main Screen - BatallaRAPP"
         Me.Panel1.ResumeLayout(False)
         Me.Panel2.ResumeLayout(False)
         Me.Panel2.PerformLayout()
@@ -218,17 +178,13 @@ Partial Class MainModule
     Friend WithEvents TimerGetWords As Timer
     Friend WithEvents Button3 As Button
     Friend WithEvents TimerWord As Timer
-    Friend WithEvents TimerCountDown As Timer
+    Friend WithEvents TimerVisualCountDown As Timer
     Friend WithEvents ProgressBar1 As ProgressBar
-    Friend WithEvents MenuStrip1 As MenuStrip
-    Friend WithEvents BattleTypeToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents EasyModeToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents HardModeToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents ExtremeModeToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents WordsIn10ToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ToolTip1 As ToolTip
     Friend WithEvents Panel1 As Panel
     Friend WithEvents Panel2 As Panel
     Friend WithEvents LblCountDown As Label
     Public WithEvents LbWord As Label
+    Friend WithEvents TimerProgressBar As Timer
+    Friend WithEvents Label1 As Label
 End Class
