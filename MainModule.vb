@@ -94,6 +94,7 @@ Public Class MainModule
                 If vars.StopBattle = True Then
                     Exit Function
                 End If
+                TargetDT = DateTime.Now.Add(CountDownFrom)
 
                 ts = TargetDT.Subtract(DateTime.Now)
                 b = CInt(ts.TotalSeconds)
@@ -189,8 +190,7 @@ Public Class MainModule
         '///////////////////////////////////////
 
         LbWord.Text = ""
-        Fn.LoadMusic()
-        Fn.PlayMusic()
+
 
         Dim settimer As Boolean = False
 
@@ -210,9 +210,11 @@ Public Class MainModule
             If Mode <> 3 Then
                 LbWord.Text = UCase(vars.arr(0).ToString)
             Else
-                '////////////////
-                'LbWord.Font = New Font("Impact", 100)
-                'LbWord.Top = (LbWord.Parent.Height \ 2) - (LbWord.Height \ 2) + 245
+                'aqui tengo que cambiar el tamaño de la fuente
+                Dim myfont As Font = Fn.GetFontByString(ms.ReadSetting("lbWordFont"))
+                Dim fontName As FontFamily = myfont.FontFamily
+                Dim fontsize = myfont.Size - Math.Round(myfont.Size / 3)
+                LbWord.Font = New Font(fontName, fontsize)
 
                 Dim CountWords As Integer = 0
                 Dim cadena As String = ""
@@ -266,15 +268,19 @@ Public Class MainModule
             TimerWord.Start()
 
         End If
+
+
+        Fn.LoadMusic()
+        Fn.PlayMusic()
     End Sub
 
     Private Sub TimerWord_Tick(sender As Object, e As EventArgs) Handles TimerWord.Tick
         'aqui mostraría la palabra siguiente
-        ProcessTick()
+        GetWord()
 
     End Sub
 
-    Sub ProcessTick()
+    Sub GetWord()
         If ControlModule.CbBattleType.SelectedIndex <> 3 Then
             LbWord.Text = UCase(vars.arr(CountWords).ToString)
         Else
@@ -326,7 +332,7 @@ Public Class MainModule
         MainModule.TimerVisualCountDown.Stop()
         MainModule.LbWord.Text = "-"
         MainModule.TimerWord.Stop()
-        Fn.Wait(1)
+        Fn.Wait(2)
         vars.Player.controls.stop()
         ControlModule.btstartbattle.Enabled = True
         ControlModule.Enabled = True
@@ -344,8 +350,13 @@ Public Class MainModule
         Select Case ts.TotalMilliseconds
             Case > 60000
                 t = ts.ToString("mm\:ss").Remove(0, 1)
+                Dim myfont As Font = Fn.GetFontByString(ms.ReadSetting("lbCountDownFont"))
+                Dim fontName As FontFamily = myfont.FontFamily
+                Dim fontsize = myfont.Size - Math.Round(myfont.Size / 3)
+                LbCountDown.Font = New Font(fontName, fontsize)
             Case < 60000
                 t = ts.ToString("ss")
+                LbCountDown.Font = Fn.GetFontByString(ms.ReadSetting("lbCountDownFont"))
         End Select
 
         LbCountDown.Text = t
@@ -370,7 +381,7 @@ Public Class MainModule
     Public Shared Function ReadWeb(MyUrl As String)
         Dim reply As String
         MyUrl = Replace(MyUrl, "'", "")
-        MyUrl = Replace(MyUrl, """", "")
+                    MyUrl = Replace(MyUrl, """", "")
         Dim res As String
         If MyUrl = "" Then Exit Function
         Try

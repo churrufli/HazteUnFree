@@ -142,12 +142,12 @@ Partial Class ControlModule
         Me.TabPage1.Controls.Add(Me.Label2)
         Me.TabPage1.Controls.Add(Me.cbMusicList)
         Me.TabPage1.Controls.Add(Me.PictureBox3)
-        Me.TabPage1.Controls.Add(Me.TabControl2)
         Me.TabPage1.Controls.Add(Me.PictureBox2)
         Me.TabPage1.Controls.Add(Me.Label1)
         Me.TabPage1.Controls.Add(Me.CbDuration)
         Me.TabPage1.Controls.Add(Me.lblBattleType)
         Me.TabPage1.Controls.Add(Me.CbBattleType)
+        Me.TabPage1.Controls.Add(Me.TabControl2)
         Me.TabPage1.Location = New System.Drawing.Point(4, 22)
         Me.TabPage1.Name = "TabPage1"
         Me.TabPage1.Padding = New System.Windows.Forms.Padding(3)
@@ -289,7 +289,7 @@ Partial Class ControlModule
         Me.TabPage6.Padding = New System.Windows.Forms.Padding(3)
         Me.TabPage6.Size = New System.Drawing.Size(505, 100)
         Me.TabPage6.TabIndex = 0
-        Me.TabPage6.Text = "Modo Automático"
+        Me.TabPage6.Text = "     Modo Automático"
         '
         'PictureBox7
         '

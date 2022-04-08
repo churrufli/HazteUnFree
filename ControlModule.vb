@@ -24,7 +24,6 @@ Public Class ControlModule
         'toma todas las opciones y muestra en el log 
     End Sub
     Sub LoadDictionaries()
-        'busco todos los diccionarios
         Dim di As New DirectoryInfo(Directory.GetCurrentDirectory)
         Dim fiArr As FileInfo() = di.GetFiles("dic_*.txt")
         Dim fri As FileInfo
@@ -107,7 +106,7 @@ Public Class ControlModule
     End Sub
 
     Private Sub btNextWord_Click(sender As Object, e As EventArgs)
-        MainModule.ProcessTick()
+        MainModule.GetWord()
     End Sub
 
     Private Sub btchangetypo_Click(sender As Object, e As EventArgs) Handles btchangewordtypo.Click
@@ -166,7 +165,7 @@ Public Class ControlModule
     End Sub
 
     Private Sub btstartwords_Click_1(sender As Object, e As EventArgs) Handles btstartwords.Click
-        MainModule.ProcessTick()
+        MainModule.GetWord()
         MainModule.TimerWord.Start()
         btstartwords.Enabled = False
         btNextWord.Enabled = True
@@ -197,7 +196,7 @@ Public Class ControlModule
     End Sub
 
     Private Sub btNextWord_Click_1(sender As Object, e As EventArgs) Handles btNextWord.Click
-        MainModule.ProcessTick()
+        MainModule.GetWord()
 
     End Sub
 
