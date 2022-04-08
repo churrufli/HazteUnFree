@@ -2,7 +2,7 @@
 
 Public Class MainModule
     Private TargetDT As DateTime
-    Public CountDownFrom As TimeSpan = TimeSpan.FromSeconds(60) '76
+    Public CountDownFrom As TimeSpan = TimeSpan.FromSeconds(60)
     Public Shared rnd As New Random()
     Public Shared Startwords As Boolean = True
     Public Shared InitAll As Boolean = True
@@ -11,7 +11,7 @@ Public Class MainModule
         Me.WindowState = FormWindowState.Maximized
         'Me.FormBorderStyle = FormBorderStyle.None
     End Sub
-    Sub InitProgram()
+    Sub InitStates()
         ControlModule.CbBattleType.SelectedIndex = 1
         ControlModule.CbDuration.SelectedIndex = 0
         CenterItems()
@@ -24,8 +24,10 @@ Public Class MainModule
     End Sub
 
     Sub SetBattle()
-        fn.Shuffle(vars.files)
-        fn.Shuffle(vars.arr)
+        If ControlModule.chkShuffle.Checked = True Then
+            Fn.Shuffle(vars.arr)
+            Fn.WriteLog("Aleatorizando orden de aparición de palabras...")
+        End If
         Dim Mode As String = ControlModule.CbBattleType.SelectedIndex
         Select Case Mode
             Case 0
@@ -68,7 +70,7 @@ Public Class MainModule
             Exit Function
         End If
 
-        fn.PlayMusic()
+        Fn.PlayMusic()
 
         Dim settimer As Boolean = False
 
@@ -82,7 +84,7 @@ Public Class MainModule
 
         Dim arr = vars.arr
         Dim espera = CInt(WordswaittoStart)
-        LblCountDown.Text = b
+        LbCountDown.Text = b
 
         If Mode <> 3 Then ' si no es el modo de sacar varias, y solo saca una....
 
@@ -97,16 +99,16 @@ Public Class MainModule
                 b = CInt(ts.TotalSeconds)
 
                 If b > 60 Then
-                    LblCountDown.Font = New Font("Impact", 180)
+                    LbCountDown.Font = New Font("Impact", 180)
                 Else
-                    LblCountDown.Font = New Font("Impact", 240.25)
+                    LbCountDown.Font = New Font("Impact", 240.25)
                 End If
 
                 CheckIfStartwords(espera, b)
 
 
                 LbWord.Text = UCase(w)
-                fn.wait(CInt(Mode) - 0.15)
+                Fn.Wait(CInt(Mode) - 0.15)
 
                 If settimer = False Then
                     settimer = True
@@ -165,7 +167,7 @@ Public Class MainModule
                 CenterItems()
 
 
-                fn.wait(10 - 0.15)
+                Fn.Wait(10 - 0.15)
                 If settimer = False Then
                     settimer = True
                     CenterItems()
@@ -187,8 +189,8 @@ Public Class MainModule
         '///////////////////////////////////////
 
         LbWord.Text = ""
-
-        fn.PlayMusic()
+        Fn.LoadMusic()
+        Fn.PlayMusic()
 
         Dim settimer As Boolean = False
 
@@ -202,20 +204,57 @@ Public Class MainModule
         If ControlModule.chautoinitwords.Checked Then
             'espera 
             Dim espera = CInt(WordswaittoStart)
-            fn.wait(espera)
+            Fn.Wait(espera)
             'pongo la primera palabra
-            LbWord.Text = UCase(vars.arr(0).ToString)
+
+            If Mode <> 3 Then
+                LbWord.Text = UCase(vars.arr(0).ToString)
+            Else
+                '////////////////
+                'LbWord.Font = New Font("Impact", 100)
+                'LbWord.Top = (LbWord.Parent.Height \ 2) - (LbWord.Height \ 2) + 245
+
+                Dim CountWords As Integer = 0
+                Dim cadena As String = ""
+                Dim salir As Integer = 0
+
+                For Each w In vars.arr
+                    CountWords = CountWords + 1
+
+                    Select Case CountWords
+                        Case 1, 3
+                            cadena = cadena & w
+                        Case 2
+                            cadena = cadena & "/" & w & vbNewLine
+                        Case 4
+                            cadena = cadena & "/" & w & ";"
+                    End Select
+
+                    If CountWords >= 4 Then
+                        CountWords = 0
+                    End If
+                    salir = salir + 1
+                    If salir > 1000 Then Exit For
+                Next
+
+                vars.arr4words = Split(cadena, ";")
+                LbWord.Text = UCase(vars.arr4words(0).ToString)
+
+                '////////////////
+            End If
+
 
             'ahora inicio el temporizador para las palabras
             CountWords = CountWords + 1
 
             Select Case ControlModule.CbBattleType.SelectedIndex
-                Case 0
+                Case 0, 3
                     TimerWord.Interval = (10000) 'ms
                 Case 1
                     TimerWord.Interval = (5000)
                 Case 2
                     TimerWord.Interval = (2000)
+
             End Select
 
             'PROGRESS BAR
@@ -236,7 +275,11 @@ Public Class MainModule
     End Sub
 
     Sub ProcessTick()
-        LbWord.Text = UCase(vars.arr(CountWords).ToString)
+        If ControlModule.CbBattleType.SelectedIndex <> 3 Then
+            LbWord.Text = UCase(vars.arr(CountWords).ToString)
+        Else
+            LbWord.Text = UCase(vars.arr4words(CountWords).ToString)
+        End If
         CountWords = CountWords + 1
     End Sub
 
@@ -247,8 +290,6 @@ Public Class MainModule
             'TimerProgressBar.Enabled = False
             'ProgressBar1.Refresh()
         End If
-        Label1.Text = ProgressBar1.Value
-
     End Sub
 
     Sub CheckIfStartwords(espera, b)
@@ -258,14 +299,14 @@ Public Class MainModule
                 'Dim tas As TimeSpan = TimeSpan.Parse("00:" & LblCountDown.Text.ToString, Globalization.CultureInfo.InvariantCulture)
                 'Dim x = tas.TotalSeconds
 
-                Dim totalsectranscurridos = TimeSpan.FromSeconds((LblCountDown.Text)).TotalSeconds
+                Dim totalsectranscurridos = TimeSpan.FromSeconds((LbCountDown.Text)).TotalSeconds
                 While CInt(totalsectranscurridos + espera) >= b
-                    totalsectranscurridos = TimeSpan.FromSeconds(LblCountDown.Text).TotalSeconds
-                    fn.wait(0.1)
+                    totalsectranscurridos = TimeSpan.FromSeconds(LbCountDown.Text).TotalSeconds
+                    Fn.Wait(0.1)
                 End While
             Else
                 While Startwords = False
-                    fn.wait(0.01)
+                    Fn.Wait(0.01)
                 End While
             End If
         Catch
@@ -281,11 +322,11 @@ Public Class MainModule
 
     Public Shared Sub StopBattleFunctions()
         vars.StopBattle = True
-        MainModule.LblCountDown.Text = "00"
+        MainModule.LbCountDown.Text = "00"
         MainModule.TimerVisualCountDown.Stop()
         MainModule.LbWord.Text = "-"
         MainModule.TimerWord.Stop()
-        fn.wait(1)
+        Fn.Wait(1)
         vars.Player.controls.stop()
         ControlModule.btstartbattle.Enabled = True
         ControlModule.Enabled = True
@@ -307,7 +348,7 @@ Public Class MainModule
                 t = ts.ToString("ss")
         End Select
 
-        LblCountDown.Text = t
+        LbCountDown.Text = t
 
         'If ProgressBar1.Value = ProgressBar1.Maximum Then ProgressBar1.Value = 1
         'ProgressBar1.Value = ProgressBar1.Value + 1
@@ -347,7 +388,7 @@ Public Class MainModule
     'End Sub
     Sub sacapalabra()
         Dim MyWords As String
-        MyWords = My.Computer.FileSystem.ReadAllText(IO.Directory.GetCurrentDirectory & "\MyWords.txt")
+        MyWords = My.Computer.FileSystem.ReadAllText(IO.Directory.GetCurrentDirectory & "\" & vars.MyWordsFileName)
         Dim w = "https://www.palabrasaleatorias.com/?fs=10&fs2=0&Submit=Nueva+palabra"
         Dim doc As HtmlAgilityPack.HtmlDocument = New HtmlAgilityPack.HtmlDocument()
         doc.LoadHtml(ReadWeb(Trim(w)))
@@ -357,11 +398,11 @@ Public Class MainModule
             Dim MyWord = LCase(word.InnerText.ToString)
             If MyWords.Contains(MyWord & "") = False Then
                 MyWords = MyWords & MyWord
-                Dim FILE_NAME As String = "MyWords.txt"
-                Dim objWriter As New System.IO.StreamWriter(IO.Directory.GetCurrentDirectory & "\MyWords.txt")
+                Dim FILE_NAME As String = vars.MyWordsFileName
+                Dim objWriter As New System.IO.StreamWriter(IO.Directory.GetCurrentDirectory & "\" & vars.MyWordsFileName)
                 objWriter.Write(MyWords)
                 objWriter.Close()
-                fn.WriteLog(MyWord)
+                Fn.WriteLog(MyWord)
             End If
         Next word
 
@@ -374,7 +415,7 @@ Public Class MainModule
         Dim i = 0
         While i < 1000000
             sacapalabra()
-            fn.wait(5)
+            Fn.Wait(5)
             i = i + 1
         End While
     End Sub

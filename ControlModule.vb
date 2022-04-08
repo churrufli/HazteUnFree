@@ -12,66 +12,38 @@ Public Class ControlModule
     Public CountDownFrom As TimeSpan = TimeSpan.FromSeconds(60) '76
     Private Sub control_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         'Me.Location = New Point(0, 30)
+        Fn.SetMySettings()
         MainModule.Show()
-        MainModule.InitProgram()
-        LoadMySettings()
         LoadWords()
+        LoadDictionaries()
+        MainModule.InitStates()
+        Calculate()
     End Sub
 
-    Public Shared Sub LoadMySettings()
-        Try
-            vars.MySettings = My.Computer.FileSystem.ReadAllText(vars.UserDir & "\" & vars.MySettingsFileName)
-        Catch err As Exception
-            fn.WriteLog(err.Message.ToString)
-        End Try
+    Sub Calculate()
+        'toma todas las opciones y muestra en el log 
     End Sub
+    Sub LoadDictionaries()
+        'busco todos los diccionarios
+        Dim di As New DirectoryInfo(Directory.GetCurrentDirectory)
+        Dim fiArr As FileInfo() = di.GetFiles("dic_*.txt")
+        Dim fri As FileInfo
+        For Each fri In fiArr
+            Dim name = Split(Split(fri.Name, "_")(1).ToString, ".txt")(0).ToString
+            ListBoxDictionaries.Items.Add(name, IIf(LCase(name) = "general", True, False))
+        Next fri
+    End Sub
+
     Public Shared Sub LoadWords()
         Try
             vars.MyWords = My.Computer.FileSystem.ReadAllText(vars.UserDir & "\" & vars.MyWordsFileName)
             vars.arr = Split(vars.MyWords, vbNewLine)
         Catch err As Exception
-            fn.WriteLog(err.Message.ToString)
+            Fn.WriteLog(err.Message.ToString)
         End Try
-
-        fn.WriteLog(vars.arr.Count & " palabras cargadas.")
-
-
+        Fn.WriteLog(vars.arr.Count & " cargadas de Palabras - General")
     End Sub
 
-    Public Shared Sub Alert(msg)
-        MsgBox(msg)
-    End Sub
-
-    Public Shared Sub UpdateSettings(idsetting, myvalue)
-        Dim mylog As String = My.Computer.FileSystem.ReadAllText(vars.MySettingsFileName)
-        Dim previousmyvalue = FindIt(mylog, "<" & idsetting & ">", "</" & idsetting & ">")
-        Dim NewSetting = Replace(mylog, "<" & idsetting & ">" & previousmyvalue & "</" & idsetting & ">",
-                             "<" & idsetting & ">" & myvalue & "</" & idsetting & ">")
-        Try
-            File.Delete(vars.UserDir & vars.MySettingsFileName)
-        Catch
-        End Try
-        Try
-            File.WriteAllText(vars.UserDir & vars.MySettingsFileName, NewSetting)
-        Catch
-        End Try
-    End Sub
-
-    Public Shared Function FindIt(total As String, first As String, last As String) As String
-        If total = Nothing Then total = ""
-        If last.Length < 1 Then
-            FindIt = total.Substring(total.IndexOf(first))
-        End If
-        If first.Length < 1 Then
-            FindIt = total.Substring(0, (total.IndexOf(last)))
-        End If
-        Try
-            FindIt =
-                ((total.Substring(total.IndexOf(first), (total.IndexOf(last) - total.IndexOf(first)))).Replace(first, "")) _
-                    .Replace(last, "")
-        Catch
-        End Try
-    End Function
     Public Sub BtClose_Click(sender As Object, e As EventArgs)
         MainModule.StopBattleFunctions()
         Application.Exit()
@@ -88,26 +60,7 @@ Public Class ControlModule
         MainModule.SetBattle()
     End Sub
 
-    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles btstartbattle.Click
-        MainModule.Show()
-        If chautoinitwords.Checked = True Then
-            MainModule.Startwords = True
-            btNextWord.Enabled = False
-        Else
-            MainModule.Startwords = False
-            btNextWord.Enabled = True
-        End If
-        vars.StopBattle = False
-        btstartbattle.Enabled = False
-
-        btstartbattle.Enabled = True
-        CbBattleType.Enabled = False
-        CbDuration.Enabled = False
-        btNextWord.Enabled = True
-        MainModule.SetBattle()
-    End Sub
-
-    Private Sub Button3_Click(sender As Object, e As EventArgs) Handles btstopbattle.Click
+    Private Sub Button3_Click(sender As Object, e As EventArgs)
         MainModule.Startwords = False
         MainModule.StopBattleFunctions()
         btstartbattle.Enabled = True
@@ -132,7 +85,7 @@ Public Class ControlModule
         Application.Exit()
     End Sub
 
-    Private Sub CheckBox1_CheckedChanged(sender As Object, e As EventArgs) Handles chautoinitwords.CheckedChanged
+    Private Sub CheckBox1_CheckedChanged(sender As Object, e As EventArgs)
         If chautoinitwords.Checked = True Then
             btstartwords.Enabled = False
             btNextWord.Enabled = False
@@ -141,16 +94,8 @@ Public Class ControlModule
         End If
     End Sub
 
-    Private Sub btstartwords_Click(sender As Object, e As EventArgs) Handles btstartwords.Click
-        'MainModule.Startwords = True
-        'btstartwords.Enabled = False
-        MainModule.ProcessTick()
-        btstartwords.Enabled = False
-        btNextWord.Enabled = True
 
-    End Sub
-
-    Private Sub TbWordsWaittoStart_KeyPress(sender As Object, e As KeyPressEventArgs) Handles TbWordsWaittoStart.KeyPress
+    Private Sub TbWordsWaittoStart_KeyPress(sender As Object, e As KeyPressEventArgs)
         '97 - 122 = Ascii codes for simple letters
         '65 - 90  = Ascii codes for capital letters
         '48 - 57  = Ascii codes for numbers
@@ -161,34 +106,116 @@ Public Class ControlModule
         End If
     End Sub
 
-    Private Sub btNextWord_Click(sender As Object, e As EventArgs) Handles btNextWord.Click
+    Private Sub btNextWord_Click(sender As Object, e As EventArgs)
         MainModule.ProcessTick()
     End Sub
 
-    Private Sub btchangetypo_Click(sender As Object, e As EventArgs) Handles btchangetypoword.Click
-        FontDialog1.ShowColor = True
+    Private Sub btchangetypo_Click(sender As Object, e As EventArgs) Handles btchangewordtypo.Click
         If FontDialog1.ShowDialog() <> DialogResult.Cancel Then
-            MainModule.LbWord.Font = FontDialog1.Font 'Change the font of the selected string  
-            MainModule.LbWord.ForeColor = FontDialog1.Color 'Change the color of selected string  
+            MainModule.LbWord.Font = FontDialog1.Font
+            ms.SaveSetting("LbWordFont", FontDialog1.Font.ToString)
         End If
+        FontDialog1.Dispose()
     End Sub
 
-    Private Sub btchangetypocounter_Click(sender As Object, e As EventArgs) Handles btchangetypocounter.Click
-        FontDialog2.ShowColor = True
-        If FontDialog2.ShowDialog() <> DialogResult.Cancel Then
-            MainModule.LblCountDown.Font = FontDialog2.Font 'Change the font of the selected string  
-            MainModule.LblCountDown.ForeColor = FontDialog2.Color 'Change the color of selected string  
-        End If
-    End Sub
+
 
     Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
         Dim result As DialogResult = OpenFileDialog1.ShowDialog()
-
-        ' Test result.
         If result = DialogResult.OK Then
-            Alert(OpenFileDialog1.FileName)
             Me.BackgroundImage = New System.Drawing.Bitmap(OpenFileDialog1.FileName)
             MainModule.BackgroundImage = New System.Drawing.Bitmap(OpenFileDialog1.FileName)
+            ms.SaveSetting("MainBackGroundImage", OpenFileDialog1.FileName)
         End If
+        OpenFileDialog1.Dispose()
+    End Sub
+
+    Private Sub btwordcolor_Click(sender As Object, e As EventArgs) Handles btwordcolor.Click
+        If ColorDialog1.ShowDialog() <> DialogResult.Cancel Then
+            Dim mycolor = ColorDialog1.Color.ToArgb.ToString
+            MainModule.LbWord.ForeColor = Color.FromArgb(mycolor)
+            ms.SaveSetting("lbWordColor", mycolor)
+
+        End If
+        ColorDialog1.Dispose()
+    End Sub
+
+    Private Sub btchangecountercolor_Click(sender As Object, e As EventArgs) Handles btchangecountercolor.Click
+        If ColorDialog2.ShowDialog() <> DialogResult.Cancel Then
+            Dim mycolor = ColorDialog2.Color.ToArgb.ToString
+            MainModule.LbCountDown.ForeColor = Color.FromArgb(mycolor)
+            ms.SaveSetting("lbCountDownColor", mycolor)
+        End If
+        ColorDialog2.Dispose()
+    End Sub
+
+    Private Sub btchangecountertypo_Click(sender As Object, e As EventArgs) Handles btchangecountertypo.Click
+        If FontDialog2.ShowDialog() <> DialogResult.Cancel Then
+            MainModule.LbCountDown.Font = FontDialog2.Font
+            ms.SaveSetting("lbCountDownFont", FontDialog2.Font.ToString)
+        End If
+        FontDialog2.Dispose()
+    End Sub
+
+    Private Sub chautoinitwords_CheckedChanged(sender As Object, e As EventArgs) Handles chautoinitwords.CheckedChanged
+        If chautoinitwords.Checked Then
+            btstartwords.Enabled = False
+        Else
+            btstartwords.Enabled = True
+        End If
+    End Sub
+
+    Private Sub btstartwords_Click_1(sender As Object, e As EventArgs) Handles btstartwords.Click
+        MainModule.ProcessTick()
+        MainModule.TimerWord.Start()
+        btstartwords.Enabled = False
+        btNextWord.Enabled = True
+    End Sub
+
+    Private Sub btstartbattle_Click(sender As Object, e As EventArgs) Handles btstartbattle.Click
+        MainModule.Show()
+        If chautoinitwords.Checked = True Then
+            MainModule.Startwords = True
+            btNextWord.Enabled = False
+        Else
+            MainModule.Startwords = False
+            btNextWord.Enabled = True
+        End If
+        vars.StopBattle = False
+        btstartbattle.Enabled = False
+
+        btstartbattle.Enabled = True
+        CbBattleType.Enabled = False
+        CbDuration.Enabled = False
+        btNextWord.Enabled = True
+        MainModule.SetBattle()
+    End Sub
+
+    Private Sub btstopbattle_Click(sender As Object, e As EventArgs) Handles btstopbattle.Click
+        MainModule.StopBattleFunctions()
+
+    End Sub
+
+    Private Sub btNextWord_Click_1(sender As Object, e As EventArgs) Handles btNextWord.Click
+        MainModule.ProcessTick()
+
+    End Sub
+
+    Private Sub btmusicdir_Click(sender As Object, e As EventArgs) Handles btmusicdir.Click
+        Dim result As DialogResult = FolderBrowserDialog1.ShowDialog()
+        If result = DialogResult.OK Then
+            ms.SaveSetting("MusicDirectory", FolderBrowserDialog1.SelectedPath.ToString)
+            tbmusicdir.Text = FolderBrowserDialog1.SelectedPath.ToString
+        End If
+        OpenFileDialog1.Dispose()
+    End Sub
+
+    Private Sub CheckBox2_CheckedChanged(sender As Object, e As EventArgs) Handles chshufflemusic.CheckedChanged
+        cbMusicList.Enabled = IIf(chshufflemusic.Checked, False, True)
+        Try
+            Fn.LoadMusic()
+        Catch
+        End Try
+
     End Sub
 End Class
