@@ -35,6 +35,11 @@ Partial Class ControlModule
         Me.Label2 = New System.Windows.Forms.Label()
         Me.cbMusicList = New System.Windows.Forms.ComboBox()
         Me.PictureBox3 = New System.Windows.Forms.PictureBox()
+        Me.PictureBox2 = New System.Windows.Forms.PictureBox()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.CbDuration = New System.Windows.Forms.ComboBox()
+        Me.lblBattleType = New System.Windows.Forms.Label()
+        Me.CbBattleType = New System.Windows.Forms.ComboBox()
         Me.TabControl2 = New System.Windows.Forms.TabControl()
         Me.TabPage6 = New System.Windows.Forms.TabPage()
         Me.PictureBox7 = New System.Windows.Forms.PictureBox()
@@ -50,24 +55,16 @@ Partial Class ControlModule
         Me.PictureBox9 = New System.Windows.Forms.PictureBox()
         Me.Label4 = New System.Windows.Forms.Label()
         Me.ListBoxDictionaries = New System.Windows.Forms.CheckedListBox()
-        Me.PictureBox2 = New System.Windows.Forms.PictureBox()
-        Me.Label1 = New System.Windows.Forms.Label()
-        Me.CbDuration = New System.Windows.Forms.ComboBox()
-        Me.lblBattleType = New System.Windows.Forms.Label()
-        Me.CbBattleType = New System.Windows.Forms.ComboBox()
         Me.TabPage3 = New System.Windows.Forms.TabPage()
         Me.GroupBox3 = New System.Windows.Forms.GroupBox()
-        Me.PictureBox6 = New System.Windows.Forms.PictureBox()
         Me.Button2 = New System.Windows.Forms.Button()
         Me.btfullscreen = New System.Windows.Forms.Button()
         Me.btwindowmode = New System.Windows.Forms.Button()
         Me.GroupBox2 = New System.Windows.Forms.GroupBox()
         Me.btchangecountertypo = New System.Windows.Forms.Button()
-        Me.pbundotypoclock = New System.Windows.Forms.PictureBox()
         Me.btchangecountercolor = New System.Windows.Forms.Button()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
         Me.btchangewordtypo = New System.Windows.Forms.Button()
-        Me.pbundotypoword = New System.Windows.Forms.PictureBox()
         Me.btwordcolor = New System.Windows.Forms.Button()
         Me.Label6 = New System.Windows.Forms.Label()
         Me.GroupBox4 = New System.Windows.Forms.GroupBox()
@@ -75,7 +72,7 @@ Partial Class ControlModule
         Me.PictureBox8 = New System.Windows.Forms.PictureBox()
         Me.btmusicdir = New System.Windows.Forms.Button()
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
-        Me.CheckBox1 = New System.Windows.Forms.CheckBox()
+        Me.chPlayMusic = New System.Windows.Forms.CheckBox()
         Me.TabPage4 = New System.Windows.Forms.TabPage()
         Me.GroupBox6 = New System.Windows.Forms.GroupBox()
         Me.GroupBox5 = New System.Windows.Forms.GroupBox()
@@ -96,6 +93,7 @@ Partial Class ControlModule
         CType(Me.PictureBox4, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox11, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox3, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabControl2.SuspendLayout()
         Me.TabPage6.SuspendLayout()
         CType(Me.PictureBox7, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -104,14 +102,10 @@ Partial Class ControlModule
         CType(Me.PictureBox10, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabPage8.SuspendLayout()
         CType(Me.PictureBox9, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabPage3.SuspendLayout()
         Me.GroupBox3.SuspendLayout()
-        CType(Me.PictureBox6, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupBox2.SuspendLayout()
-        CType(Me.pbundotypoclock, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupBox1.SuspendLayout()
-        CType(Me.pbundotypoword, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupBox4.SuspendLayout()
         CType(Me.PictureBox8, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -264,6 +258,63 @@ Partial Class ControlModule
         Me.PictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
         Me.PictureBox3.TabIndex = 29
         Me.PictureBox3.TabStop = False
+        '
+        'PictureBox2
+        '
+        Me.PictureBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None
+        Me.PictureBox2.Cursor = System.Windows.Forms.Cursors.Help
+        Me.PictureBox2.Image = CType(resources.GetObject("PictureBox2.Image"), System.Drawing.Image)
+        Me.PictureBox2.Location = New System.Drawing.Point(10, 11)
+        Me.PictureBox2.Name = "PictureBox2"
+        Me.PictureBox2.Size = New System.Drawing.Size(16, 16)
+        Me.PictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
+        Me.PictureBox2.TabIndex = 28
+        Me.PictureBox2.TabStop = False
+        Me.ToolTip1.SetToolTip(Me.PictureBox2, "Selecciona tipo de batalla")
+        '
+        'Label1
+        '
+        Me.Label1.AutoSize = True
+        Me.Label1.BackColor = System.Drawing.Color.Transparent
+        Me.Label1.ForeColor = System.Drawing.Color.Black
+        Me.Label1.Location = New System.Drawing.Point(157, 13)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(50, 13)
+        Me.Label1.TabIndex = 25
+        Me.Label1.Text = "Duración"
+        '
+        'CbDuration
+        '
+        Me.CbDuration.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.CbDuration.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.CbDuration.FormattingEnabled = True
+        Me.CbDuration.Items.AddRange(New Object() {"1'", "1'20''", "2'", "All"})
+        Me.CbDuration.Location = New System.Drawing.Point(141, 33)
+        Me.CbDuration.Name = "CbDuration"
+        Me.CbDuration.Size = New System.Drawing.Size(66, 21)
+        Me.CbDuration.TabIndex = 3
+        '
+        'lblBattleType
+        '
+        Me.lblBattleType.AutoSize = True
+        Me.lblBattleType.BackColor = System.Drawing.Color.Transparent
+        Me.lblBattleType.ForeColor = System.Drawing.Color.Black
+        Me.lblBattleType.Location = New System.Drawing.Point(27, 14)
+        Me.lblBattleType.Name = "lblBattleType"
+        Me.lblBattleType.Size = New System.Drawing.Size(95, 13)
+        Me.lblBattleType.TabIndex = 23
+        Me.lblBattleType.Text = "Formato de Batalla"
+        '
+        'CbBattleType
+        '
+        Me.CbBattleType.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.CbBattleType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.CbBattleType.FormattingEnabled = True
+        Me.CbBattleType.Items.AddRange(New Object() {"Easy Mode (10)", "Hard Mode (5)", "Extreme Mode (2)", "4 Words each 10''"})
+        Me.CbBattleType.Location = New System.Drawing.Point(10, 33)
+        Me.CbBattleType.Name = "CbBattleType"
+        Me.CbBattleType.Size = New System.Drawing.Size(122, 21)
+        Me.CbBattleType.TabIndex = 2
         '
         'TabControl2
         '
@@ -446,63 +497,6 @@ Partial Class ControlModule
         Me.ListBoxDictionaries.Size = New System.Drawing.Size(487, 60)
         Me.ListBoxDictionaries.TabIndex = 35
         '
-        'PictureBox2
-        '
-        Me.PictureBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None
-        Me.PictureBox2.Cursor = System.Windows.Forms.Cursors.Help
-        Me.PictureBox2.Image = CType(resources.GetObject("PictureBox2.Image"), System.Drawing.Image)
-        Me.PictureBox2.Location = New System.Drawing.Point(10, 11)
-        Me.PictureBox2.Name = "PictureBox2"
-        Me.PictureBox2.Size = New System.Drawing.Size(16, 16)
-        Me.PictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
-        Me.PictureBox2.TabIndex = 28
-        Me.PictureBox2.TabStop = False
-        Me.ToolTip1.SetToolTip(Me.PictureBox2, "Selecciona tipo de batalla")
-        '
-        'Label1
-        '
-        Me.Label1.AutoSize = True
-        Me.Label1.BackColor = System.Drawing.Color.Transparent
-        Me.Label1.ForeColor = System.Drawing.Color.Black
-        Me.Label1.Location = New System.Drawing.Point(157, 13)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(50, 13)
-        Me.Label1.TabIndex = 25
-        Me.Label1.Text = "Duración"
-        '
-        'CbDuration
-        '
-        Me.CbDuration.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.CbDuration.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.CbDuration.FormattingEnabled = True
-        Me.CbDuration.Items.AddRange(New Object() {"1'", "1'20''", "2'", "All"})
-        Me.CbDuration.Location = New System.Drawing.Point(141, 33)
-        Me.CbDuration.Name = "CbDuration"
-        Me.CbDuration.Size = New System.Drawing.Size(66, 21)
-        Me.CbDuration.TabIndex = 3
-        '
-        'lblBattleType
-        '
-        Me.lblBattleType.AutoSize = True
-        Me.lblBattleType.BackColor = System.Drawing.Color.Transparent
-        Me.lblBattleType.ForeColor = System.Drawing.Color.Black
-        Me.lblBattleType.Location = New System.Drawing.Point(27, 14)
-        Me.lblBattleType.Name = "lblBattleType"
-        Me.lblBattleType.Size = New System.Drawing.Size(95, 13)
-        Me.lblBattleType.TabIndex = 23
-        Me.lblBattleType.Text = "Formato de Batalla"
-        '
-        'CbBattleType
-        '
-        Me.CbBattleType.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.CbBattleType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.CbBattleType.FormattingEnabled = True
-        Me.CbBattleType.Items.AddRange(New Object() {"Easy Mode (10)", "Hard Mode (5)", "Extreme Mode (2)", "4 Words each 10''"})
-        Me.CbBattleType.Location = New System.Drawing.Point(10, 33)
-        Me.CbBattleType.Name = "CbBattleType"
-        Me.CbBattleType.Size = New System.Drawing.Size(122, 21)
-        Me.CbBattleType.TabIndex = 2
-        '
         'TabPage3
         '
         Me.TabPage3.BackColor = System.Drawing.Color.WhiteSmoke
@@ -519,7 +513,6 @@ Partial Class ControlModule
         '
         'GroupBox3
         '
-        Me.GroupBox3.Controls.Add(Me.PictureBox6)
         Me.GroupBox3.Controls.Add(Me.Button2)
         Me.GroupBox3.Controls.Add(Me.btfullscreen)
         Me.GroupBox3.Controls.Add(Me.btwindowmode)
@@ -530,25 +523,12 @@ Partial Class ControlModule
         Me.GroupBox3.TabStop = False
         Me.GroupBox3.Text = "Formato de Ventana Pantalla Principal"
         '
-        'PictureBox6
-        '
-        Me.PictureBox6.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None
-        Me.PictureBox6.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.PictureBox6.Image = CType(resources.GetObject("PictureBox6.Image"), System.Drawing.Image)
-        Me.PictureBox6.Location = New System.Drawing.Point(210, 101)
-        Me.PictureBox6.Name = "PictureBox6"
-        Me.PictureBox6.Size = New System.Drawing.Size(16, 16)
-        Me.PictureBox6.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
-        Me.PictureBox6.TabIndex = 34
-        Me.PictureBox6.TabStop = False
-        Me.ToolTip1.SetToolTip(Me.PictureBox6, "Haz clic aquí para reestablecer por defecto la tipografía del reloj")
-        '
         'Button2
         '
         Me.Button2.Font = New System.Drawing.Font("Microsoft Sans Serif", 7.25!)
         Me.Button2.Location = New System.Drawing.Point(13, 94)
         Me.Button2.Name = "Button2"
-        Me.Button2.Size = New System.Drawing.Size(191, 23)
+        Me.Button2.Size = New System.Drawing.Size(215, 23)
         Me.Button2.TabIndex = 30
         Me.Button2.Text = "Fondo de Pantalla"
         Me.ToolTip1.SetToolTip(Me.Button2, "Selecciona una imagen personalizada para el fondo de pantalla." & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10))
@@ -579,7 +559,6 @@ Partial Class ControlModule
         'GroupBox2
         '
         Me.GroupBox2.Controls.Add(Me.btchangecountertypo)
-        Me.GroupBox2.Controls.Add(Me.pbundotypoclock)
         Me.GroupBox2.Controls.Add(Me.btchangecountercolor)
         Me.GroupBox2.Location = New System.Drawing.Point(266, 80)
         Me.GroupBox2.Name = "GroupBox2"
@@ -599,26 +578,13 @@ Partial Class ControlModule
         Me.ToolTip1.SetToolTip(Me.btchangecountertypo, "Cambia la tipografía del reloj de la pantalla principal." & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10))
         Me.btchangecountertypo.UseVisualStyleBackColor = True
         '
-        'pbundotypoclock
-        '
-        Me.pbundotypoclock.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None
-        Me.pbundotypoclock.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.pbundotypoclock.Image = CType(resources.GetObject("pbundotypoclock.Image"), System.Drawing.Image)
-        Me.pbundotypoclock.Location = New System.Drawing.Point(210, 33)
-        Me.pbundotypoclock.Name = "pbundotypoclock"
-        Me.pbundotypoclock.Size = New System.Drawing.Size(16, 16)
-        Me.pbundotypoclock.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
-        Me.pbundotypoclock.TabIndex = 33
-        Me.pbundotypoclock.TabStop = False
-        Me.ToolTip1.SetToolTip(Me.pbundotypoclock, "Haz clic aquí para reestablecer por defecto la tipografía del reloj")
-        '
         'btchangecountercolor
         '
         Me.btchangecountercolor.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None
         Me.btchangecountercolor.Font = New System.Drawing.Font("Microsoft Sans Serif", 7.25!)
         Me.btchangecountercolor.Location = New System.Drawing.Point(147, 26)
         Me.btchangecountercolor.Name = "btchangecountercolor"
-        Me.btchangecountercolor.Size = New System.Drawing.Size(57, 23)
+        Me.btchangecountercolor.Size = New System.Drawing.Size(90, 23)
         Me.btchangecountercolor.TabIndex = 38
         Me.btchangecountercolor.Text = "Color"
         Me.ToolTip1.SetToolTip(Me.btchangecountercolor, "Cambia la tipografía de las palabras. Asegúrate de usar una tipografía con acento" &
@@ -628,7 +594,6 @@ Partial Class ControlModule
         'GroupBox1
         '
         Me.GroupBox1.Controls.Add(Me.btchangewordtypo)
-        Me.GroupBox1.Controls.Add(Me.pbundotypoword)
         Me.GroupBox1.Controls.Add(Me.btwordcolor)
         Me.GroupBox1.Location = New System.Drawing.Point(266, 12)
         Me.GroupBox1.Name = "GroupBox1"
@@ -649,26 +614,13 @@ Partial Class ControlModule
         "s.")
         Me.btchangewordtypo.UseVisualStyleBackColor = True
         '
-        'pbundotypoword
-        '
-        Me.pbundotypoword.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None
-        Me.pbundotypoword.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.pbundotypoword.Image = CType(resources.GetObject("pbundotypoword.Image"), System.Drawing.Image)
-        Me.pbundotypoword.Location = New System.Drawing.Point(210, 30)
-        Me.pbundotypoword.Name = "pbundotypoword"
-        Me.pbundotypoword.Size = New System.Drawing.Size(16, 16)
-        Me.pbundotypoword.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
-        Me.pbundotypoword.TabIndex = 32
-        Me.pbundotypoword.TabStop = False
-        Me.ToolTip1.SetToolTip(Me.pbundotypoword, "Haz clic aquí para reestablecer por defecto la tipografía de palabras")
-        '
         'btwordcolor
         '
         Me.btwordcolor.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None
         Me.btwordcolor.Font = New System.Drawing.Font("Microsoft Sans Serif", 7.25!)
         Me.btwordcolor.Location = New System.Drawing.Point(147, 24)
         Me.btwordcolor.Name = "btwordcolor"
-        Me.btwordcolor.Size = New System.Drawing.Size(57, 23)
+        Me.btwordcolor.Size = New System.Drawing.Size(90, 23)
         Me.btwordcolor.TabIndex = 35
         Me.btwordcolor.Text = "Color"
         Me.ToolTip1.SetToolTip(Me.btwordcolor, "Cambia la tipografía de las palabras. Asegúrate de usar una tipografía con acento" &
@@ -689,7 +641,7 @@ Partial Class ControlModule
         Me.GroupBox4.Controls.Add(Me.PictureBox8)
         Me.GroupBox4.Controls.Add(Me.btmusicdir)
         Me.GroupBox4.Controls.Add(Me.PictureBox1)
-        Me.GroupBox4.Controls.Add(Me.CheckBox1)
+        Me.GroupBox4.Controls.Add(Me.chPlayMusic)
         Me.GroupBox4.Location = New System.Drawing.Point(13, 155)
         Me.GroupBox4.Name = "GroupBox4"
         Me.GroupBox4.Size = New System.Drawing.Size(497, 89)
@@ -741,15 +693,15 @@ Partial Class ControlModule
         Me.ToolTip1.SetToolTip(Me.PictureBox1, "BatallaRAAP reproducirá música, en caso de que la música la ponga un DJ acuerda c" &
         "on previamente el desarrollo de las batallas.")
         '
-        'CheckBox1
+        'chPlayMusic
         '
-        Me.CheckBox1.AutoSize = True
-        Me.CheckBox1.Location = New System.Drawing.Point(26, 27)
-        Me.CheckBox1.Name = "CheckBox1"
-        Me.CheckBox1.Size = New System.Drawing.Size(128, 17)
-        Me.CheckBox1.TabIndex = 47
-        Me.CheckBox1.Text = "NO reproducir música"
-        Me.CheckBox1.UseVisualStyleBackColor = True
+        Me.chPlayMusic.AutoSize = True
+        Me.chPlayMusic.Location = New System.Drawing.Point(26, 27)
+        Me.chPlayMusic.Name = "chPlayMusic"
+        Me.chPlayMusic.Size = New System.Drawing.Size(128, 17)
+        Me.chPlayMusic.TabIndex = 47
+        Me.chPlayMusic.Text = "NO reproducir música"
+        Me.chPlayMusic.UseVisualStyleBackColor = True
         '
         'TabPage4
         '
@@ -863,6 +815,7 @@ Partial Class ControlModule
         CType(Me.PictureBox4, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox11, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox3, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TabControl2.ResumeLayout(False)
         Me.TabPage6.ResumeLayout(False)
         Me.TabPage6.PerformLayout()
@@ -873,15 +826,11 @@ Partial Class ControlModule
         Me.TabPage8.ResumeLayout(False)
         Me.TabPage8.PerformLayout()
         CType(Me.PictureBox9, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TabPage3.ResumeLayout(False)
         Me.TabPage3.PerformLayout()
         Me.GroupBox3.ResumeLayout(False)
-        CType(Me.PictureBox6, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupBox2.ResumeLayout(False)
-        CType(Me.pbundotypoclock, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupBox1.ResumeLayout(False)
-        CType(Me.pbundotypoword, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupBox4.ResumeLayout(False)
         Me.GroupBox4.PerformLayout()
         CType(Me.PictureBox8, System.ComponentModel.ISupportInitialize).EndInit()
@@ -915,8 +864,6 @@ Partial Class ControlModule
     Friend WithEvents PictureBox2 As PictureBox
     Friend WithEvents PictureBox3 As PictureBox
     Friend WithEvents PictureBox4 As PictureBox
-    Friend WithEvents pbundotypoclock As PictureBox
-    Friend WithEvents pbundotypoword As PictureBox
     Friend WithEvents cbMusicList As ComboBox
     Friend WithEvents PictureBox11 As PictureBox
     Friend WithEvents Label2 As Label
@@ -928,7 +875,6 @@ Partial Class ControlModule
     Friend WithEvents btwordcolor As Button
     Friend WithEvents Label6 As Label
     Friend WithEvents GroupBox3 As GroupBox
-    Friend WithEvents PictureBox6 As PictureBox
     Friend WithEvents ColorDialog2 As ColorDialog
     Friend WithEvents TabControl2 As TabControl
     Friend WithEvents TabPage6 As TabPage
@@ -947,7 +893,7 @@ Partial Class ControlModule
     Private WithEvents PictureBox8 As PictureBox
     Friend WithEvents btmusicdir As Button
     Private WithEvents PictureBox1 As PictureBox
-    Friend WithEvents CheckBox1 As CheckBox
+    Friend WithEvents chPlayMusic As CheckBox
     Friend WithEvents btstopbattle As Button
     Friend WithEvents btstartbattle As Button
     Friend WithEvents TextBox1 As TextBox

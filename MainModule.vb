@@ -16,6 +16,8 @@ Public Class MainModule
         ControlModule.CbDuration.SelectedIndex = 0
         CenterItems()
     End Sub
+
+
     Public Shared Sub CenterItems()
     End Sub
 
@@ -270,7 +272,7 @@ Public Class MainModule
         End If
 
 
-        Fn.LoadMusic()
+        'Fn.LoadMusic()
         Fn.PlayMusic()
     End Sub
 

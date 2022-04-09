@@ -17,6 +17,7 @@ Public Class ControlModule
         LoadWords()
         LoadDictionaries()
         MainModule.InitStates()
+        Fn.LoadMusic()
         Calculate()
     End Sub
 
@@ -32,7 +33,6 @@ Public Class ControlModule
             ListBoxDictionaries.Items.Add(name, IIf(LCase(name) = "general", True, False))
         Next fri
     End Sub
-
     Public Shared Sub LoadWords()
         Try
             vars.MyWords = My.Computer.FileSystem.ReadAllText(vars.UserDir & "\" & vars.MyWordsFileName)
@@ -216,5 +216,10 @@ Public Class ControlModule
         Catch
         End Try
 
+    End Sub
+
+    Private Sub PictureBox6_Click(sender As Object, e As EventArgs)
+        ms.UpdateSettings("MainBackGroundImage", "")
+        Fn.WriteLog("El fondo de pantalla se reestableció a su valor por defecto.")
     End Sub
 End Class

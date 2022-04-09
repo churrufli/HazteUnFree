@@ -35,7 +35,7 @@ Public Class Fn
             ControlModule.tbmusicdir.Text = vars.UserDir
         End If
 
-        LoadMusic()
+        InitMusic()
 
     End Sub
 
@@ -161,19 +161,24 @@ Public Class Fn
         My.Settings.Save()
         Alert("Configuración guardada.")
     End Sub
-
-    Public Shared Sub LoadMusic()
-
-        Dim comboSource As New Dictionary(Of String, String)()
+    Public Shared Sub InitMusic()
         Dim dir = ms.ReadSetting("MusicDirectory")
         If dir = Nothing Then Exit Sub
         vars.files = Directory.GetFiles(dir, "*.*").Where(Function(file) file.ToLower().EndsWith(".mp3") OrElse file.ToLower().EndsWith(".wav")).ToArray()
+    End Sub
 
+
+    Public Shared Sub LoadMusic()
+        If ControlModule.chPlayMusic.Checked Then Exit Sub
+        Dim comboSource As New Dictionary(Of String, String)()
+        'Dim dir = ms.ReadSetting("MusicDirectory")
+        'If dir = Nothing Then Exit Sub
+        'vars.files = Directory.GetFiles(dir, "*.*").Where(Function(file) file.ToLower().EndsWith(".mp3") OrElse file.ToLower().EndsWith(".wav")).ToArray()
 
         If ControlModule.chshufflemusic.Checked Then
             Fn.Shuffle(vars.files)
         End If
-
+        Dim dir = ms.ReadSetting("MusicDirectory")
         For Each u In vars.files
             Dim n = u & " (" & TimeSpan.FromSeconds(Math.Round(GetMediaDuration(u))).ToString("mm\:ss") & ")"
             n = Replace(n, ".mp3", "")
@@ -187,6 +192,11 @@ Public Class Fn
 
     End Sub
     Public Shared Sub PlayMusic()
+        If ControlModule.chPlayMusic.Checked Then Exit Sub
+
+        If ControlModule.chshufflemusic.Checked Then
+            LoadMusic()
+        End If
         '///// MUSIC //////
         Dim Vidhhmmss As String
         Dim u = ControlModule.cbMusicList.SelectedValue
