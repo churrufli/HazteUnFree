@@ -30,6 +30,7 @@ Public Class ms
         t = t & AddSetting("lbCountDownFontSize", "125")
         t = t & AddSetting("lbCountDownColor", "192; 64; 0")
         t = t & AddSetting("cbBattleType", "2")
+        t = t & AddSetting("MusicDirectory", IO.Directory.GetCurrentDirectory)
         File.Create(vars.MySettingsFileName).Dispose()
         File.WriteAllText(vars.MySettingsFileName, t)
     End Sub
@@ -42,6 +43,7 @@ Public Class ms
         WriteIfNotExistSetting("lbCountDownFontSize", "125")
         WriteIfNotExistSetting("lbCountDownColor", "192; 64; 0")
         WriteIfNotExistSetting("cbBattleType", "2")
+        WriteIfNotExistSetting("MusicDirectory", IO.Directory.GetCurrentDirectory)
     End Sub
 
     Public Shared Function ReadSetting(setting)

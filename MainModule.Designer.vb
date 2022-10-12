@@ -49,6 +49,7 @@ Partial Class MainModule
         Me.Button2.Size = New System.Drawing.Size(33, 33)
         Me.Button2.TabIndex = 2
         Me.Button2.UseVisualStyleBackColor = True
+        Me.Button2.Visible = False
         '
         'TimerGetWords
         '
@@ -83,6 +84,9 @@ Partial Class MainModule
         '
         'LbCountDown
         '
+        Me.LbCountDown.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.LbCountDown.BackColor = System.Drawing.Color.Transparent
         Me.LbCountDown.Font = New System.Drawing.Font("Arial", 8.25!)
         Me.LbCountDown.ForeColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(0, Byte), Integer))
@@ -92,7 +96,6 @@ Partial Class MainModule
         Me.LbCountDown.TabIndex = 6
         Me.LbCountDown.Text = "00"
         Me.LbCountDown.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        Me.LbCountDown.UseCompatibleTextRendering = True
         '
         'TimerProgressBar
         '
@@ -100,8 +103,6 @@ Partial Class MainModule
         'LbWord
         '
         Me.LbWord.BackColor = System.Drawing.Color.Transparent
-        Me.LbWord.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.LbWord.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.LbWord.Font = New System.Drawing.Font("Impact", 130.0!)
         Me.LbWord.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(65, Byte), Integer))
         Me.LbWord.Location = New System.Drawing.Point(0, 0)
@@ -135,13 +136,13 @@ Partial Class MainModule
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.White
         Me.BackgroundImage = CType(resources.GetObject("$this.BackgroundImage"), System.Drawing.Image)
+        Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
         Me.ClientSize = New System.Drawing.Size(1904, 1041)
         Me.Controls.Add(Me.Panel1)
         Me.Controls.Add(Me.Panel2)
         Me.Controls.Add(Me.ProgressBar1)
         Me.Controls.Add(Me.Button3)
         Me.Controls.Add(Me.Button2)
-        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Name = "MainModule"
         Me.ShowIcon = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen

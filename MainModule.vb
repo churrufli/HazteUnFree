@@ -17,7 +17,6 @@ Public Class MainModule
         CenterItems()
     End Sub
 
-
     Public Shared Sub CenterItems()
     End Sub
 
@@ -432,6 +431,52 @@ Public Class MainModule
             i = i + 1
         End While
     End Sub
+    Dim dragging
+    Dim beginX
+    Dim beginY
+    Dim PictureBox1 = LbCountDown
+    Private Sub LbCountDown_MouseDown(sender As Object, e As MouseEventArgs) Handles LbCountDown.MouseDown
+        dragging = True
+        beginX = e.X
+        beginY = e.Y
+    End Sub
+
+    Private Sub LbCountDown_MouseMove(sender As Object, e As MouseEventArgs) Handles LbCountDown.MouseMove
+        If dragging = True Then
+            LbCountDown.Location = New Point(LbCountDown.Location.X + e.X - beginX, LbCountDown.Location.Y + e.Y - beginY)
+            Me.Refresh()
+        End If
+    End Sub
+
+    Private Sub LbCountDown_MouseUp(sender As Object, e As MouseEventArgs) Handles LbCountDown.MouseUp
+        dragging = False
+    End Sub
+
+    Private Sub LbCountDown_DragDrop(sender As Object, e As DragEventArgs) Handles LbCountDown.DragDrop
+        LbCountDown.Location = New Point(LbCountDown.Location.X + e.X - beginX, LbCountDown.Location.Y + e.Y - beginY)
+    End Sub
+    ''''
+    Private Sub LbWord_MouseDown(sender As Object, e As MouseEventArgs) Handles LbWord.MouseDown
+        dragging = True
+        beginX = e.X
+        beginY = e.Y
+    End Sub
+
+    Private Sub LbWord_MouseMove(sender As Object, e As MouseEventArgs) Handles LbWord.MouseMove
+        If dragging = True Then
+            LbWord.Location = New Point(LbWord.Location.X + e.X - beginX, LbWord.Location.Y + e.Y - beginY)
+            Me.Refresh()
+        End If
+    End Sub
+
+    Private Sub LbWord_MouseUp(sender As Object, e As MouseEventArgs) Handles LbWord.MouseUp
+        dragging = False
+    End Sub
+
+    Private Sub LbWord_DragDrop(sender As Object, e As DragEventArgs) Handles LbWord.DragDrop
+        LbWord.Location = New Point(LbWord.Location.X + e.X - beginX, LbWord.Location.Y + e.Y - beginY)
+    End Sub
+
 
 
 End Class

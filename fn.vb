@@ -98,28 +98,9 @@ Public Class Fn
         Dim imgBytes As Byte() = imgConverter.ConvertTo(Img, GetType(Byte()))
         Return Convert.ToBase64String(imgBytes)
     End Function
-
-
-
-
-
     Public Shared Function FindIt(total As String, first As String, last As String) As String
         Return GetDelimitedText(total, first, last)
         Exit Function
-
-        'If total = Nothing Then total = ""
-        'If last.Length < 1 Then
-        '    FindIt = total.Substring(total.IndexOf(first))
-        'End If
-        'If first.Length < 1 Then
-        '    FindIt = total.Substring(0, (total.IndexOf(last)))
-        'End If
-        'Try
-        '    FindIt =
-        '        ((total.Substring(total.IndexOf(first), (total.IndexOf(last) - total.IndexOf(first)))).Replace(first, "")) _
-        '            .Replace(last, "")
-        'Catch
-        'End Try
     End Function
 
 

@@ -32,7 +32,6 @@ Partial Class ControlModule
         Me.chkShuffle = New System.Windows.Forms.CheckBox()
         Me.chshufflemusic = New System.Windows.Forms.CheckBox()
         Me.PictureBox11 = New System.Windows.Forms.PictureBox()
-        Me.Label2 = New System.Windows.Forms.Label()
         Me.cbMusicList = New System.Windows.Forms.ComboBox()
         Me.PictureBox3 = New System.Windows.Forms.PictureBox()
         Me.PictureBox2 = New System.Windows.Forms.PictureBox()
@@ -56,17 +55,6 @@ Partial Class ControlModule
         Me.Label4 = New System.Windows.Forms.Label()
         Me.ListBoxDictionaries = New System.Windows.Forms.CheckedListBox()
         Me.TabPage3 = New System.Windows.Forms.TabPage()
-        Me.GroupBox3 = New System.Windows.Forms.GroupBox()
-        Me.Button2 = New System.Windows.Forms.Button()
-        Me.btfullscreen = New System.Windows.Forms.Button()
-        Me.btwindowmode = New System.Windows.Forms.Button()
-        Me.GroupBox2 = New System.Windows.Forms.GroupBox()
-        Me.btchangecountertypo = New System.Windows.Forms.Button()
-        Me.btchangecountercolor = New System.Windows.Forms.Button()
-        Me.GroupBox1 = New System.Windows.Forms.GroupBox()
-        Me.btchangewordtypo = New System.Windows.Forms.Button()
-        Me.btwordcolor = New System.Windows.Forms.Button()
-        Me.Label6 = New System.Windows.Forms.Label()
         Me.GroupBox4 = New System.Windows.Forms.GroupBox()
         Me.tbmusicdir = New System.Windows.Forms.TextBox()
         Me.PictureBox8 = New System.Windows.Forms.PictureBox()
@@ -88,6 +76,21 @@ Partial Class ControlModule
         Me.ColorDialog2 = New System.Windows.Forms.ColorDialog()
         Me.Button3 = New System.Windows.Forms.Button()
         Me.FolderBrowserDialog1 = New System.Windows.Forms.FolderBrowserDialog()
+        Me.MenuStrip1 = New System.Windows.Forms.MenuStrip()
+        Me.ConfiguraciónToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.PersonalizarToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.VentanaPrincipalToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ModoVentanaToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ModoPantallaCompletaToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.FondoDePantallaToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.PalabrasToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.FuenteYTamañoToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ColorToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.RelojToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.FuenteYTamañoToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ColorToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
+        Me.RadioButton1 = New System.Windows.Forms.RadioButton()
+        Me.RadioButton2 = New System.Windows.Forms.RadioButton()
         Me.tabcontrol1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         CType(Me.PictureBox4, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -103,14 +106,12 @@ Partial Class ControlModule
         Me.TabPage8.SuspendLayout()
         CType(Me.PictureBox9, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabPage3.SuspendLayout()
-        Me.GroupBox3.SuspendLayout()
-        Me.GroupBox2.SuspendLayout()
-        Me.GroupBox1.SuspendLayout()
         Me.GroupBox4.SuspendLayout()
         CType(Me.PictureBox8, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabPage4.SuspendLayout()
         Me.GroupBox5.SuspendLayout()
+        Me.MenuStrip1.SuspendLayout()
         Me.SuspendLayout()
         '
         'tabcontrol1
@@ -118,7 +119,7 @@ Partial Class ControlModule
         Me.tabcontrol1.Controls.Add(Me.TabPage1)
         Me.tabcontrol1.Controls.Add(Me.TabPage3)
         Me.tabcontrol1.Controls.Add(Me.TabPage4)
-        Me.tabcontrol1.Location = New System.Drawing.Point(7, 12)
+        Me.tabcontrol1.Location = New System.Drawing.Point(7, 27)
         Me.tabcontrol1.Name = "tabcontrol1"
         Me.tabcontrol1.SelectedIndex = 0
         Me.tabcontrol1.Size = New System.Drawing.Size(533, 338)
@@ -127,13 +128,14 @@ Partial Class ControlModule
         'TabPage1
         '
         Me.TabPage1.BackColor = System.Drawing.Color.WhiteSmoke
+        Me.TabPage1.Controls.Add(Me.RadioButton2)
+        Me.TabPage1.Controls.Add(Me.RadioButton1)
         Me.TabPage1.Controls.Add(Me.btstopbattle)
         Me.TabPage1.Controls.Add(Me.btstartbattle)
         Me.TabPage1.Controls.Add(Me.PictureBox4)
         Me.TabPage1.Controls.Add(Me.chkShuffle)
         Me.TabPage1.Controls.Add(Me.chshufflemusic)
         Me.TabPage1.Controls.Add(Me.PictureBox11)
-        Me.TabPage1.Controls.Add(Me.Label2)
         Me.TabPage1.Controls.Add(Me.cbMusicList)
         Me.TabPage1.Controls.Add(Me.PictureBox3)
         Me.TabPage1.Controls.Add(Me.PictureBox2)
@@ -155,7 +157,7 @@ Partial Class ControlModule
         Me.btstopbattle.DialogResult = System.Windows.Forms.DialogResult.Cancel
         Me.btstopbattle.Enabled = False
         Me.btstopbattle.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!)
-        Me.btstopbattle.Location = New System.Drawing.Point(268, 247)
+        Me.btstopbattle.Location = New System.Drawing.Point(270, 235)
         Me.btstopbattle.Name = "btstopbattle"
         Me.btstopbattle.Size = New System.Drawing.Size(242, 47)
         Me.btstopbattle.TabIndex = 40
@@ -166,7 +168,7 @@ Partial Class ControlModule
         '
         Me.btstartbattle.BackColor = System.Drawing.Color.Gainsboro
         Me.btstartbattle.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!)
-        Me.btstartbattle.Location = New System.Drawing.Point(10, 247)
+        Me.btstartbattle.Location = New System.Drawing.Point(12, 235)
         Me.btstartbattle.Name = "btstartbattle"
         Me.btstartbattle.Size = New System.Drawing.Size(238, 49)
         Me.btstartbattle.TabIndex = 39
@@ -204,11 +206,11 @@ Partial Class ControlModule
         Me.chshufflemusic.AutoSize = True
         Me.chshufflemusic.Checked = True
         Me.chshufflemusic.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.chshufflemusic.Location = New System.Drawing.Point(400, 14)
+        Me.chshufflemusic.Location = New System.Drawing.Point(247, 14)
         Me.chshufflemusic.Name = "chshufflemusic"
-        Me.chshufflemusic.Size = New System.Drawing.Size(110, 17)
+        Me.chshufflemusic.Size = New System.Drawing.Size(190, 17)
         Me.chshufflemusic.TabIndex = 35
-        Me.chshufflemusic.Text = "Elección aleatoria"
+        Me.chshufflemusic.Text = "Reproducir pista de audio aleatoria"
         Me.chshufflemusic.UseVisualStyleBackColor = True
         '
         'PictureBox11
@@ -224,17 +226,6 @@ Partial Class ControlModule
         Me.PictureBox11.TabStop = False
         Me.ToolTip1.SetToolTip(Me.PictureBox11, "Selecciona la música para la batalla (en caso de que tengas en las opciones de mú" &
         "sica desactivado ")
-        '
-        'Label2
-        '
-        Me.Label2.AutoSize = True
-        Me.Label2.BackColor = System.Drawing.Color.Transparent
-        Me.Label2.ForeColor = System.Drawing.Color.Black
-        Me.Label2.Location = New System.Drawing.Point(247, 14)
-        Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(41, 13)
-        Me.Label2.TabIndex = 33
-        Me.Label2.Text = "Música"
         '
         'cbMusicList
         '
@@ -264,7 +255,7 @@ Partial Class ControlModule
         Me.PictureBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None
         Me.PictureBox2.Cursor = System.Windows.Forms.Cursors.Help
         Me.PictureBox2.Image = CType(resources.GetObject("PictureBox2.Image"), System.Drawing.Image)
-        Me.PictureBox2.Location = New System.Drawing.Point(10, 11)
+        Me.PictureBox2.Location = New System.Drawing.Point(10, 13)
         Me.PictureBox2.Name = "PictureBox2"
         Me.PictureBox2.Size = New System.Drawing.Size(16, 16)
         Me.PictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
@@ -321,7 +312,7 @@ Partial Class ControlModule
         Me.TabControl2.Controls.Add(Me.TabPage6)
         Me.TabControl2.Controls.Add(Me.TabPage7)
         Me.TabControl2.Controls.Add(Me.TabPage8)
-        Me.TabControl2.Location = New System.Drawing.Point(6, 72)
+        Me.TabControl2.Location = New System.Drawing.Point(9, 92)
         Me.TabControl2.Name = "TabControl2"
         Me.TabControl2.SelectedIndex = 0
         Me.TabControl2.Size = New System.Drawing.Size(513, 126)
@@ -340,7 +331,7 @@ Partial Class ControlModule
         Me.TabPage6.Padding = New System.Windows.Forms.Padding(3)
         Me.TabPage6.Size = New System.Drawing.Size(505, 100)
         Me.TabPage6.TabIndex = 0
-        Me.TabPage6.Text = "     Modo Automático"
+        Me.TabPage6.Text = "M. Auto"
         '
         'PictureBox7
         '
@@ -414,7 +405,7 @@ Partial Class ControlModule
         Me.TabPage7.Padding = New System.Windows.Forms.Padding(3)
         Me.TabPage7.Size = New System.Drawing.Size(505, 100)
         Me.TabPage7.TabIndex = 1
-        Me.TabPage7.Text = "Modo Manual"
+        Me.TabPage7.Text = "Opciones"
         '
         'PictureBox10
         '
@@ -500,140 +491,12 @@ Partial Class ControlModule
         'TabPage3
         '
         Me.TabPage3.BackColor = System.Drawing.Color.WhiteSmoke
-        Me.TabPage3.Controls.Add(Me.GroupBox3)
-        Me.TabPage3.Controls.Add(Me.GroupBox2)
-        Me.TabPage3.Controls.Add(Me.GroupBox1)
-        Me.TabPage3.Controls.Add(Me.Label6)
         Me.TabPage3.Controls.Add(Me.GroupBox4)
         Me.TabPage3.Location = New System.Drawing.Point(4, 22)
         Me.TabPage3.Name = "TabPage3"
         Me.TabPage3.Size = New System.Drawing.Size(525, 312)
         Me.TabPage3.TabIndex = 2
-        Me.TabPage3.Text = "Configuración"
-        '
-        'GroupBox3
-        '
-        Me.GroupBox3.Controls.Add(Me.Button2)
-        Me.GroupBox3.Controls.Add(Me.btfullscreen)
-        Me.GroupBox3.Controls.Add(Me.btwindowmode)
-        Me.GroupBox3.Location = New System.Drawing.Point(13, 12)
-        Me.GroupBox3.Name = "GroupBox3"
-        Me.GroupBox3.Size = New System.Drawing.Size(244, 132)
-        Me.GroupBox3.TabIndex = 26
-        Me.GroupBox3.TabStop = False
-        Me.GroupBox3.Text = "Formato de Ventana Pantalla Principal"
-        '
-        'Button2
-        '
-        Me.Button2.Font = New System.Drawing.Font("Microsoft Sans Serif", 7.25!)
-        Me.Button2.Location = New System.Drawing.Point(13, 94)
-        Me.Button2.Name = "Button2"
-        Me.Button2.Size = New System.Drawing.Size(215, 23)
-        Me.Button2.TabIndex = 30
-        Me.Button2.Text = "Fondo de Pantalla"
-        Me.ToolTip1.SetToolTip(Me.Button2, "Selecciona una imagen personalizada para el fondo de pantalla." & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10))
-        Me.Button2.UseVisualStyleBackColor = True
-        '
-        'btfullscreen
-        '
-        Me.btfullscreen.Font = New System.Drawing.Font("Microsoft Sans Serif", 7.25!)
-        Me.btfullscreen.Location = New System.Drawing.Point(120, 31)
-        Me.btfullscreen.Name = "btfullscreen"
-        Me.btfullscreen.Size = New System.Drawing.Size(108, 23)
-        Me.btfullscreen.TabIndex = 26
-        Me.btfullscreen.Text = "Pantalla Completa"
-        Me.ToolTip1.SetToolTip(Me.btfullscreen, "Establece la Pantalla Principal en Modo Pantalla Completa")
-        Me.btfullscreen.UseVisualStyleBackColor = True
-        '
-        'btwindowmode
-        '
-        Me.btwindowmode.Font = New System.Drawing.Font("Microsoft Sans Serif", 7.25!)
-        Me.btwindowmode.Location = New System.Drawing.Point(13, 31)
-        Me.btwindowmode.Name = "btwindowmode"
-        Me.btwindowmode.Size = New System.Drawing.Size(101, 23)
-        Me.btwindowmode.TabIndex = 27
-        Me.btwindowmode.Text = "Modo Ventana"
-        Me.ToolTip1.SetToolTip(Me.btwindowmode, "Establece la Pantalla Principal en Modo Ventana")
-        Me.btwindowmode.UseVisualStyleBackColor = True
-        '
-        'GroupBox2
-        '
-        Me.GroupBox2.Controls.Add(Me.btchangecountertypo)
-        Me.GroupBox2.Controls.Add(Me.btchangecountercolor)
-        Me.GroupBox2.Location = New System.Drawing.Point(266, 80)
-        Me.GroupBox2.Name = "GroupBox2"
-        Me.GroupBox2.Size = New System.Drawing.Size(244, 66)
-        Me.GroupBox2.TabIndex = 26
-        Me.GroupBox2.TabStop = False
-        Me.GroupBox2.Text = "Formato del Reloj"
-        '
-        'btchangecountertypo
-        '
-        Me.btchangecountertypo.Font = New System.Drawing.Font("Microsoft Sans Serif", 7.25!)
-        Me.btchangecountertypo.Location = New System.Drawing.Point(11, 26)
-        Me.btchangecountertypo.Name = "btchangecountertypo"
-        Me.btchangecountertypo.Size = New System.Drawing.Size(130, 23)
-        Me.btchangecountertypo.TabIndex = 29
-        Me.btchangecountertypo.Text = "Reloj"
-        Me.ToolTip1.SetToolTip(Me.btchangecountertypo, "Cambia la tipografía del reloj de la pantalla principal." & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10))
-        Me.btchangecountertypo.UseVisualStyleBackColor = True
-        '
-        'btchangecountercolor
-        '
-        Me.btchangecountercolor.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None
-        Me.btchangecountercolor.Font = New System.Drawing.Font("Microsoft Sans Serif", 7.25!)
-        Me.btchangecountercolor.Location = New System.Drawing.Point(147, 26)
-        Me.btchangecountercolor.Name = "btchangecountercolor"
-        Me.btchangecountercolor.Size = New System.Drawing.Size(90, 23)
-        Me.btchangecountercolor.TabIndex = 38
-        Me.btchangecountercolor.Text = "Color"
-        Me.ToolTip1.SetToolTip(Me.btchangecountercolor, "Cambia la tipografía de las palabras. Asegúrate de usar una tipografía con acento" &
-        "s.")
-        Me.btchangecountercolor.UseVisualStyleBackColor = True
-        '
-        'GroupBox1
-        '
-        Me.GroupBox1.Controls.Add(Me.btchangewordtypo)
-        Me.GroupBox1.Controls.Add(Me.btwordcolor)
-        Me.GroupBox1.Location = New System.Drawing.Point(266, 12)
-        Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Size = New System.Drawing.Size(244, 66)
-        Me.GroupBox1.TabIndex = 41
-        Me.GroupBox1.TabStop = False
-        Me.GroupBox1.Text = "Formato de texto de Palabras"
-        '
-        'btchangewordtypo
-        '
-        Me.btchangewordtypo.Font = New System.Drawing.Font("Microsoft Sans Serif", 7.25!)
-        Me.btchangewordtypo.Location = New System.Drawing.Point(11, 24)
-        Me.btchangewordtypo.Name = "btchangewordtypo"
-        Me.btchangewordtypo.Size = New System.Drawing.Size(130, 23)
-        Me.btchangewordtypo.TabIndex = 28
-        Me.btchangewordtypo.Text = "Fuente y tamaño"
-        Me.ToolTip1.SetToolTip(Me.btchangewordtypo, "Cambia la tipografía de las palabras. Asegúrate de usar una tipografía con acento" &
-        "s.")
-        Me.btchangewordtypo.UseVisualStyleBackColor = True
-        '
-        'btwordcolor
-        '
-        Me.btwordcolor.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None
-        Me.btwordcolor.Font = New System.Drawing.Font("Microsoft Sans Serif", 7.25!)
-        Me.btwordcolor.Location = New System.Drawing.Point(147, 24)
-        Me.btwordcolor.Name = "btwordcolor"
-        Me.btwordcolor.Size = New System.Drawing.Size(90, 23)
-        Me.btwordcolor.TabIndex = 35
-        Me.btwordcolor.Text = "Color"
-        Me.ToolTip1.SetToolTip(Me.btwordcolor, "Cambia la tipografía de las palabras. Asegúrate de usar una tipografía con acento" &
-        "s.")
-        Me.btwordcolor.UseVisualStyleBackColor = True
-        '
-        'Label6
-        '
-        Me.Label6.AutoSize = True
-        Me.Label6.Location = New System.Drawing.Point(276, 85)
-        Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(0, 13)
-        Me.Label6.TabIndex = 37
+        Me.TabPage3.Text = "Música"
         '
         'GroupBox4
         '
@@ -642,7 +505,7 @@ Partial Class ControlModule
         Me.GroupBox4.Controls.Add(Me.btmusicdir)
         Me.GroupBox4.Controls.Add(Me.PictureBox1)
         Me.GroupBox4.Controls.Add(Me.chPlayMusic)
-        Me.GroupBox4.Location = New System.Drawing.Point(13, 155)
+        Me.GroupBox4.Location = New System.Drawing.Point(13, 13)
         Me.GroupBox4.Name = "GroupBox4"
         Me.GroupBox4.Size = New System.Drawing.Size(497, 89)
         Me.GroupBox4.TabIndex = 47
@@ -794,6 +657,114 @@ Partial Class ControlModule
         Me.Button3.Text = "Previsualizar Batalla en el Log"
         Me.Button3.UseVisualStyleBackColor = True
         '
+        'MenuStrip1
+        '
+        Me.MenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ConfiguraciónToolStripMenuItem})
+        Me.MenuStrip1.Location = New System.Drawing.Point(0, 0)
+        Me.MenuStrip1.Name = "MenuStrip1"
+        Me.MenuStrip1.Size = New System.Drawing.Size(544, 24)
+        Me.MenuStrip1.TabIndex = 42
+        Me.MenuStrip1.Text = "MenuStrip1"
+        '
+        'ConfiguraciónToolStripMenuItem
+        '
+        Me.ConfiguraciónToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.PersonalizarToolStripMenuItem})
+        Me.ConfiguraciónToolStripMenuItem.Name = "ConfiguraciónToolStripMenuItem"
+        Me.ConfiguraciónToolStripMenuItem.Size = New System.Drawing.Size(95, 20)
+        Me.ConfiguraciónToolStripMenuItem.Text = "Configuración"
+        '
+        'PersonalizarToolStripMenuItem
+        '
+        Me.PersonalizarToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.PalabrasToolStripMenuItem, Me.RelojToolStripMenuItem, Me.VentanaPrincipalToolStripMenuItem})
+        Me.PersonalizarToolStripMenuItem.Name = "PersonalizarToolStripMenuItem"
+        Me.PersonalizarToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.PersonalizarToolStripMenuItem.Text = "Personalizar"
+        '
+        'VentanaPrincipalToolStripMenuItem
+        '
+        Me.VentanaPrincipalToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ModoVentanaToolStripMenuItem, Me.ModoPantallaCompletaToolStripMenuItem, Me.FondoDePantallaToolStripMenuItem})
+        Me.VentanaPrincipalToolStripMenuItem.Name = "VentanaPrincipalToolStripMenuItem"
+        Me.VentanaPrincipalToolStripMenuItem.Size = New System.Drawing.Size(165, 22)
+        Me.VentanaPrincipalToolStripMenuItem.Text = "Ventana Principal"
+        '
+        'ModoVentanaToolStripMenuItem
+        '
+        Me.ModoVentanaToolStripMenuItem.Name = "ModoVentanaToolStripMenuItem"
+        Me.ModoVentanaToolStripMenuItem.Size = New System.Drawing.Size(206, 22)
+        Me.ModoVentanaToolStripMenuItem.Text = "Modo Ventana"
+        '
+        'ModoPantallaCompletaToolStripMenuItem
+        '
+        Me.ModoPantallaCompletaToolStripMenuItem.Name = "ModoPantallaCompletaToolStripMenuItem"
+        Me.ModoPantallaCompletaToolStripMenuItem.Size = New System.Drawing.Size(206, 22)
+        Me.ModoPantallaCompletaToolStripMenuItem.Text = "Modo Pantalla Completa"
+        '
+        'FondoDePantallaToolStripMenuItem
+        '
+        Me.FondoDePantallaToolStripMenuItem.Name = "FondoDePantallaToolStripMenuItem"
+        Me.FondoDePantallaToolStripMenuItem.Size = New System.Drawing.Size(206, 22)
+        Me.FondoDePantallaToolStripMenuItem.Text = "Fondo de Pantalla"
+        '
+        'PalabrasToolStripMenuItem
+        '
+        Me.PalabrasToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.FuenteYTamañoToolStripMenuItem, Me.ColorToolStripMenuItem})
+        Me.PalabrasToolStripMenuItem.Name = "PalabrasToolStripMenuItem"
+        Me.PalabrasToolStripMenuItem.Size = New System.Drawing.Size(165, 22)
+        Me.PalabrasToolStripMenuItem.Text = "Palabras"
+        '
+        'FuenteYTamañoToolStripMenuItem
+        '
+        Me.FuenteYTamañoToolStripMenuItem.Name = "FuenteYTamañoToolStripMenuItem"
+        Me.FuenteYTamañoToolStripMenuItem.Size = New System.Drawing.Size(164, 22)
+        Me.FuenteYTamañoToolStripMenuItem.Text = "Fuente y Tamaño"
+        '
+        'ColorToolStripMenuItem
+        '
+        Me.ColorToolStripMenuItem.Name = "ColorToolStripMenuItem"
+        Me.ColorToolStripMenuItem.Size = New System.Drawing.Size(164, 22)
+        Me.ColorToolStripMenuItem.Text = "Color"
+        '
+        'RelojToolStripMenuItem
+        '
+        Me.RelojToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.FuenteYTamañoToolStripMenuItem1, Me.ColorToolStripMenuItem1})
+        Me.RelojToolStripMenuItem.Name = "RelojToolStripMenuItem"
+        Me.RelojToolStripMenuItem.Size = New System.Drawing.Size(165, 22)
+        Me.RelojToolStripMenuItem.Text = "Reloj"
+        '
+        'FuenteYTamañoToolStripMenuItem1
+        '
+        Me.FuenteYTamañoToolStripMenuItem1.Name = "FuenteYTamañoToolStripMenuItem1"
+        Me.FuenteYTamañoToolStripMenuItem1.Size = New System.Drawing.Size(164, 22)
+        Me.FuenteYTamañoToolStripMenuItem1.Text = "Fuente y Tamaño"
+        '
+        'ColorToolStripMenuItem1
+        '
+        Me.ColorToolStripMenuItem1.Name = "ColorToolStripMenuItem1"
+        Me.ColorToolStripMenuItem1.Size = New System.Drawing.Size(164, 22)
+        Me.ColorToolStripMenuItem1.Text = "Color"
+        '
+        'RadioButton1
+        '
+        Me.RadioButton1.AutoSize = True
+        Me.RadioButton1.Location = New System.Drawing.Point(14, 69)
+        Me.RadioButton1.Name = "RadioButton1"
+        Me.RadioButton1.Size = New System.Drawing.Size(108, 17)
+        Me.RadioButton1.TabIndex = 41
+        Me.RadioButton1.TabStop = True
+        Me.RadioButton1.Text = "Modo Automático"
+        Me.RadioButton1.UseVisualStyleBackColor = True
+        '
+        'RadioButton2
+        '
+        Me.RadioButton2.AutoSize = True
+        Me.RadioButton2.Location = New System.Drawing.Point(126, 69)
+        Me.RadioButton2.Name = "RadioButton2"
+        Me.RadioButton2.Size = New System.Drawing.Size(90, 17)
+        Me.RadioButton2.TabIndex = 44
+        Me.RadioButton2.TabStop = True
+        Me.RadioButton2.Text = "Mono Manual"
+        Me.RadioButton2.UseVisualStyleBackColor = True
+        '
         'ControlModule
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -802,8 +773,10 @@ Partial Class ControlModule
         Me.Controls.Add(Me.Button3)
         Me.Controls.Add(Me.tabcontrol1)
         Me.Controls.Add(Me.tbUserLog)
+        Me.Controls.Add(Me.MenuStrip1)
         Me.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
+        Me.MainMenuStrip = Me.MenuStrip1
         Me.MaximizeBox = False
         Me.Name = "ControlModule"
         Me.ShowIcon = False
@@ -827,10 +800,6 @@ Partial Class ControlModule
         Me.TabPage8.PerformLayout()
         CType(Me.PictureBox9, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TabPage3.ResumeLayout(False)
-        Me.TabPage3.PerformLayout()
-        Me.GroupBox3.ResumeLayout(False)
-        Me.GroupBox2.ResumeLayout(False)
-        Me.GroupBox1.ResumeLayout(False)
         Me.GroupBox4.ResumeLayout(False)
         Me.GroupBox4.PerformLayout()
         CType(Me.PictureBox8, System.ComponentModel.ISupportInitialize).EndInit()
@@ -838,6 +807,8 @@ Partial Class ControlModule
         Me.TabPage4.ResumeLayout(False)
         Me.GroupBox5.ResumeLayout(False)
         Me.GroupBox5.PerformLayout()
+        Me.MenuStrip1.ResumeLayout(False)
+        Me.MenuStrip1.PerformLayout()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -849,16 +820,11 @@ Partial Class ControlModule
     Friend WithEvents lblBattleType As Label
     Friend WithEvents CbBattleType As ComboBox
     Friend WithEvents TabPage3 As TabPage
-    Friend WithEvents btwindowmode As Button
-    Friend WithEvents btfullscreen As Button
     Friend WithEvents tbUserLog As TextBox
-    Friend WithEvents btchangewordtypo As Button
     Friend WithEvents FontDialog1 As FontDialog
-    Friend WithEvents btchangecountertypo As Button
     Friend WithEvents FontDialog2 As FontDialog
     Friend WithEvents TabPage4 As TabPage
     Friend WithEvents OpenFileDialog1 As OpenFileDialog
-    Friend WithEvents Button2 As Button
     Friend WithEvents chkShuffle As CheckBox
     Friend WithEvents ToolTip1 As ToolTip
     Friend WithEvents PictureBox2 As PictureBox
@@ -866,15 +832,8 @@ Partial Class ControlModule
     Friend WithEvents PictureBox4 As PictureBox
     Friend WithEvents cbMusicList As ComboBox
     Friend WithEvents PictureBox11 As PictureBox
-    Friend WithEvents Label2 As Label
     Friend WithEvents chshufflemusic As CheckBox
     Friend WithEvents ColorDialog1 As ColorDialog
-    Friend WithEvents GroupBox2 As GroupBox
-    Friend WithEvents btchangecountercolor As Button
-    Friend WithEvents GroupBox1 As GroupBox
-    Friend WithEvents btwordcolor As Button
-    Friend WithEvents Label6 As Label
-    Friend WithEvents GroupBox3 As GroupBox
     Friend WithEvents ColorDialog2 As ColorDialog
     Friend WithEvents TabControl2 As TabControl
     Friend WithEvents TabPage6 As TabPage
@@ -906,4 +865,19 @@ Partial Class ControlModule
     Friend WithEvents LinkLabel1 As LinkLabel
     Friend WithEvents FolderBrowserDialog1 As FolderBrowserDialog
     Public WithEvents tbmusicdir As TextBox
+    Friend WithEvents MenuStrip1 As MenuStrip
+    Friend WithEvents ConfiguraciónToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents PersonalizarToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents VentanaPrincipalToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents ModoVentanaToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents ModoPantallaCompletaToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents FondoDePantallaToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents PalabrasToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents FuenteYTamañoToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents ColorToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents RelojToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents FuenteYTamañoToolStripMenuItem1 As ToolStripMenuItem
+    Friend WithEvents ColorToolStripMenuItem1 As ToolStripMenuItem
+    Friend WithEvents RadioButton2 As RadioButton
+    Friend WithEvents RadioButton1 As RadioButton
 End Class

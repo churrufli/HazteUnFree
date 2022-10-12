@@ -65,12 +65,12 @@ Public Class ControlModule
         btstartbattle.Enabled = True
         btstartwords.Enabled = True
     End Sub
-    Private Sub btfullscreen_Click(sender As Object, e As EventArgs) Handles btfullscreen.Click
+    Private Sub btfullscreen_Click(sender As Object, e As EventArgs)
         MainModule.WindowState = FormWindowState.Maximized
         MainModule.FormBorderStyle = FormBorderStyle.None
     End Sub
 
-    Private Sub btwindowmode_Click(sender As Object, e As EventArgs) Handles btwindowmode.Click
+    Private Sub btwindowmode_Click(sender As Object, e As EventArgs)
         MainModule.WindowState = FormWindowState.Normal
         MainModule.FormBorderStyle = FormBorderStyle.Sizable
     End Sub
@@ -109,7 +109,7 @@ Public Class ControlModule
         MainModule.GetWord()
     End Sub
 
-    Private Sub btchangetypo_Click(sender As Object, e As EventArgs) Handles btchangewordtypo.Click
+    Private Sub btchangetypo_Click(sender As Object, e As EventArgs)
         If FontDialog1.ShowDialog() <> DialogResult.Cancel Then
             MainModule.LbWord.Font = FontDialog1.Font
             ms.SaveSetting("LbWordFont", FontDialog1.Font.ToString)
@@ -119,7 +119,7 @@ Public Class ControlModule
 
 
 
-    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
+    Private Sub Button2_Click(sender As Object, e As EventArgs)
         Dim result As DialogResult = OpenFileDialog1.ShowDialog()
         If result = DialogResult.OK Then
             Me.BackgroundImage = New System.Drawing.Bitmap(OpenFileDialog1.FileName)
@@ -129,7 +129,7 @@ Public Class ControlModule
         OpenFileDialog1.Dispose()
     End Sub
 
-    Private Sub btwordcolor_Click(sender As Object, e As EventArgs) Handles btwordcolor.Click
+    Private Sub btwordcolor_Click(sender As Object, e As EventArgs)
         If ColorDialog1.ShowDialog() <> DialogResult.Cancel Then
             Dim mycolor = ColorDialog1.Color.ToArgb.ToString
             MainModule.LbWord.ForeColor = Color.FromArgb(mycolor)
@@ -139,7 +139,7 @@ Public Class ControlModule
         ColorDialog1.Dispose()
     End Sub
 
-    Private Sub btchangecountercolor_Click(sender As Object, e As EventArgs) Handles btchangecountercolor.Click
+    Private Sub btchangecountercolor_Click(sender As Object, e As EventArgs)
         If ColorDialog2.ShowDialog() <> DialogResult.Cancel Then
             Dim mycolor = ColorDialog2.Color.ToArgb.ToString
             MainModule.LbCountDown.ForeColor = Color.FromArgb(mycolor)
@@ -148,7 +148,7 @@ Public Class ControlModule
         ColorDialog2.Dispose()
     End Sub
 
-    Private Sub btchangecountertypo_Click(sender As Object, e As EventArgs) Handles btchangecountertypo.Click
+    Private Sub btchangecountertypo_Click(sender As Object, e As EventArgs)
         If FontDialog2.ShowDialog() <> DialogResult.Cancel Then
             MainModule.LbCountDown.Font = FontDialog2.Font
             ms.SaveSetting("lbCountDownFont", FontDialog2.Font.ToString)
@@ -210,16 +210,95 @@ Public Class ControlModule
     End Sub
 
     Private Sub CheckBox2_CheckedChanged(sender As Object, e As EventArgs) Handles chshufflemusic.CheckedChanged
+        chshufflemusic.Text = IIf(chshufflemusic.Checked, "Reproducir pista de audio aleatoria", "Reproducir pista de audio")
+        cbMusicList.Visible = IIf(chshufflemusic.Checked, False, True)
         cbMusicList.Enabled = IIf(chshufflemusic.Checked, False, True)
         Try
             Fn.LoadMusic()
         Catch
         End Try
-
     End Sub
 
     Private Sub PictureBox6_Click(sender As Object, e As EventArgs)
         ms.UpdateSettings("MainBackGroundImage", "")
         Fn.WriteLog("El fondo de pantalla se reestableció a su valor por defecto.")
+    End Sub
+
+    Private Sub ModoVentanaToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ModoVentanaToolStripMenuItem.Click
+        MainModule.WindowState = FormWindowState.Normal
+        MainModule.FormBorderStyle = FormBorderStyle.Sizable
+    End Sub
+
+    Private Sub ModoPantallaCompletaToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ModoPantallaCompletaToolStripMenuItem.Click
+        MainModule.WindowState = FormWindowState.Maximized
+        MainModule.FormBorderStyle = FormBorderStyle.None
+    End Sub
+
+    Private Sub FondoDePantallaToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles FondoDePantallaToolStripMenuItem.Click
+        Dim result As DialogResult = OpenFileDialog1.ShowDialog()
+        If result = DialogResult.OK Then
+            Me.BackgroundImage = New System.Drawing.Bitmap(OpenFileDialog1.FileName)
+            MainModule.BackgroundImage = New System.Drawing.Bitmap(OpenFileDialog1.FileName)
+            ms.SaveSetting("MainBackGroundImage", OpenFileDialog1.FileName)
+        End If
+        OpenFileDialog1.Dispose()
+    End Sub
+
+    Private Sub FuenteYTamañoToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles FuenteYTamañoToolStripMenuItem.Click
+        If FontDialog1.ShowDialog() <> DialogResult.Cancel Then
+            MainModule.LbWord.Font = FontDialog1.Font
+            ms.SaveSetting("LbWordFont", FontDialog1.Font.ToString)
+        End If
+        FontDialog1.Dispose()
+    End Sub
+
+    Private Sub ColorToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ColorToolStripMenuItem.Click
+        If ColorDialog1.ShowDialog() <> DialogResult.Cancel Then
+            Dim mycolor = ColorDialog1.Color.ToArgb.ToString
+            MainModule.LbWord.ForeColor = Color.FromArgb(mycolor)
+            ms.SaveSetting("lbWordColor", mycolor)
+
+        End If
+        ColorDialog1.Dispose()
+    End Sub
+
+    Private Sub ColorToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles ColorToolStripMenuItem1.Click
+        If FontDialog2.ShowDialog() <> DialogResult.Cancel Then
+            MainModule.LbCountDown.Font = FontDialog2.Font
+            ms.SaveSetting("lbCountDownFont", FontDialog2.Font.ToString)
+        End If
+        FontDialog2.Dispose()
+    End Sub
+
+    Private Sub FuenteYTamañoToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles FuenteYTamañoToolStripMenuItem1.Click
+        If FontDialog2.ShowDialog() <> DialogResult.Cancel Then
+            MainModule.LbCountDown.Font = FontDialog2.Font
+            ms.SaveSetting("lbCountDownFont", FontDialog2.Font.ToString)
+        End If
+        FontDialog2.Dispose()
+    End Sub
+
+    Private Sub RadioButton1_CheckedChanged(sender As Object, e As EventArgs) Handles RadioButton1.CheckedChanged
+        'modo automatico cambio de estado
+        If RadioButton1.Checked = True Then
+            TabControl2.TabPages(1).Visible = False
+            RadioButton2.Checked = False
+        Else
+            TabControl2.TabPages(1).Visible = True
+            RadioButton2.Checked = True
+
+        End If
+    End Sub
+
+    Private Sub RadioButton2_CheckedChanged(sender As Object, e As EventArgs) Handles RadioButton2.CheckedChanged
+        'modo manual cambio de estado
+        If RadioButton2.Checked = True Then
+            TabControl2.TabPages(0).Visible = False
+            RadioButton1.Checked = False
+
+        Else
+            TabControl2.TabPages(0).Visible = True
+            RadioButton1.Checked = True
+        End If
     End Sub
 End Class
