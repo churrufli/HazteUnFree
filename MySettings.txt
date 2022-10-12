@@ -1,0 +1,9 @@
+<MainBackGroundImage></MainBackGroundImage>
+<LbWordFont>[Font: Name=Impact, Size=129,75, Units=3, GdiCharSet=0, GdiVerticalFont=False]</LbWordFont>
+<LbWordSize>130pt</LbWordSize>
+<lbWordColor>-16765119</lbWordColor>
+<lbCountDownFont>[Font: Name=Impact, Size=249,75, Units=3, GdiCharSet=0, GdiVerticalFont=False]</lbCountDownFont>
+<lbCountDownFontSize>125</lbCountDownFontSize>
+<cbBattleType>2</cbBattleType>
+<lbCountDownColor>-32768</lbCountDownColor>
+<MusicDirectory>C:\BatallaRAAP</MusicDirectory>
