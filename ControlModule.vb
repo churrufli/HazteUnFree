@@ -14,11 +14,15 @@ Public Class ControlModule
         'Me.Location = New Point(0, 30)
         Fn.SetMySettings()
         MainModule.Show()
-        LoadWords()
         LoadDictionaries()
+        LoadWords()
+        Me.InitStates()
         MainModule.InitStates()
         Fn.LoadMusic()
         Calculate()
+    End Sub
+    Sub InitStates()
+        TbWordsWaittoStart.Text = ms.ReadSetting("TbWordsWaittoStart")
     End Sub
 
     Sub Calculate()
@@ -32,17 +36,57 @@ Public Class ControlModule
             Dim name = Split(Split(fri.Name, "_")(1).ToString, ".txt")(0).ToString
             ListBoxDictionaries.Items.Add(name, IIf(LCase(name) = "general", True, False))
         Next fri
+        Dim checked As Boolean = True   ' Set to True or False, as required.
+        For i As Integer = 0 To ListBoxDictionaries.Items.Count - 1
+            ListBoxDictionaries.SetItemChecked(i, checked)
+        Next
     End Sub
-    Public Shared Sub LoadWords()
-        Try
-            vars.MyWords = My.Computer.FileSystem.ReadAllText(vars.UserDir & "\" & vars.MyWordsFileName)
-            vars.arr = Split(vars.MyWords, vbNewLine)
-        Catch err As Exception
-            Fn.WriteLog(err.Message.ToString)
-        End Try
-        Fn.WriteLog(vars.arr.Count & " cargadas de Palabras - General")
-    End Sub
+    Sub LoadWords()
 
+        Dim MyTotalWords As String = Nothing
+        For i = 0 To ListBoxDictionaries.Items.Count - 1
+            Dim Item As Object = ListBoxDictionaries.Items(i)
+            If ListBoxDictionaries.GetItemChecked(i) Then
+
+                Dim FullText As String
+                Dim a = Item
+                Item = "dic_" & Item & ".txt"
+                Try
+                    FullText = My.Computer.FileSystem.ReadAllText(vars.UserDir & "\" & Item)
+
+                    If IsNothing(MyTotalWords) Then
+                        MyTotalWords = FullText
+                    Else
+                        MyTotalWords = FullText & vbNewLine & MyTotalWords
+                    End If
+
+                    Fn.WriteLog(CountWords(FullText) & " cargadas de Palabras - " & a.ToString)
+
+                Catch err As Exception
+                    Fn.WriteLog(err.Message.ToString)
+                End Try
+            End If
+        Next
+
+        Dim MyTotalWordsArr As String()
+        If InStr(MyTotalWords, ",") > 0 Then
+            MyTotalWords = Replace(MyTotalWords, ",", vbNewLine)
+        End If
+
+        MyTotalWordsArr = Split(MyTotalWords, vbNewLine)
+        vars.arr = MyTotalWordsArr
+
+    End Sub
+    Function CountWords(s)
+        Dim MyTotalWordsArr As String()
+        If InStr(s, ",") > 0 Then
+            s = Replace(s, ",", vbNewLine)
+        End If
+        MyTotalWordsArr = Split(s, vbNewLine)
+        vars.arr = MyTotalWordsArr
+        Return MyTotalWordsArr.Count
+
+    End Function
     Public Sub BtClose_Click(sender As Object, e As EventArgs)
         MainModule.StopBattleFunctions()
         Application.Exit()
@@ -62,8 +106,8 @@ Public Class ControlModule
     Private Sub Button3_Click(sender As Object, e As EventArgs)
         MainModule.Startwords = False
         MainModule.StopBattleFunctions()
-        btstartbattle.Enabled = True
-        btstartwords.Enabled = True
+        BtStartBattle.Enabled = True
+        btStartWords.Enabled = True
     End Sub
     Private Sub btfullscreen_Click(sender As Object, e As EventArgs)
         MainModule.WindowState = FormWindowState.Maximized
@@ -86,10 +130,10 @@ Public Class ControlModule
 
     Private Sub CheckBox1_CheckedChanged(sender As Object, e As EventArgs)
         If chautoinitwords.Checked = True Then
-            btstartwords.Enabled = False
+            btStartWords.Enabled = False
             btNextWord.Enabled = False
         Else
-            btstartwords.Enabled = True
+            btStartWords.Enabled = True
         End If
     End Sub
 
@@ -156,22 +200,20 @@ Public Class ControlModule
         FontDialog2.Dispose()
     End Sub
 
-    Private Sub chautoinitwords_CheckedChanged(sender As Object, e As EventArgs) Handles chautoinitwords.CheckedChanged
-        If chautoinitwords.Checked Then
-            btstartwords.Enabled = False
-        Else
-            btstartwords.Enabled = True
-        End If
-    End Sub
-
-    Private Sub btstartwords_Click_1(sender As Object, e As EventArgs) Handles btstartwords.Click
+    Private Sub btstartwords_Click_1(sender As Object, e As EventArgs) Handles btStartWords.Click
         MainModule.GetWord()
         MainModule.TimerWord.Start()
-        btstartwords.Enabled = False
+        btStartWords.Enabled = False
         btNextWord.Enabled = True
+        StartBattle()
     End Sub
 
-    Private Sub btstartbattle_Click(sender As Object, e As EventArgs) Handles btstartbattle.Click
+    Private Sub btstartbattle_Click(sender As Object, e As EventArgs) Handles BtStartBattle.Click
+        StartBattle()
+    End Sub
+
+    Sub StartBattle()
+        BtStartBattle.Enabled = False
         MainModule.Show()
         If chautoinitwords.Checked = True Then
             MainModule.Startwords = True
@@ -181,21 +223,21 @@ Public Class ControlModule
             btNextWord.Enabled = True
         End If
         vars.StopBattle = False
-        btstartbattle.Enabled = False
-
-        btstartbattle.Enabled = True
         CbBattleType.Enabled = False
         CbDuration.Enabled = False
-        btNextWord.Enabled = True
+        'btNextWord.Enabled = True
+
+        Fn.PlayMusic()
+
         MainModule.SetBattle()
     End Sub
 
-    Private Sub btstopbattle_Click(sender As Object, e As EventArgs) Handles btstopbattle.Click
+    Private Sub btstopbattle_Click(sender As Object, e As EventArgs) Handles btStopBattle.Click
         MainModule.StopBattleFunctions()
 
     End Sub
 
-    Private Sub btNextWord_Click_1(sender As Object, e As EventArgs) Handles btNextWord.Click
+    Private Sub btNextWord_Click_1(sender As Object, e As EventArgs)
         MainModule.GetWord()
 
     End Sub
@@ -210,7 +252,6 @@ Public Class ControlModule
     End Sub
 
     Private Sub CheckBox2_CheckedChanged(sender As Object, e As EventArgs) Handles chshufflemusic.CheckedChanged
-        chshufflemusic.Text = IIf(chshufflemusic.Checked, "Reproducir pista de audio aleatoria", "Reproducir pista de audio")
         cbMusicList.Visible = IIf(chshufflemusic.Checked, False, True)
         cbMusicList.Enabled = IIf(chshufflemusic.Checked, False, True)
         Try
@@ -278,27 +319,81 @@ Public Class ControlModule
         FontDialog2.Dispose()
     End Sub
 
-    Private Sub RadioButton1_CheckedChanged(sender As Object, e As EventArgs) Handles RadioButton1.CheckedChanged
-        'modo automatico cambio de estado
-        If RadioButton1.Checked = True Then
-            TabControl2.TabPages(1).Visible = False
-            RadioButton2.Checked = False
+
+    Private Sub chamanualnitwords_CheckedChanged(sender As Object, e As EventArgs) Handles chamanuailnitwords.CheckedChanged
+
+
+
+        If chautoinitwords.Checked Then
+            btStartWords.Enabled = False
+            btNextWord.Enabled = False
+            chamanuailnitwords.Checked = False
+            BtStartBattle.Enabled = True
         Else
-            TabControl2.TabPages(1).Visible = True
-            RadioButton2.Checked = True
+            btStartWords.Enabled = True
+            btNextWord.Enabled = True
+            chamanuailnitwords.Checked = True
+            BtStartBattle.Enabled = False
+
+        End If
+
+
+    End Sub
+    Private Sub chautoinitwords_CheckedChanged(sender As Object, e As EventArgs) Handles chautoinitwords.CheckedChanged
+        If chautoinitwords.Checked Then
+            btStartWords.Enabled = False
+            btNextWord.Enabled = False
+            chamanuailnitwords.Checked = False
+            BtStartBattle.Enabled = True
+        Else
+            btStartWords.Enabled = True
+            btNextWord.Enabled = True
+            chamanuailnitwords.Checked = True
+            BtStartBattle.Enabled = False
 
         End If
     End Sub
 
-    Private Sub RadioButton2_CheckedChanged(sender As Object, e As EventArgs) Handles RadioButton2.CheckedChanged
-        'modo manual cambio de estado
-        If RadioButton2.Checked = True Then
-            TabControl2.TabPages(0).Visible = False
-            RadioButton1.Checked = False
-
-        Else
-            TabControl2.TabPages(0).Visible = True
-            RadioButton1.Checked = True
+    Private Sub TbWordsWaittoStart_KeyPress_1(sender As Object, e As KeyPressEventArgs) Handles TbWordsWaittoStart.KeyPress
+        If Not Char.IsControl(e.KeyChar) AndAlso Not Char.IsDigit(e.KeyChar) AndAlso (e.KeyChar <> "."c) Then
+            e.Handled = True
         End If
+
+        If (e.KeyChar = "."c) AndAlso ((TryCast(sender, TextBox)).Text.IndexOf("."c) > -1) Then
+            e.Handled = True
+        End If
+    End Sub
+
+    Private Sub TbWordsWaittoStart_TextChanged(sender As Object, e As EventArgs) Handles TbWordsWaittoStart.TextChanged
+        ms.SaveSetting("TbWordsWaittoStart", TbWordsWaittoStart.text)
+    End Sub
+
+    Private Sub ListBoxDictionaries_SelectedValueChanged(sender As Object, e As EventArgs) Handles ListBoxDictionaries.SelectedValueChanged
+        For Each item In ListBoxDictionaries.CheckedItems
+            If ListBoxDictionaries.GetItemCheckState(ListBoxDictionaries.Items.IndexOf(item)) Then
+              
+            End If
+        Next
+    End Sub
+
+    Private Sub ListBoxDictionaries_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ListBoxDictionaries.SelectedIndexChanged
+        LoadWords()
+    End Sub
+
+    Private Sub btNextWord_Click_2(sender As Object, e As EventArgs) Handles btNextWord.Click
+        MainModule.GetWord()
+    End Sub
+
+    Private Sub PictureBox4_Click(sender As Object, e As EventArgs) Handles PictureBox4.Click
+
+    End Sub
+
+    Private Sub chkShuffle_CheckedChanged(sender As Object, e As EventArgs) Handles chkShuffle.CheckedChanged
+
+    End Sub
+
+    Private Sub MostrarPantallaPrincipalToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles MostrarPantallaPrincipalToolStripMenuItem.Click
+        MainModule.Show()
+        Me.Show()
     End Sub
 End Class

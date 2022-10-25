@@ -30,14 +30,10 @@ Partial Class MainModule
         Me.TimerWord = New System.Windows.Forms.Timer(Me.components)
         Me.TimerVisualCountDown = New System.Windows.Forms.Timer(Me.components)
         Me.ToolTip1 = New System.Windows.Forms.ToolTip(Me.components)
-        Me.Panel2 = New System.Windows.Forms.Panel()
-        Me.LbCountDown = New System.Windows.Forms.Label()
         Me.TimerProgressBar = New System.Windows.Forms.Timer(Me.components)
-        Me.LbWord = New System.Windows.Forms.Label()
-        Me.Panel1 = New System.Windows.Forms.Panel()
         Me.ProgressBar1 = New System.Windows.Forms.ProgressBar()
-        Me.Panel2.SuspendLayout()
-        Me.Panel1.SuspendLayout()
+        Me.LbCountDown = New System.Windows.Forms.Label()
+        Me.LbWord = New System.Windows.Forms.Label()
         Me.SuspendLayout()
         '
         'Button2
@@ -49,7 +45,6 @@ Partial Class MainModule
         Me.Button2.Size = New System.Drawing.Size(33, 33)
         Me.Button2.TabIndex = 2
         Me.Button2.UseVisualStyleBackColor = True
-        Me.Button2.Visible = False
         '
         'TimerGetWords
         '
@@ -73,14 +68,15 @@ Partial Class MainModule
         'TimerVisualCountDown
         '
         '
-        'Panel2
+        'TimerProgressBar
         '
-        Me.Panel2.BackColor = System.Drawing.Color.Transparent
-        Me.Panel2.Controls.Add(Me.LbCountDown)
-        Me.Panel2.Location = New System.Drawing.Point(601, 146)
-        Me.Panel2.Name = "Panel2"
-        Me.Panel2.Size = New System.Drawing.Size(696, 404)
-        Me.Panel2.TabIndex = 40
+        '
+        'ProgressBar1
+        '
+        Me.ProgressBar1.Location = New System.Drawing.Point(54, 107)
+        Me.ProgressBar1.Name = "ProgressBar1"
+        Me.ProgressBar1.Size = New System.Drawing.Size(281, 20)
+        Me.ProgressBar1.TabIndex = 37
         '
         'LbCountDown
         '
@@ -90,45 +86,24 @@ Partial Class MainModule
         Me.LbCountDown.BackColor = System.Drawing.Color.Transparent
         Me.LbCountDown.Font = New System.Drawing.Font("Arial", 8.25!)
         Me.LbCountDown.ForeColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(0, Byte), Integer))
-        Me.LbCountDown.Location = New System.Drawing.Point(0, 0)
+        Me.LbCountDown.Location = New System.Drawing.Point(657, 9)
         Me.LbCountDown.Name = "LbCountDown"
-        Me.LbCountDown.Size = New System.Drawing.Size(722, 404)
+        Me.LbCountDown.Size = New System.Drawing.Size(600, 600)
         Me.LbCountDown.TabIndex = 6
         Me.LbCountDown.Text = "00"
         Me.LbCountDown.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        '
-        'TimerProgressBar
-        '
         '
         'LbWord
         '
         Me.LbWord.BackColor = System.Drawing.Color.Transparent
         Me.LbWord.Font = New System.Drawing.Font("Impact", 130.0!)
         Me.LbWord.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(65, Byte), Integer))
-        Me.LbWord.Location = New System.Drawing.Point(0, 0)
+        Me.LbWord.Location = New System.Drawing.Point(18, 604)
         Me.LbWord.Name = "LbWord"
-        Me.LbWord.Size = New System.Drawing.Size(1900, 350)
+        Me.LbWord.Size = New System.Drawing.Size(1900, 290)
         Me.LbWord.TabIndex = 3
         Me.LbWord.Text = "BatallaRAAP"
         Me.LbWord.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        '
-        'Panel1
-        '
-        Me.Panel1.BackColor = System.Drawing.Color.Transparent
-        Me.Panel1.Controls.Add(Me.LbWord)
-        Me.Panel1.ForeColor = System.Drawing.Color.Transparent
-        Me.Panel1.Location = New System.Drawing.Point(0, 600)
-        Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(1900, 350)
-        Me.Panel1.TabIndex = 39
-        '
-        'ProgressBar1
-        '
-        Me.ProgressBar1.Location = New System.Drawing.Point(54, 107)
-        Me.ProgressBar1.Name = "ProgressBar1"
-        Me.ProgressBar1.Size = New System.Drawing.Size(281, 20)
-        Me.ProgressBar1.TabIndex = 37
-        Me.ProgressBar1.Visible = False
         '
         'MainModule
         '
@@ -138,8 +113,8 @@ Partial Class MainModule
         Me.BackgroundImage = CType(resources.GetObject("$this.BackgroundImage"), System.Drawing.Image)
         Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
         Me.ClientSize = New System.Drawing.Size(1904, 1041)
-        Me.Controls.Add(Me.Panel1)
-        Me.Controls.Add(Me.Panel2)
+        Me.Controls.Add(Me.LbWord)
+        Me.Controls.Add(Me.LbCountDown)
         Me.Controls.Add(Me.ProgressBar1)
         Me.Controls.Add(Me.Button3)
         Me.Controls.Add(Me.Button2)
@@ -147,8 +122,6 @@ Partial Class MainModule
         Me.ShowIcon = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Main Screen - BatallaRAPP"
-        Me.Panel2.ResumeLayout(False)
-        Me.Panel1.ResumeLayout(False)
         Me.ResumeLayout(False)
 
     End Sub
@@ -158,10 +131,8 @@ Partial Class MainModule
     Friend WithEvents TimerWord As Timer
     Friend WithEvents TimerVisualCountDown As Timer
     Friend WithEvents ToolTip1 As ToolTip
-    Friend WithEvents Panel2 As Panel
     Friend WithEvents TimerProgressBar As Timer
-    Public WithEvents LbWord As Label
-    Friend WithEvents Panel1 As Panel
-    Public WithEvents LbCountDown As Label
     Friend WithEvents ProgressBar1 As ProgressBar
+    Public WithEvents LbCountDown As Label
+    Public WithEvents LbWord As Label
 End Class

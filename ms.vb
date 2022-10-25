@@ -31,6 +31,7 @@ Public Class ms
         t = t & AddSetting("lbCountDownColor", "192; 64; 0")
         t = t & AddSetting("cbBattleType", "2")
         t = t & AddSetting("MusicDirectory", IO.Directory.GetCurrentDirectory)
+        t = t & AddSetting("TbWordsWaittoStart", "3")
         File.Create(vars.MySettingsFileName).Dispose()
         File.WriteAllText(vars.MySettingsFileName, t)
     End Sub
@@ -43,7 +44,10 @@ Public Class ms
         WriteIfNotExistSetting("lbCountDownFontSize", "125")
         WriteIfNotExistSetting("lbCountDownColor", "192; 64; 0")
         WriteIfNotExistSetting("cbBattleType", "2")
+        WriteIfNotExistSetting("cbBattleType", "2")
         WriteIfNotExistSetting("MusicDirectory", IO.Directory.GetCurrentDirectory)
+        WriteIfNotExistSetting("TbWordsWaittoStart", "3")
+
     End Sub
 
     Public Shared Function ReadSetting(setting)
@@ -77,6 +81,8 @@ Public Class ms
         Dim mylog As String = My.Computer.FileSystem.ReadAllText(vars.UserDir & vars.MySettingsFileName)
         Dim previousmyvalue = Fn.GetDelimitedText(mylog, "<" & setting & ">", "</" & setting & ">")
         Dim newlog As String
+        If previousmyvalue = myvalue Then Exit Sub
+
         If previousmyvalue <> Nothing Then
             newlog = Replace(mylog, "<" & setting & ">" & previousmyvalue & "</" & setting & ">",
                              "<" & setting & ">" & myvalue & "</" & setting & ">")

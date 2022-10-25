@@ -9,8 +9,12 @@ Public Class Fn
         ms.LoadSettings()
 
         If ms.ReadSetting("MainBackGroundImage") <> Nothing Then
-            ControlModule.BackgroundImage = New System.Drawing.Bitmap(ms.ReadSetting("MainBackGroundImage").ToString)
-            MainModule.BackgroundImage = ControlModule.BackgroundImage
+            Try
+                ControlModule.BackgroundImage = New System.Drawing.Bitmap(ms.ReadSetting("MainBackGroundImage").ToString)
+                MainModule.BackgroundImage = ControlModule.BackgroundImage
+            Catch
+                WriteLog("No se encontró la imagen de fondo " & ms.ReadSetting("MainBackGroundImage").ToString)
+            End Try
         End If
 
         If ms.ReadSetting("lbWordColor") <> Nothing Then
@@ -35,8 +39,23 @@ Public Class Fn
             ControlModule.tbmusicdir.Text = vars.UserDir
         End If
 
-        InitMusic()
+        If ms.ReadSetting("lbCountDownPositionX") <> Nothing And ms.ReadSetting("lbCountDownPositionY") <> Nothing Then
+            MainModule.LbCountDown.Location = New Point(CInt(ms.ReadSetting("lbCountDownPositionX")), CInt(ms.ReadSetting("lbCountDownPositionY")))
+        End If
+        If ms.ReadSetting("lbWordPositionX") <> Nothing And ms.ReadSetting("lbWordPositionY") <> Nothing Then
+            MainModule.LbWord.Location = New Point(CInt(ms.ReadSetting("lbWordPositionX")), CInt(ms.ReadSetting("lbWordPositionY")))
+        End If
 
+        If ms.ReadSetting("MainWidth") <> Nothing Then
+            MainModule.Width = ms.ReadSetting("MainWidth")
+        End If
+
+        If ms.ReadSetting("MainHeight") <> Nothing Then
+            MainModule.Height = ms.ReadSetting("MainWidth")
+        End If
+
+
+        InitMusic()
     End Sub
 
 
@@ -160,8 +179,12 @@ Public Class Fn
             Fn.Shuffle(vars.files)
         End If
         Dim dir = ms.ReadSetting("MusicDirectory")
+        Dim i As Integer = 0
         For Each u In vars.files
-            Dim n = u & " (" & TimeSpan.FromSeconds(Math.Round(GetMediaDuration(u))).ToString("mm\:ss") & ")"
+            i = i + 1
+            Dim n = u
+            'esto funciona pero ralentiza el tiempo de carga de las batallas
+            'n = n & " (" & TimeSpan.FromSeconds(Math.Round(GetMediaDuration(u))).ToString("mm\:ss") & ")"
             n = Replace(n, ".mp3", "")
             n = Replace(n, ".wav", "")
             n = Replace(n, dir & "\", Nothing)
@@ -170,6 +193,10 @@ Public Class Fn
         ControlModule.cbMusicList.DataSource = New BindingSource(comboSource, Nothing)
         ControlModule.cbMusicList.DisplayMember = "Value"
         ControlModule.cbMusicList.ValueMember = "Key"
+        WriteLog(i & " instrumentales cargadas")
+        If InStr(ControlModule.chshufflemusic.Text, "(") < 0 Then
+            ControlModule.chshufflemusic.Text = ControlModule.chshufflemusic.Text & (" (" & i & " instrumentales)")
+        End If
 
     End Sub
     Public Shared Sub PlayMusic()
@@ -267,7 +294,6 @@ Public Class Fn
             int1 = InStr(name, ",") ' Finds the location of the text , in the string
             name = Microsoft.VisualBasic.Left(name, int1 - 1) ' returns the string with the part after the , chopped off
         End If
-
 
         ' Find Font Size
         int1 = InStr(s, "Size=") ' find the location of the text Size= in the string

@@ -56,6 +56,9 @@ Public Class MainModule
         End Select
 
         PlayBattle(Mode, ControlModule.TbWordsWaittoStart.Text, Nothing, Me.CountDownFrom)
+
+
+
     End Sub
 
     Function PlayBattle(Mode, WordswaittoStart, Song, duration)
@@ -76,7 +79,7 @@ Public Class MainModule
         Dim settimer As Boolean = False
 
         TargetDT = DateTime.Now.Add(CountDownFrom)
-        ControlModule.btstopbattle.Enabled = True
+        ControlModule.btStopBattle.Enabled = True
         TimerVisualCountDown.Interval = CInt(Mode + 1)
         TimerVisualCountDown.Start()
         Dim a = CInt(CountDownFrom.TotalSeconds + WordswaittoStart)
@@ -189,14 +192,14 @@ Public Class MainModule
 
     Sub PlayBattleV2(Mode, WordswaittoStart, Song, duration)
         '///////////////////////////////////////
-
+        LbCountDown.Visible = True
         LbWord.Text = ""
 
 
         Dim settimer As Boolean = False
 
         TargetDT = DateTime.Now.Add(CountDownFrom)
-        ControlModule.btstopbattle.Enabled = True
+        ControlModule.btStopBattle.Enabled = True
 
         'esto llama a la funcion tick y el contador del tiempo
         TimerVisualCountDown.Interval = (900)
@@ -262,7 +265,7 @@ Public Class MainModule
 
             'PROGRESS BAR
             TimerProgressBar.Interval = 100
-            ProgressBar1.Maximum = CInt(TimerWord.Interval / 10) - 10
+            ProgressBar1.Maximum = CInt(TimerWord.Interval / 10)
             ProgressBar1.Minimum = 10
             TimerProgressBar.Enabled = True
             TimerProgressBar.Start()
@@ -272,7 +275,7 @@ Public Class MainModule
 
 
         'Fn.LoadMusic()
-        Fn.PlayMusic()
+
     End Sub
 
     Private Sub TimerWord_Tick(sender As Object, e As EventArgs) Handles TimerWord.Tick
@@ -282,21 +285,31 @@ Public Class MainModule
     End Sub
 
     Sub GetWord()
-        If ControlModule.CbBattleType.SelectedIndex <> 3 Then
-            LbWord.Text = UCase(vars.arr(CountWords).ToString)
-        Else
-            LbWord.Text = UCase(vars.arr4words(CountWords).ToString)
-        End If
-        CountWords = CountWords + 1
+        Try
+            If ControlModule.CbBattleType.SelectedIndex <> 3 Then
+                LbWord.Text = UCase(vars.arr(CountWords).ToString)
+            Else
+                LbWord.Text = UCase(vars.arr4words(CountWords).ToString)
+            End If
+            CountWords = CountWords + 1
+        Catch
+            CountWords = 0
+            Fn.WriteLog("Repitiendo palabras, se han mostrado todas.")
+        End Try
+
     End Sub
 
     Private Sub TimerProgressBar_Tick(sender As Object, e As EventArgs) Handles TimerProgressBar.Tick
-        ProgressBar1.Value = ProgressBar1.Value + 10
-        If ProgressBar1.Value >= ProgressBar1.Maximum Then
-            ProgressBar1.Value = 10
-            'TimerProgressBar.Enabled = False
-            'ProgressBar1.Refresh()
-        End If
+        Try
+            ProgressBar1.Value = ProgressBar1.Value + 10
+            If ProgressBar1.Value >= ProgressBar1.Maximum Then
+                ProgressBar1.Value = 10
+                'TimerProgressBar.Enabled = False
+                'ProgressBar1.Refresh()
+            End If
+        Catch
+        End Try
+
     End Sub
 
     Sub CheckIfStartwords(espera, b)
@@ -335,13 +348,13 @@ Public Class MainModule
         MainModule.TimerWord.Stop()
         Fn.Wait(2)
         vars.Player.controls.stop()
-        ControlModule.btstartbattle.Enabled = True
+        ControlModule.BtStartBattle.Enabled = True
         ControlModule.Enabled = True
-        ControlModule.btstartbattle.Enabled = True
-        ControlModule.btstartwords.Enabled = True
+        ControlModule.BtStartBattle.Enabled = True
+        ControlModule.btStartWords.Enabled = True
         ControlModule.CbBattleType.Enabled = True
         ControlModule.CbDuration.Enabled = True
-        ControlModule.btstopbattle.Enabled = True
+        ControlModule.btStopBattle.Enabled = True
         CountWords = 0
     End Sub
 
@@ -374,6 +387,9 @@ Public Class MainModule
 
     Private Sub Main_FormClosing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
         StopBattleFunctions()
+        MsgBox("guardar medidas de la ventana")
+        ms.SaveSetting("MainWidth", Me.Width)
+        ms.SaveSetting("MainHeight", Me.Height)
     End Sub
 
     Private Sub Button1_Click(sender As Object, e As EventArgs)
@@ -444,12 +460,15 @@ Public Class MainModule
     Private Sub LbCountDown_MouseMove(sender As Object, e As MouseEventArgs) Handles LbCountDown.MouseMove
         If dragging = True Then
             LbCountDown.Location = New Point(LbCountDown.Location.X + e.X - beginX, LbCountDown.Location.Y + e.Y - beginY)
-            Me.Refresh()
+            'Me.Refresh()
         End If
     End Sub
 
     Private Sub LbCountDown_MouseUp(sender As Object, e As MouseEventArgs) Handles LbCountDown.MouseUp
         dragging = False
+        ms.SaveSetting("LbCountDownPositionX", sender.left)
+        ms.SaveSetting("LbCountDownPositionY", sender.top)
+        Fn.WriteLog("posición del contador guardada.")
     End Sub
 
     Private Sub LbCountDown_DragDrop(sender As Object, e As DragEventArgs) Handles LbCountDown.DragDrop
@@ -460,23 +479,29 @@ Public Class MainModule
         dragging = True
         beginX = e.X
         beginY = e.Y
+
+        If e.Button = MouseButtons.Right Then
+
+        End If
     End Sub
 
     Private Sub LbWord_MouseMove(sender As Object, e As MouseEventArgs) Handles LbWord.MouseMove
         If dragging = True Then
             LbWord.Location = New Point(LbWord.Location.X + e.X - beginX, LbWord.Location.Y + e.Y - beginY)
-            Me.Refresh()
+            'Me.Refresh()
         End If
     End Sub
 
     Private Sub LbWord_MouseUp(sender As Object, e As MouseEventArgs) Handles LbWord.MouseUp
         dragging = False
+        ms.SaveSetting("LbWordPositionX", sender.left)
+        ms.SaveSetting("LbWordPositionY", sender.top)
+        Fn.WriteLog("posición de la palabra guardada.")
     End Sub
 
     Private Sub LbWord_DragDrop(sender As Object, e As DragEventArgs) Handles LbWord.DragDrop
         LbWord.Location = New Point(LbWord.Location.X + e.X - beginX, LbWord.Location.Y + e.Y - beginY)
     End Sub
-
 
 
 End Class
