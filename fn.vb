@@ -54,7 +54,6 @@ Public Class Fn
             MainModule.Height = ms.ReadSetting("MainWidth")
         End If
 
-
         InitMusic()
     End Sub
 
@@ -181,6 +180,7 @@ Public Class Fn
         Dim dir = ms.ReadSetting("MusicDirectory")
         Dim i As Integer = 0
         For Each u In vars.files
+
             i = i + 1
             Dim n = u
             'esto funciona pero ralentiza el tiempo de carga de las batallas
@@ -188,7 +188,12 @@ Public Class Fn
             n = Replace(n, ".mp3", "")
             n = Replace(n, ".wav", "")
             n = Replace(n, dir & "\", Nothing)
-            comboSource.Add(u, n)
+            If n <> "horn" Then
+                comboSource.Add(u, n)
+            Else
+                n = n
+            End If
+
         Next
         ControlModule.cbMusicList.DataSource = New BindingSource(comboSource, Nothing)
         ControlModule.cbMusicList.DisplayMember = "Value"

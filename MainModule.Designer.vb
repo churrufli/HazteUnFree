@@ -73,32 +73,31 @@ Partial Class MainModule
         '
         'ProgressBar1
         '
-        Me.ProgressBar1.Location = New System.Drawing.Point(54, 107)
+        Me.ProgressBar1.Location = New System.Drawing.Point(550, 977)
         Me.ProgressBar1.Name = "ProgressBar1"
-        Me.ProgressBar1.Size = New System.Drawing.Size(281, 20)
+        Me.ProgressBar1.Size = New System.Drawing.Size(775, 10)
         Me.ProgressBar1.TabIndex = 37
+        Me.ProgressBar1.Visible = False
         '
         'LbCountDown
         '
-        Me.LbCountDown.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.LbCountDown.BackColor = System.Drawing.Color.Transparent
-        Me.LbCountDown.Font = New System.Drawing.Font("Arial", 8.25!)
+        Me.LbCountDown.Font = New System.Drawing.Font("Arial", 50.0!)
         Me.LbCountDown.ForeColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(0, Byte), Integer))
-        Me.LbCountDown.Location = New System.Drawing.Point(657, 9)
+        Me.LbCountDown.Location = New System.Drawing.Point(655, 84)
         Me.LbCountDown.Name = "LbCountDown"
-        Me.LbCountDown.Size = New System.Drawing.Size(600, 600)
+        Me.LbCountDown.Size = New System.Drawing.Size(600, 470)
         Me.LbCountDown.TabIndex = 6
-        Me.LbCountDown.Text = "00"
+        Me.LbCountDown.Text = "0"
         Me.LbCountDown.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'LbWord
         '
         Me.LbWord.BackColor = System.Drawing.Color.Transparent
+        Me.LbWord.Cursor = System.Windows.Forms.Cursors.Hand
         Me.LbWord.Font = New System.Drawing.Font("Impact", 130.0!)
         Me.LbWord.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(65, Byte), Integer))
-        Me.LbWord.Location = New System.Drawing.Point(18, 604)
+        Me.LbWord.Location = New System.Drawing.Point(-72, 603)
         Me.LbWord.Name = "LbWord"
         Me.LbWord.Size = New System.Drawing.Size(1900, 290)
         Me.LbWord.TabIndex = 3
@@ -113,8 +112,8 @@ Partial Class MainModule
         Me.BackgroundImage = CType(resources.GetObject("$this.BackgroundImage"), System.Drawing.Image)
         Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
         Me.ClientSize = New System.Drawing.Size(1904, 1041)
-        Me.Controls.Add(Me.LbWord)
         Me.Controls.Add(Me.LbCountDown)
+        Me.Controls.Add(Me.LbWord)
         Me.Controls.Add(Me.ProgressBar1)
         Me.Controls.Add(Me.Button3)
         Me.Controls.Add(Me.Button2)

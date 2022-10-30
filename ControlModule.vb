@@ -228,8 +228,12 @@ Public Class ControlModule
         'btNextWord.Enabled = True
 
         Fn.PlayMusic()
+        If chkminimize.Checked Then
+            Me.WindowState = FormWindowState.Minimized
+        End If
 
         MainModule.SetBattle()
+
     End Sub
 
     Private Sub btstopbattle_Click(sender As Object, e As EventArgs) Handles btStopBattle.Click
@@ -395,5 +399,14 @@ Public Class ControlModule
     Private Sub MostrarPantallaPrincipalToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles MostrarPantallaPrincipalToolStripMenuItem.Click
         MainModule.Show()
         Me.Show()
+    End Sub
+
+    Private Sub PosiciónToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles PosiciónToolStripMenuItem.Click
+        MsgBox("En la pantalla principal, situa el ratón en la zona de las palabras y arrastra y suelta para cambiar su posición en la pantalla.", MsgBoxStyle.Information)
+    End Sub
+
+    Private Sub PosiciónToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles PosiciónToolStripMenuItem1.Click
+        MsgBox("En la pantalla principal, situa el ratón en la zona del reloj y arrastra y suelta para cambiar su posición en la pantalla.", MsgBoxStyle.Information)
+
     End Sub
 End Class

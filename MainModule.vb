@@ -179,6 +179,7 @@ Public Class MainModule
                 End If
 
                 If vars.StopBattle Then
+                    CenterItems()
                     StopBattleFunctions()
                     vars.StopBattle = False
                     Exit Function
@@ -381,13 +382,17 @@ Public Class MainModule
         If ts.TotalMilliseconds <= 0 Then
             TimerVisualCountDown.Stop()
 
+            Dim wplayer As WMPLib.WindowsMediaPlayer = New WMPLib.WindowsMediaPlayer()
+            wplayer.URL = "horn.mp3"
+            wplayer.controls.play()
+            wplayer = Nothing
+
             StopBattleFunctions()
         End If
     End Sub
 
     Private Sub Main_FormClosing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
         StopBattleFunctions()
-        MsgBox("guardar medidas de la ventana")
         ms.SaveSetting("MainWidth", Me.Width)
         ms.SaveSetting("MainHeight", Me.Height)
     End Sub
@@ -443,7 +448,7 @@ Public Class MainModule
         Dim i = 0
         While i < 1000000
             sacapalabra()
-            Fn.Wait(5)
+            Fn.Wait(2)
             i = i + 1
         End While
     End Sub
