@@ -2,7 +2,7 @@
 
 
 ## Introducción
-¿Te gustaría organizar una Batalla de Gallos en tu aula, con tu asociación o pequeño evento y no sabes cómo hacerlo técnicamente? ¿Quieres mostrar por una pantalla el cronómetro y las palabras? BatallaRAAP nace como un software sencillo y a la vez práctico para cumplir con el objetivo.
+¿Te gustaría **organizar una Batalla de Gallos**  en tu aula, con tu asociación o pequeño evento y **no sabes cómo hacerlo técnicamente**? ¿Quieres mostrar por una pantalla el cronómetro y las palabras? BatallaRAAP nace como un software sencillo y a la vez práctico para cumplir con el objetivo.
 
 Además es personalizable; podrás cambiar el fondo de pantalla, el formato del texto de la pantalla principal. Podrás usar tus instrumentales y añadir tus propias palabras para la batalla. Es una primera versión y puede ser que le haga mejoras más adelante, pero por ahora quizás puede valerte. Molando. Lee este documento para conocer el funcionamiento o comienza a usarlo por tu cuenta para entenderlo y consultalo si te surgen dudas.
 
@@ -21,13 +21,13 @@ El fondo de pantalla así como la fuente color y tamaño del contador y palabras
 
 ## Ventana de Control
 
-** Personalización
+**Personalización
 Pantalla principal:
 Ventana** 
  elige entre diferentes modos de ventana para la pantalla principal.
-** Fondo de pantalla** 
+**Fondo de pantalla** 
 Elige un fondo de pantalla. El programa viene con un fondo de pantalla por defecto. Si lo deseas, usa el archivo incluido BG.jpg del programa como plantilla para crear el tuyo personalizado y elígelo como fondo.
-Cambia la ** tipografía** , tamaño y formato del reloj. También el color. Puedes arrastrar y soltar los elementos de la pantalla principal para acomodar su posición a tu diseño.
+Cambia la **tipografía** , tamaño y formato del reloj. También el color. Puedes arrastrar y soltar los elementos de la pantalla principal para acomodar su posición a tu diseño.
 
 ## Formato de batalla
 Elige entre los diferentes formatos de batalla 
