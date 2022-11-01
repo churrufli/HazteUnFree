@@ -1,6 +1,8 @@
-﻿Imports VB = Microsoft.VisualBasic
+﻿
 Imports System.IO
 Imports System.Text.RegularExpressions
+Imports WMPLib
+Imports VB = Microsoft.VisualBasic
 
 Public Class Fn
     Public Shared Sub SetMySettings()
@@ -10,7 +12,7 @@ Public Class Fn
 
         If ms.ReadSetting("MainBackGroundImage") <> Nothing Then
             Try
-                ControlModule.BackgroundImage = New System.Drawing.Bitmap(ms.ReadSetting("MainBackGroundImage").ToString)
+                ControlModule.BackgroundImage = New Bitmap(ms.ReadSetting("MainBackGroundImage").ToString)
                 MainModule.BackgroundImage = ControlModule.BackgroundImage
             Catch
                 WriteLog("No se encontró la imagen de fondo " & ms.ReadSetting("MainBackGroundImage").ToString)
@@ -22,7 +24,7 @@ Public Class Fn
         End If
 
         If ms.ReadSetting("lbWordFont") <> Nothing Then
-            MainModule.LbWord.Font = Fn.GetFontByString(ms.ReadSetting("lbWordFont"))
+            MainModule.LbWord.Font = GetFontByString(ms.ReadSetting("lbWordFont"))
         End If
 
         If ms.ReadSetting("lbCountDownColor") <> Nothing Then
@@ -30,7 +32,7 @@ Public Class Fn
         End If
 
         If ms.ReadSetting("lbCountDownFont") <> Nothing Then
-            MainModule.LbCountDown.Font = Fn.GetFontByString(ms.ReadSetting("lbCountDownFont"))
+            MainModule.LbCountDown.Font = GetFontByString(ms.ReadSetting("lbCountDownFont"))
         End If
 
         If ms.ReadSetting("MusicDirectory") <> Nothing Then
@@ -40,10 +42,12 @@ Public Class Fn
         End If
 
         If ms.ReadSetting("lbCountDownPositionX") <> Nothing And ms.ReadSetting("lbCountDownPositionY") <> Nothing Then
-            MainModule.LbCountDown.Location = New Point(CInt(ms.ReadSetting("lbCountDownPositionX")), CInt(ms.ReadSetting("lbCountDownPositionY")))
+            MainModule.LbCountDown.Location = New Point(CInt(ms.ReadSetting("lbCountDownPositionX")),
+                                                        CInt(ms.ReadSetting("lbCountDownPositionY")))
         End If
         If ms.ReadSetting("lbWordPositionX") <> Nothing And ms.ReadSetting("lbWordPositionY") <> Nothing Then
-            MainModule.LbWord.Location = New Point(CInt(ms.ReadSetting("lbWordPositionX")), CInt(ms.ReadSetting("lbWordPositionY")))
+            MainModule.LbWord.Location = New Point(CInt(ms.ReadSetting("lbWordPositionX")),
+                                                   CInt(ms.ReadSetting("lbWordPositionY")))
         End If
 
         If ms.ReadSetting("MainWidth") <> Nothing Then
@@ -54,10 +58,29 @@ Public Class Fn
             MainModule.Height = ms.ReadSetting("MainWidth")
         End If
 
+        If ms.ReadSetting("chkHorn") <> Nothing Then
+            If ms.ReadSetting("chkHorn") = "1" Then
+                ControlModule.chkHorn.Checked = True
+            Else
+                ControlModule.chkHorn.Checked = False
+            End If
+        End If
+        If ms.ReadSetting("chkMinimize") <> Nothing Then
+            If ms.ReadSetting("chkMinimize") = "1" Then
+                ControlModule.chkMinimize.Checked = True
+            Else
+                ControlModule.chkMinimize.Checked = False
+            End If
+        End If
+        If ms.ReadSetting("chPlayMusic") <> Nothing Then
+            If ms.ReadSetting("chPlayMusic") = "1" Then
+                ControlModule.chPlayMusic.Checked = True
+            Else
+                ControlModule.chPlayMusic.Checked = False
+            End If
+        End If
         InitMusic()
     End Sub
-
-
 
 
     Public Shared Function ColourFromData(s As String) As Color
@@ -78,10 +101,12 @@ Public Class Fn
 
         ' Get the names of the known colours.
         'TODO: If this function is called frequently, consider creating allColours as a variable with a larger scope.
-        Dim allColours = [Enum].GetNames(GetType(System.Drawing.KnownColor))
+        Dim allColours = [Enum].GetNames(GetType(KnownColor))
 
         ' Attempt a case-insensitive match to the known colours.
-        Dim nameOfColour = allColours.FirstOrDefault(Function(c) String.Compare(c, colourName, StringComparison.OrdinalIgnoreCase) = 0)
+        Dim nameOfColour =
+                allColours.FirstOrDefault(
+                    Function(c) String.Compare(c, colourName, StringComparison.OrdinalIgnoreCase) = 0)
 
         If Not String.IsNullOrEmpty(nameOfColour) Then
             Return Color.FromName(nameOfColour)
@@ -104,24 +129,23 @@ Public Class Fn
                 Return fallbackColour
             End If
 
-            Return System.Drawing.Color.FromArgb(a, r, g, b)
+            Return Color.FromArgb(a, r, g, b)
 
         End If
 
         Return fallbackColour
-
     End Function
-    Public Shared Function ImageToString(ByVal Img As Image)
+
+    Public Shared Function ImageToString(Img As Image)
         Dim imgConverter As New ImageConverter()
         Dim imgBytes As Byte() = imgConverter.ConvertTo(Img, GetType(Byte()))
         Return Convert.ToBase64String(imgBytes)
     End Function
+
     Public Shared Function FindIt(total As String, first As String, last As String) As String
         Return GetDelimitedText(total, first, last)
         Exit Function
     End Function
-
-
 
 
     'Public Shared Sub SaveSetting(setting, value)
@@ -136,15 +160,18 @@ Public Class Fn
 
 
     Public Shared Sub WriteLog(msg)
-        ControlModule.tbUserLog.SelectedText = "- " & msg & vbCrLf
-        ControlModule.tbUserLog.SelectionStart = ControlModule.tbUserLog.Text.Length
-        ControlModule.tbUserLog.ScrollToCaret()
+        Try
+            ControlModule.tbUserLog.SelectedText = "- " & msg & vbCrLf
+            ControlModule.tbUserLog.SelectionStart = ControlModule.tbUserLog.Text.Length
+            ControlModule.tbUserLog.ScrollToCaret()
+        Catch
+        End Try
     End Sub
 
     Public Shared Sub Shuffle(items As String())
         Dim j As Int32
         Dim temp As String
-        For n As Int32 = items.Length - 1 To 0 Step -1
+        For n As Int32 = items.Length - 1 To 0 Step - 1
             j = MainModule.rnd.Next(0, n + 1)
             temp = items(n)
             items(n) = items(j)
@@ -160,25 +187,28 @@ Public Class Fn
         My.Settings.Save()
         Alert("Configuración guardada.")
     End Sub
+
     Public Shared Sub InitMusic()
         Dim dir = ms.ReadSetting("MusicDirectory")
         If dir = Nothing Then Exit Sub
-        vars.files = Directory.GetFiles(dir, "*.*").Where(Function(file) file.ToLower().EndsWith(".mp3") OrElse file.ToLower().EndsWith(".wav")).ToArray()
+        vars.files =
+            Directory.GetFiles(dir, "*.*").Where(
+                Function(file) file.ToLower().EndsWith(".mp3") OrElse file.ToLower().EndsWith(".wav")).ToArray()
     End Sub
 
 
     Public Shared Sub LoadMusic()
-        If ControlModule.chPlayMusic.Checked Then Exit Sub
+        If ControlModule.chPlayMusic.Checked = False Then Exit Sub
         Dim comboSource As New Dictionary(Of String, String)()
         'Dim dir = ms.ReadSetting("MusicDirectory")
         'If dir = Nothing Then Exit Sub
         'vars.files = Directory.GetFiles(dir, "*.*").Where(Function(file) file.ToLower().EndsWith(".mp3") OrElse file.ToLower().EndsWith(".wav")).ToArray()
 
         If ControlModule.chshufflemusic.Checked Then
-            Fn.Shuffle(vars.files)
+            Shuffle(vars.files)
         End If
         Dim dir = ms.ReadSetting("MusicDirectory")
-        Dim i As Integer = 0
+        Dim i = 0
         For Each u In vars.files
 
             i = i + 1
@@ -202,10 +232,10 @@ Public Class Fn
         If InStr(ControlModule.chshufflemusic.Text, "(") < 0 Then
             ControlModule.chshufflemusic.Text = ControlModule.chshufflemusic.Text & (" (" & i & " instrumentales)")
         End If
-
     End Sub
-    Public Shared Sub PlayMusic()
-        If ControlModule.chPlayMusic.Checked Then Exit Sub
+
+    Public Shared Function PlayMusic()
+        If ControlModule.chPlayMusic.Checked = False Then Exit Function
 
         If ControlModule.chshufflemusic.Checked Then
             LoadMusic()
@@ -220,16 +250,16 @@ Public Class Fn
             Vidhhmmss = TimeSpan.FromSeconds(Math.Round(GetMediaDuration(u))).ToString("mm\:ss") ' Format hh:mm:ss
             MainModule.CountDownFrom = TimeSpan.FromSeconds(VidSecs)
         End If
-        Fn.WriteLog("Reproduciendo " & Replace(u, IO.Directory.GetCurrentDirectory() & "\", ""))
+        WriteLog("Reproduciendo " & Replace(u, Directory.GetCurrentDirectory() & "\", ""))
+        Return VidSecs
+    End Function
 
-    End Sub
-
-    Public Shared Sub Wait(ByVal seconds As Single)
+    Public Shared Sub Wait(seconds As Single)
         If vars.StopBattle <> True Then
             Static start As Single
             start = VB.Timer()
             Do While VB.Timer() < start + seconds
-                System.Windows.Forms.Application.DoEvents()
+                Application.DoEvents()
             Loop
         Else
             Exit Sub
@@ -279,7 +309,7 @@ Public Class Fn
     'End Function
 
 
-    Public Shared Function GetFontByString(ByVal s As String) As Font
+    Public Shared Function GetFontByString(s As String) As Font
         ' A function that returnes a font from the given string
         Dim int1 As Integer
         Dim name As String
@@ -295,9 +325,9 @@ Public Class Fn
         If int1 = 0 Then ' Checks if this has failed
             name = "Courier New" ' Puts the default font name into the name string variable
         Else
-            name = Microsoft.VisualBasic.Mid(s, int1 + 5) ' returns the string with the part before Name= chopped off
+            name = Mid(s, int1 + 5) ' returns the string with the part before Name= chopped off
             int1 = InStr(name, ",") ' Finds the location of the text , in the string
-            name = Microsoft.VisualBasic.Left(name, int1 - 1) ' returns the string with the part after the , chopped off
+            name = Left(name, int1 - 1) ' returns the string with the part after the , chopped off
         End If
 
         ' Find Font Size
@@ -305,9 +335,9 @@ Public Class Fn
         If int1 = 0 Then ' Checks if this has failed
             size = "8" ' Puts the default font size into the size string variable
         Else
-            size = Microsoft.VisualBasic.Mid(s, int1 + 5) ' returns the string with the part before Size= chopped off
+            size = Mid(s, int1 + 5) ' returns the string with the part before Size= chopped off
             int1 = InStr(size, ",") ' Finds the location of the text , in the string
-            size = Microsoft.VisualBasic.Left(size, int1 - 1) ' returns the string with the part after the , chopped off
+            size = Left(size, int1 - 1) ' returns the string with the part after the , chopped off
         End If
 
         ' Find Font Units
@@ -315,9 +345,9 @@ Public Class Fn
         If int1 = 0 Then ' Checks if this has failed
             unit = "3" ' Puts the default font units into the unit string variable
         Else
-            unit = Microsoft.VisualBasic.Mid(s, int1 + 6) ' returns the string with the part before Units= chopped off
+            unit = Mid(s, int1 + 6) ' returns the string with the part before Units= chopped off
             int1 = InStr(unit, ",") ' Finds the location of the text , in the string
-            unit = Microsoft.VisualBasic.Left(unit, int1 - 1) ' returns the string with the part after the , chopped off
+            unit = Left(unit, int1 - 1) ' returns the string with the part after the , chopped off
         End If
 
 
@@ -326,9 +356,9 @@ Public Class Fn
         If int1 = 0 Then ' Checks if this has failed
             gdiChar = "1" ' Puts the default font GdiCharSet into the GdiChar string variable
         Else
-            gdiChar = Microsoft.VisualBasic.Mid(s, int1 + 11) ' returns the string with the part before GdiCharSet= chopped off
+            gdiChar = Mid(s, int1 + 11) ' returns the string with the part before GdiCharSet= chopped off
             int1 = InStr(gdiChar, ",") ' Finds the location of the text , in the string
-            gdiChar = Microsoft.VisualBasic.Left(gdiChar, int1 - 1) ' returns the string with the part after the , chopped off
+            gdiChar = Left(gdiChar, int1 - 1) ' returns the string with the part after the , chopped off
         End If
 
 
@@ -337,9 +367,9 @@ Public Class Fn
         If int1 = 0 Then ' Checks if this has failed
             gdiVertical = False ' Puts the default font GdiVertical into the GdiVertical boolean variable 
         Else
-            gdiVerticalFont = Microsoft.VisualBasic.Mid(s, int1 + 16) ' returns the string with the part before GdiVerticalFont= chopped off
+            gdiVerticalFont = Mid(s, int1 + 16) ' returns the string with the part before GdiVerticalFont= chopped off
             int1 = InStr(gdiVerticalFont, "]") ' Finds the location of the text ] in the string
-            gdiVerticalFont = Microsoft.VisualBasic.Left(gdiVerticalFont, int1 - 1) ' returns the string with the part after the ] chopped off
+            gdiVerticalFont = Left(gdiVerticalFont, int1 - 1) ' returns the string with the part after the ] chopped off
             gdiVertical = CBool(gdiVerticalFont) ' converts the returend string variable into a boolean variable
         End If
 
@@ -349,53 +379,75 @@ Public Class Fn
         If int1 = 0 Then ' Checks if this has failed
             style = "1"  ' Puts the default font style into the style string variable
         Else
-            style = Microsoft.VisualBasic.Mid(s, int1 + 10) ' returns the string with the part before FontStyle= chopped off
+            style = Mid(s, int1 + 10) ' returns the string with the part before FontStyle= chopped off
         End If
 
         Select Case CInt(style) ' Uses a case select to find the style from the numerical representation of it
             ' then sets the function to return a new font dependant of the name size and style variables
             Case 0
-                Return New System.Drawing.Font(name, CInt(size), FontStyle.Regular, CInt(unit), CInt(gdiChar), gdiVertical)
+                Return New Font(name, CInt(size), FontStyle.Regular, CInt(unit), CInt(gdiChar), gdiVertical)
             Case 1
-                Return New System.Drawing.Font(name, CInt(size), FontStyle.Bold, CInt(unit), CInt(gdiChar), gdiVertical)
+                Return New Font(name, CInt(size), FontStyle.Bold, CInt(unit), CInt(gdiChar), gdiVertical)
             Case 2
-                Return New System.Drawing.Font(name, CInt(size), FontStyle.Italic, CInt(unit), CInt(gdiChar), gdiVertical)
+                Return New Font(name, CInt(size), FontStyle.Italic, CInt(unit), CInt(gdiChar), gdiVertical)
             Case 3
-                Return New System.Drawing.Font(name, CInt(size), FontStyle.Bold Or Drawing.FontStyle.Italic, CInt(unit), CInt(gdiChar), gdiVertical)
+                Return _
+                    New Font(name, CInt(size), FontStyle.Bold Or FontStyle.Italic, CInt(unit), CInt(gdiChar),
+                             gdiVertical)
             Case 4
-                Return New System.Drawing.Font(name, CInt(size), FontStyle.Underline, CInt(unit), CInt(gdiChar), gdiVertical)
+                Return New Font(name, CInt(size), FontStyle.Underline, CInt(unit), CInt(gdiChar), gdiVertical)
             Case 5
-                Return New System.Drawing.Font(name, CInt(size), FontStyle.Underline Or FontStyle.Bold, CInt(unit), CInt(gdiChar), gdiVertical)
+                Return _
+                    New Font(name, CInt(size), FontStyle.Underline Or FontStyle.Bold, CInt(unit), CInt(gdiChar),
+                             gdiVertical)
             Case 6
-                Return New System.Drawing.Font(name, CInt(size), FontStyle.Underline Or FontStyle.Italic, CInt(unit), CInt(gdiChar), gdiVertical)
+                Return _
+                    New Font(name, CInt(size), FontStyle.Underline Or FontStyle.Italic, CInt(unit), CInt(gdiChar),
+                             gdiVertical)
             Case 7
-                Return New System.Drawing.Font(name, CInt(size), FontStyle.Underline Or FontStyle.Bold Or FontStyle.Italic, CInt(unit), CInt(gdiChar), gdiVertical)
+                Return _
+                    New Font(name, CInt(size), FontStyle.Underline Or FontStyle.Bold Or FontStyle.Italic, CInt(unit),
+                             CInt(gdiChar), gdiVertical)
             Case 8
-                Return New System.Drawing.Font(name, CInt(size), FontStyle.Strikeout, CInt(unit), CInt(gdiChar), gdiVertical)
+                Return New Font(name, CInt(size), FontStyle.Strikeout, CInt(unit), CInt(gdiChar), gdiVertical)
             Case 9
-                Return New System.Drawing.Font(name, CInt(size), FontStyle.Strikeout Or FontStyle.Bold, CInt(unit), CInt(gdiChar), gdiVertical)
+                Return _
+                    New Font(name, CInt(size), FontStyle.Strikeout Or FontStyle.Bold, CInt(unit), CInt(gdiChar),
+                             gdiVertical)
             Case 10
-                Return New System.Drawing.Font(name, CInt(size), FontStyle.Strikeout Or FontStyle.Italic, CInt(unit), CInt(gdiChar), gdiVertical)
+                Return _
+                    New Font(name, CInt(size), FontStyle.Strikeout Or FontStyle.Italic, CInt(unit), CInt(gdiChar),
+                             gdiVertical)
             Case 11
-                Return New System.Drawing.Font(name, CInt(size), FontStyle.Strikeout Or FontStyle.Bold Or FontStyle.Italic, CInt(unit), CInt(gdiChar), gdiVertical)
+                Return _
+                    New Font(name, CInt(size), FontStyle.Strikeout Or FontStyle.Bold Or FontStyle.Italic, CInt(unit),
+                             CInt(gdiChar), gdiVertical)
             Case 12
-                Return New System.Drawing.Font(name, CInt(size), FontStyle.Strikeout Or FontStyle.Underline, CInt(unit), CInt(gdiChar), gdiVertical)
+                Return _
+                    New Font(name, CInt(size), FontStyle.Strikeout Or FontStyle.Underline, CInt(unit), CInt(gdiChar),
+                             gdiVertical)
             Case 13
-                Return New System.Drawing.Font(name, CInt(size), FontStyle.Strikeout Or FontStyle.Underline Or FontStyle.Bold, CInt(unit), CInt(gdiChar), gdiVertical)
+                Return _
+                    New Font(name, CInt(size), FontStyle.Strikeout Or FontStyle.Underline Or FontStyle.Bold, CInt(unit),
+                             CInt(gdiChar), gdiVertical)
             Case 14
-                Return New System.Drawing.Font(name, CInt(size), FontStyle.Strikeout Or FontStyle.Underline Or FontStyle.Italic, CInt(unit), CInt(gdiChar), gdiVertical)
+                Return _
+                    New Font(name, CInt(size), FontStyle.Strikeout Or FontStyle.Underline Or FontStyle.Italic,
+                             CInt(unit), CInt(gdiChar), gdiVertical)
             Case 15
-                Return New System.Drawing.Font(name, CInt(size), FontStyle.Strikeout Or FontStyle.Underline Or FontStyle.Bold Or FontStyle.Italic, CInt(unit), CInt(gdiChar), gdiVertical)
+                Return _
+                    New Font(name, CInt(size),
+                             FontStyle.Strikeout Or FontStyle.Underline Or FontStyle.Bold Or FontStyle.Italic,
+                             CInt(unit), CInt(gdiChar), gdiVertical)
             Case Else
-                Return New System.Drawing.Font(name, CInt(size), FontStyle.Regular, CInt(unit), CInt(gdiChar), gdiVertical)
+                Return New Font(name, CInt(size), FontStyle.Regular, CInt(unit), CInt(gdiChar), gdiVertical)
         End Select
-
     End Function
 
-    Public Shared Function GetMediaDuration(ByVal mediafile As String)
+    Public Shared Function GetMediaDuration(mediafile As String)
         Try
-            Dim w As New WMPLib.WindowsMediaPlayer
-            Dim m As WMPLib.IWMPMedia = w.newMedia(mediafile)
+            Dim w As New WindowsMediaPlayer
+            Dim m As IWMPMedia = w.newMedia(mediafile)
             w.close()
             Return m.duration
         Catch ex As Exception
@@ -403,7 +455,8 @@ Public Class Fn
         End Try
     End Function
 
-    Public Shared Function GetDelimitedText(Text As String, OpenDelimiter As String, CloseDelimiter As String, Optional index As Long = 0) As String
+    Public Shared Function GetDelimitedText(Text As String, OpenDelimiter As String, CloseDelimiter As String,
+                                            Optional index As Long = 0) As String
         Dim i As Long, j As Long
 
         If index = 0 Then index = 1
@@ -428,6 +481,5 @@ Public Class Fn
 
         ' advanced the index after the closing Delimiter
         index = j + Len(CloseDelimiter)
-
     End Function
 End Class

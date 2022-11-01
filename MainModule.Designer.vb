@@ -24,9 +24,7 @@ Partial Class MainModule
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(MainModule))
-        Me.Button2 = New System.Windows.Forms.Button()
         Me.TimerGetWords = New System.Windows.Forms.Timer(Me.components)
-        Me.Button3 = New System.Windows.Forms.Button()
         Me.TimerWord = New System.Windows.Forms.Timer(Me.components)
         Me.TimerVisualCountDown = New System.Windows.Forms.Timer(Me.components)
         Me.ToolTip1 = New System.Windows.Forms.ToolTip(Me.components)
@@ -36,30 +34,9 @@ Partial Class MainModule
         Me.LbWord = New System.Windows.Forms.Label()
         Me.SuspendLayout()
         '
-        'Button2
-        '
-        Me.Button2.BackgroundImage = CType(resources.GetObject("Button2.BackgroundImage"), System.Drawing.Image)
-        Me.Button2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
-        Me.Button2.Location = New System.Drawing.Point(65, 46)
-        Me.Button2.Name = "Button2"
-        Me.Button2.Size = New System.Drawing.Size(33, 33)
-        Me.Button2.TabIndex = 2
-        Me.Button2.UseVisualStyleBackColor = True
-        '
         'TimerGetWords
         '
         Me.TimerGetWords.Interval = 5000
-        '
-        'Button3
-        '
-        Me.Button3.BackgroundImage = CType(resources.GetObject("Button3.BackgroundImage"), System.Drawing.Image)
-        Me.Button3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
-        Me.Button3.Location = New System.Drawing.Point(104, 46)
-        Me.Button3.Name = "Button3"
-        Me.Button3.Size = New System.Drawing.Size(33, 33)
-        Me.Button3.TabIndex = 3
-        Me.Button3.UseVisualStyleBackColor = True
-        Me.Button3.Visible = False
         '
         'TimerWord
         '
@@ -82,13 +59,15 @@ Partial Class MainModule
         'LbCountDown
         '
         Me.LbCountDown.BackColor = System.Drawing.Color.Transparent
+        Me.LbCountDown.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.LbCountDown.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.LbCountDown.Font = New System.Drawing.Font("Arial", 50.0!)
         Me.LbCountDown.ForeColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(0, Byte), Integer))
         Me.LbCountDown.Location = New System.Drawing.Point(655, 84)
         Me.LbCountDown.Name = "LbCountDown"
         Me.LbCountDown.Size = New System.Drawing.Size(600, 470)
         Me.LbCountDown.TabIndex = 6
-        Me.LbCountDown.Text = "0"
+        Me.LbCountDown.Text = "00"
         Me.LbCountDown.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'LbWord
@@ -115,8 +94,6 @@ Partial Class MainModule
         Me.Controls.Add(Me.LbCountDown)
         Me.Controls.Add(Me.LbWord)
         Me.Controls.Add(Me.ProgressBar1)
-        Me.Controls.Add(Me.Button3)
-        Me.Controls.Add(Me.Button2)
         Me.Name = "MainModule"
         Me.ShowIcon = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
@@ -124,9 +101,7 @@ Partial Class MainModule
         Me.ResumeLayout(False)
 
     End Sub
-    Friend WithEvents Button2 As Button
     Friend WithEvents TimerGetWords As Timer
-    Friend WithEvents Button3 As Button
     Friend WithEvents TimerWord As Timer
     Friend WithEvents TimerVisualCountDown As Timer
     Friend WithEvents ToolTip1 As ToolTip

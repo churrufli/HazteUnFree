@@ -1,12 +1,7 @@
-﻿Imports System.Diagnostics.Contracts
-Imports System.Globalization
+﻿
+
 Imports System.IO
-Imports System.Runtime.CompilerServices
-Imports System.Text
-Imports System.Text.RegularExpressions
 Imports VB = Microsoft.VisualBasic
-Imports WMPLib
-Imports System.Web
 
 Public Class ControlModule
     Public CountDownFrom As TimeSpan = TimeSpan.FromSeconds(60) '76
@@ -21,6 +16,7 @@ Public Class ControlModule
         Fn.LoadMusic()
         Calculate()
     End Sub
+
     Sub InitStates()
         TbWordsWaittoStart.Text = ms.ReadSetting("TbWordsWaittoStart")
     End Sub
@@ -28,6 +24,7 @@ Public Class ControlModule
     Sub Calculate()
         'toma todas las opciones y muestra en el log 
     End Sub
+
     Sub LoadDictionaries()
         Dim di As New DirectoryInfo(Directory.GetCurrentDirectory)
         Dim fiArr As FileInfo() = di.GetFiles("dic_*.txt")
@@ -36,11 +33,12 @@ Public Class ControlModule
             Dim name = Split(Split(fri.Name, "_")(1).ToString, ".txt")(0).ToString
             ListBoxDictionaries.Items.Add(name, IIf(LCase(name) = "general", True, False))
         Next fri
-        Dim checked As Boolean = True   ' Set to True or False, as required.
-        For i As Integer = 0 To ListBoxDictionaries.Items.Count - 1
+        Dim checked = True   ' Set to True or False, as required.
+        For i = 0 To ListBoxDictionaries.Items.Count - 1
             ListBoxDictionaries.SetItemChecked(i, checked)
         Next
     End Sub
+
     Sub LoadWords()
 
         Dim MyTotalWords As String = Nothing
@@ -75,8 +73,8 @@ Public Class ControlModule
 
         MyTotalWordsArr = Split(MyTotalWords, vbNewLine)
         vars.arr = MyTotalWordsArr
-
     End Sub
+
     Function CountWords(s)
         Dim MyTotalWordsArr As String()
         If InStr(s, ",") > 0 Then
@@ -85,8 +83,8 @@ Public Class ControlModule
         MyTotalWordsArr = Split(s, vbNewLine)
         vars.arr = MyTotalWordsArr
         Return MyTotalWordsArr.Count
-
     End Function
+
     Public Sub BtClose_Click(sender As Object, e As EventArgs)
         MainModule.StopBattleFunctions()
         Application.Exit()
@@ -97,10 +95,10 @@ Public Class ControlModule
     End Sub
 
     Private Sub BtStart_Click(sender As Object, e As EventArgs)
-        MainModule.Show()
-        MainModule.WindowState = FormWindowState.Maximized
-        MainModule.FormBorderStyle = FormBorderStyle.None
-        MainModule.SetBattle()
+        'MainModule.Show()
+        'MainModule.WindowState = FormWindowState.Maximized
+        'MainModule.FormBorderStyle = FormBorderStyle.None
+        'MainModule.SetBattle()
     End Sub
 
     Private Sub Button3_Click(sender As Object, e As EventArgs)
@@ -109,6 +107,7 @@ Public Class ControlModule
         BtStartBattle.Enabled = True
         btStartWords.Enabled = True
     End Sub
+
     Private Sub btfullscreen_Click(sender As Object, e As EventArgs)
         MainModule.WindowState = FormWindowState.Maximized
         MainModule.FormBorderStyle = FormBorderStyle.None
@@ -131,7 +130,7 @@ Public Class ControlModule
     Private Sub CheckBox1_CheckedChanged(sender As Object, e As EventArgs)
         If chautoinitwords.Checked = True Then
             btStartWords.Enabled = False
-            btNextWord.Enabled = False
+            'btNextWord.Enabled = False
         Else
             btStartWords.Enabled = True
         End If
@@ -162,12 +161,11 @@ Public Class ControlModule
     End Sub
 
 
-
     Private Sub Button2_Click(sender As Object, e As EventArgs)
         Dim result As DialogResult = OpenFileDialog1.ShowDialog()
         If result = DialogResult.OK Then
-            Me.BackgroundImage = New System.Drawing.Bitmap(OpenFileDialog1.FileName)
-            MainModule.BackgroundImage = New System.Drawing.Bitmap(OpenFileDialog1.FileName)
+            Me.BackgroundImage = New Bitmap(OpenFileDialog1.FileName)
+            MainModule.BackgroundImage = New Bitmap(OpenFileDialog1.FileName)
             ms.SaveSetting("MainBackGroundImage", OpenFileDialog1.FileName)
         End If
         OpenFileDialog1.Dispose()
@@ -201,18 +199,18 @@ Public Class ControlModule
     End Sub
 
     Private Sub btstartwords_Click_1(sender As Object, e As EventArgs) Handles btStartWords.Click
-        MainModule.GetWord()
+        'MainModule.GetWord()
         MainModule.TimerWord.Start()
         btStartWords.Enabled = False
         btNextWord.Enabled = True
-        StartBattle()
+        StartBattle("manual")
     End Sub
 
     Private Sub btstartbattle_Click(sender As Object, e As EventArgs) Handles BtStartBattle.Click
-        StartBattle()
+        StartBattle("auto")
     End Sub
 
-    Sub StartBattle()
+    Sub StartBattle(mode As String)
         BtStartBattle.Enabled = False
         MainModule.Show()
         If chautoinitwords.Checked = True Then
@@ -222,28 +220,27 @@ Public Class ControlModule
             MainModule.Startwords = False
             btNextWord.Enabled = True
         End If
+
         vars.StopBattle = False
         CbBattleType.Enabled = False
         CbDuration.Enabled = False
-        'btNextWord.Enabled = True
+        btNextWord.Enabled = True
 
-        Fn.PlayMusic()
-        If chkminimize.Checked Then
+        vars.SongDuration = Fn.PlayMusic()
+        If chkMinimize.Checked Then
             Me.WindowState = FormWindowState.Minimized
         End If
 
-        MainModule.SetBattle()
-
+        MainModule.SetBattle(mode)
     End Sub
 
     Private Sub btstopbattle_Click(sender As Object, e As EventArgs) Handles btStopBattle.Click
         MainModule.StopBattleFunctions()
-
+        btStopBattle.Enabled = False
     End Sub
 
     Private Sub btNextWord_Click_1(sender As Object, e As EventArgs)
         MainModule.GetWord()
-
     End Sub
 
     Private Sub btmusicdir_Click(sender As Object, e As EventArgs) Handles btmusicdir.Click
@@ -269,27 +266,31 @@ Public Class ControlModule
         Fn.WriteLog("El fondo de pantalla se reestableció a su valor por defecto.")
     End Sub
 
-    Private Sub ModoVentanaToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ModoVentanaToolStripMenuItem.Click
+    Private Sub ModoVentanaToolStripMenuItem_Click(sender As Object, e As EventArgs) _
+        Handles ModoVentanaToolStripMenuItem.Click
         MainModule.WindowState = FormWindowState.Normal
         MainModule.FormBorderStyle = FormBorderStyle.Sizable
     End Sub
 
-    Private Sub ModoPantallaCompletaToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ModoPantallaCompletaToolStripMenuItem.Click
+    Private Sub ModoPantallaCompletaToolStripMenuItem_Click(sender As Object, e As EventArgs) _
+        Handles ModoPantallaCompletaToolStripMenuItem.Click
         MainModule.WindowState = FormWindowState.Maximized
         MainModule.FormBorderStyle = FormBorderStyle.None
     End Sub
 
-    Private Sub FondoDePantallaToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles FondoDePantallaToolStripMenuItem.Click
+    Private Sub FondoDePantallaToolStripMenuItem_Click(sender As Object, e As EventArgs) _
+        Handles FondoDePantallaToolStripMenuItem.Click
         Dim result As DialogResult = OpenFileDialog1.ShowDialog()
         If result = DialogResult.OK Then
-            Me.BackgroundImage = New System.Drawing.Bitmap(OpenFileDialog1.FileName)
-            MainModule.BackgroundImage = New System.Drawing.Bitmap(OpenFileDialog1.FileName)
+            Me.BackgroundImage = New Bitmap(OpenFileDialog1.FileName)
+            MainModule.BackgroundImage = New Bitmap(OpenFileDialog1.FileName)
             ms.SaveSetting("MainBackGroundImage", OpenFileDialog1.FileName)
         End If
         OpenFileDialog1.Dispose()
     End Sub
 
-    Private Sub FuenteYTamañoToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles FuenteYTamañoToolStripMenuItem.Click
+    Private Sub FuenteYTamañoToolStripMenuItem_Click(sender As Object, e As EventArgs) _
+        Handles FuenteYTamañoToolStripMenuItem.Click
         If FontDialog1.ShowDialog() <> DialogResult.Cancel Then
             MainModule.LbWord.Font = FontDialog1.Font
             ms.SaveSetting("LbWordFont", FontDialog1.Font.ToString)
@@ -315,7 +316,8 @@ Public Class ControlModule
         FontDialog2.Dispose()
     End Sub
 
-    Private Sub FuenteYTamañoToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles FuenteYTamañoToolStripMenuItem1.Click
+    Private Sub FuenteYTamañoToolStripMenuItem1_Click(sender As Object, e As EventArgs) _
+        Handles FuenteYTamañoToolStripMenuItem1.Click
         If FontDialog2.ShowDialog() <> DialogResult.Cancel Then
             MainModule.LbCountDown.Font = FontDialog2.Font
             ms.SaveSetting("lbCountDownFont", FontDialog2.Font.ToString)
@@ -323,42 +325,23 @@ Public Class ControlModule
         FontDialog2.Dispose()
     End Sub
 
-
-    Private Sub chamanualnitwords_CheckedChanged(sender As Object, e As EventArgs) Handles chamanuailnitwords.CheckedChanged
-
-
-
-        If chautoinitwords.Checked Then
-            btStartWords.Enabled = False
-            btNextWord.Enabled = False
-            chamanuailnitwords.Checked = False
-            BtStartBattle.Enabled = True
-        Else
-            btStartWords.Enabled = True
-            btNextWord.Enabled = True
-            chamanuailnitwords.Checked = True
-            BtStartBattle.Enabled = False
-
-        End If
-
-
-    End Sub
     Private Sub chautoinitwords_CheckedChanged(sender As Object, e As EventArgs) Handles chautoinitwords.CheckedChanged
         If chautoinitwords.Checked Then
-            btStartWords.Enabled = False
-            btNextWord.Enabled = False
-            chamanuailnitwords.Checked = False
-            BtStartBattle.Enabled = True
+            'btStartWords.Enabled = False
+            'btNextWord.Enabled = False
+            'chamanuailnitwords.Checked = False
+            'BtStartBattle.Enabled = True
         Else
-            btStartWords.Enabled = True
-            btNextWord.Enabled = True
-            chamanuailnitwords.Checked = True
-            BtStartBattle.Enabled = False
+            'btStartWords.Enabled = True
+            'btNextWord.Enabled = True
+            ''chamanuailnitwords.Checked = True
+            'BtStartBattle.Enabled = False
 
         End If
     End Sub
 
-    Private Sub TbWordsWaittoStart_KeyPress_1(sender As Object, e As KeyPressEventArgs) Handles TbWordsWaittoStart.KeyPress
+    Private Sub TbWordsWaittoStart_KeyPress_1(sender As Object, e As KeyPressEventArgs) _
+        Handles TbWordsWaittoStart.KeyPress
         If Not Char.IsControl(e.KeyChar) AndAlso Not Char.IsDigit(e.KeyChar) AndAlso (e.KeyChar <> "."c) Then
             e.Handled = True
         End If
@@ -369,18 +352,20 @@ Public Class ControlModule
     End Sub
 
     Private Sub TbWordsWaittoStart_TextChanged(sender As Object, e As EventArgs) Handles TbWordsWaittoStart.TextChanged
-        ms.SaveSetting("TbWordsWaittoStart", TbWordsWaittoStart.text)
+        ms.SaveSetting("TbWordsWaittoStart", TbWordsWaittoStart.Text)
     End Sub
 
-    Private Sub ListBoxDictionaries_SelectedValueChanged(sender As Object, e As EventArgs) Handles ListBoxDictionaries.SelectedValueChanged
+    Private Sub ListBoxDictionaries_SelectedValueChanged(sender As Object, e As EventArgs) _
+        Handles ListBoxDictionaries.SelectedValueChanged
         For Each item In ListBoxDictionaries.CheckedItems
             If ListBoxDictionaries.GetItemCheckState(ListBoxDictionaries.Items.IndexOf(item)) Then
-              
+
             End If
         Next
     End Sub
 
-    Private Sub ListBoxDictionaries_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ListBoxDictionaries.SelectedIndexChanged
+    Private Sub ListBoxDictionaries_SelectedIndexChanged(sender As Object, e As EventArgs) _
+        Handles ListBoxDictionaries.SelectedIndexChanged
         LoadWords()
     End Sub
 
@@ -388,25 +373,61 @@ Public Class ControlModule
         MainModule.GetWord()
     End Sub
 
-    Private Sub PictureBox4_Click(sender As Object, e As EventArgs) Handles PictureBox4.Click
-
+    Private Sub PictureBox4_Click(sender As Object, e As EventArgs)
     End Sub
 
     Private Sub chkShuffle_CheckedChanged(sender As Object, e As EventArgs) Handles chkShuffle.CheckedChanged
-
     End Sub
 
-    Private Sub MostrarPantallaPrincipalToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles MostrarPantallaPrincipalToolStripMenuItem.Click
+    Private Sub MostrarPantallaPrincipalToolStripMenuItem_Click(sender As Object, e As EventArgs) _
+        Handles MostrarPantallaPrincipalToolStripMenuItem.Click
         MainModule.Show()
         Me.Show()
     End Sub
 
-    Private Sub PosiciónToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles PosiciónToolStripMenuItem.Click
-        MsgBox("En la pantalla principal, situa el ratón en la zona de las palabras y arrastra y suelta para cambiar su posición en la pantalla.", MsgBoxStyle.Information)
+    Private Sub PosiciónToolStripMenuItem_Click(sender As Object, e As EventArgs) _
+        Handles PosiciónToolStripMenuItem.Click
+        MsgBox(
+            "En la pantalla principal, situa el ratón en la zona de las palabras y arrastra y suelta para cambiar su posición en la pantalla.",
+            MsgBoxStyle.Information)
     End Sub
 
-    Private Sub PosiciónToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles PosiciónToolStripMenuItem1.Click
-        MsgBox("En la pantalla principal, situa el ratón en la zona del reloj y arrastra y suelta para cambiar su posición en la pantalla.", MsgBoxStyle.Information)
+    Private Sub PosiciónToolStripMenuItem1_Click(sender As Object, e As EventArgs) _
+        Handles PosiciónToolStripMenuItem1.Click
+        MsgBox(
+            "En la pantalla principal, situa el ratón en la zona del reloj y arrastra y suelta para cambiar su posición en la pantalla.",
+            MsgBoxStyle.Information)
+    End Sub
 
+    Private Sub chkHorn_CheckedChanged(sender As Object, e As EventArgs) Handles chkHorn.CheckedChanged
+        ms.SaveSetting("chkHorn", IIf(chkHorn.Checked = True, "1", "0"))
+        Fn.WriteLog("Preferencia guardada")
+    End Sub
+
+    Private Sub chkminimize_CheckedChanged(sender As Object, e As EventArgs) Handles chkMinimize.CheckedChanged
+        ms.SaveSetting("chkMinimize", IIf(chkMinimize.Checked = True, "1", "0"))
+        Fn.WriteLog("Preferencia guardada")
+    End Sub
+
+    Private Sub rbManualMode_CheckedChanged(sender As Object, e As EventArgs) Handles rbManualMode.CheckedChanged
+        If rbManualMode.Checked = True Then
+            gbManualMode.Enabled = True
+            gbAutoMode.Enabled = False
+            btNextWord.Enabled = False
+        End If
+        MainModule.StopBattleFunctions()
+    End Sub
+
+    Private Sub rbAutoMode_CheckedChanged(sender As Object, e As EventArgs) Handles rbAutoMode.CheckedChanged
+        If rbAutoMode.Checked = True Then
+            gbManualMode.Enabled = False
+            gbAutoMode.Enabled = True
+        End If
+        MainModule.StopBattleFunctions()
+    End Sub
+
+    Private Sub chPlayMusic_CheckedChanged(sender As Object, e As EventArgs) Handles chPlayMusic.CheckedChanged
+        ms.SaveSetting("chPlayMusic", IIf(chPlayMusic.Checked = True, "1", "0"))
+        Fn.WriteLog("Preferencia guardada")
     End Sub
 End Class

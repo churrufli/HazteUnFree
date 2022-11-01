@@ -69,22 +69,11 @@
     <SignManifests>false</SignManifests>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="HtmlAgilityPack, Version=1.11.42.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
-      <HintPath>packages\HtmlAgilityPack.1.11.42\lib\Net45\HtmlAgilityPack.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="PresentationCore" />
-    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.Net.Http" />
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
@@ -140,6 +129,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="MainModule.resx">
       <DependentUpon>MainModule.vb</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
@@ -164,15 +154,6 @@
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
     <None Include="App.config" />
-    <None Include="packages.config">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="packages\HtmlAgilityPack.1.11.42\.signature.p7s" />
-    <None Include="packages\HtmlAgilityPack.1.11.42\HtmlAgilityPack.1.11.42.nupkg" />
-    <None Include="packages\HtmlAgilityPack.1.11.42\lib\netstandard1.3\HtmlAgilityPack.deps.json" />
-    <None Include="packages\HtmlAgilityPack.1.11.42\lib\netstandard1.6\HtmlAgilityPack.deps.json" />
-    <None Include="packages\HtmlAgilityPack.1.11.42\lib\netstandard2.0\HtmlAgilityPack.deps.json" />
-    <None Include="packages\HtmlAgilityPack.1.11.42\lib\uap10.0\HtmlAgilityPack.pri" />
   </ItemGroup>
   <ItemGroup>
     <COMReference Include="WMPLib">
@@ -221,39 +202,6 @@
     <Content Include="bin\Debug\Red Bull Batalla de los Gallos - Pianic.mp3" />
     <Content Include="bin\Debug\Red Bull Batalla de los Gallos - Rebellious.mp3" />
     <Content Include="bin\Debug\Red Bull Batalla de los Gallos - Round   Round.mp3" />
-    <Content Include="packages\HtmlAgilityPack.1.11.42\lib\Net35\HtmlAgilityPack.dll" />
-    <Content Include="packages\HtmlAgilityPack.1.11.42\lib\Net35\HtmlAgilityPack.pdb" />
-    <Content Include="packages\HtmlAgilityPack.1.11.42\lib\Net35\HtmlAgilityPack.xml" />
-    <Content Include="packages\HtmlAgilityPack.1.11.42\lib\Net40-client\HtmlAgilityPack.dll" />
-    <Content Include="packages\HtmlAgilityPack.1.11.42\lib\Net40-client\HtmlAgilityPack.pdb" />
-    <Content Include="packages\HtmlAgilityPack.1.11.42\lib\Net40-client\HtmlAgilityPack.xml" />
-    <Content Include="packages\HtmlAgilityPack.1.11.42\lib\Net40\HtmlAgilityPack.dll" />
-    <Content Include="packages\HtmlAgilityPack.1.11.42\lib\Net40\HtmlAgilityPack.pdb" />
-    <Content Include="packages\HtmlAgilityPack.1.11.42\lib\Net40\HtmlAgilityPack.XML" />
-    <Content Include="packages\HtmlAgilityPack.1.11.42\lib\Net45\HtmlAgilityPack.dll" />
-    <Content Include="packages\HtmlAgilityPack.1.11.42\lib\Net45\HtmlAgilityPack.pdb" />
-    <Content Include="packages\HtmlAgilityPack.1.11.42\lib\Net45\HtmlAgilityPack.XML" />
-    <Content Include="packages\HtmlAgilityPack.1.11.42\lib\NetCore45\HtmlAgilityPack.dll" />
-    <Content Include="packages\HtmlAgilityPack.1.11.42\lib\NetCore45\HtmlAgilityPack.pdb" />
-    <Content Include="packages\HtmlAgilityPack.1.11.42\lib\NetCore45\HtmlAgilityPack.XML" />
-    <Content Include="packages\HtmlAgilityPack.1.11.42\lib\netstandard1.3\HtmlAgilityPack.dll" />
-    <Content Include="packages\HtmlAgilityPack.1.11.42\lib\netstandard1.3\HtmlAgilityPack.pdb" />
-    <Content Include="packages\HtmlAgilityPack.1.11.42\lib\netstandard1.3\HtmlAgilityPack.xml" />
-    <Content Include="packages\HtmlAgilityPack.1.11.42\lib\netstandard1.6\HtmlAgilityPack.dll" />
-    <Content Include="packages\HtmlAgilityPack.1.11.42\lib\netstandard1.6\HtmlAgilityPack.pdb" />
-    <Content Include="packages\HtmlAgilityPack.1.11.42\lib\netstandard1.6\HtmlAgilityPack.xml" />
-    <Content Include="packages\HtmlAgilityPack.1.11.42\lib\netstandard2.0\HtmlAgilityPack.dll" />
-    <Content Include="packages\HtmlAgilityPack.1.11.42\lib\netstandard2.0\HtmlAgilityPack.pdb" />
-    <Content Include="packages\HtmlAgilityPack.1.11.42\lib\netstandard2.0\HtmlAgilityPack.xml" />
-    <Content Include="packages\HtmlAgilityPack.1.11.42\lib\portable-net45+netcore45+wp8+MonoAndroid+MonoTouch\HtmlAgilityPack.dll" />
-    <Content Include="packages\HtmlAgilityPack.1.11.42\lib\portable-net45+netcore45+wp8+MonoAndroid+MonoTouch\HtmlAgilityPack.pdb" />
-    <Content Include="packages\HtmlAgilityPack.1.11.42\lib\portable-net45+netcore45+wp8+MonoAndroid+MonoTouch\HtmlAgilityPack.XML" />
-    <Content Include="packages\HtmlAgilityPack.1.11.42\lib\portable-net45+netcore45+wpa81+wp8+MonoAndroid+MonoTouch\HtmlAgilityPack.dll" />
-    <Content Include="packages\HtmlAgilityPack.1.11.42\lib\portable-net45+netcore45+wpa81+wp8+MonoAndroid+MonoTouch\HtmlAgilityPack.pdb" />
-    <Content Include="packages\HtmlAgilityPack.1.11.42\lib\portable-net45+netcore45+wpa81+wp8+MonoAndroid+MonoTouch\HtmlAgilityPack.XML" />
-    <Content Include="packages\HtmlAgilityPack.1.11.42\lib\uap10.0\HtmlAgilityPack.dll" />
-    <Content Include="packages\HtmlAgilityPack.1.11.42\lib\uap10.0\HtmlAgilityPack.pdb" />
-    <Content Include="packages\HtmlAgilityPack.1.11.42\lib\uap10.0\HtmlAgilityPack.XML" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="bin\Release\" />
