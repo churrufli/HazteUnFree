@@ -1,4 +1,7 @@
-# BatallaRAAP - software para Batallas de Gallos
+# BatallaRAAP - software libre para Batallas de Gallos (Windows)
+
+## Requisitos
+Windows 7, .NET Framework (4.5.2)
 
 
 ## Introducción
