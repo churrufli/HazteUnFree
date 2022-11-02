@@ -1,8 +1,7 @@
 # BatallaRAAP - software libre para Batallas de Gallos (Windows)
 
-## Requisitos
-Windows 7, .NET Framework (4.5.2)
-
+## Requisitos mínimos 
+Windows 7, .NET Framework (4.5.2) 1GB RAM
 
 ## Introducción
 ¿Te gustaría **organizar una Batalla de Gallos**  en tu aula, con tu asociación o pequeño evento y **no sabes cómo hacerlo técnicamente**? ¿Quieres mostrar por una pantalla el cronómetro y las palabras? BatallaRAAP nace como un software sencillo y a la vez práctico para cumplir con el objetivo. También servirá para practicar tus batallas.
@@ -51,7 +50,10 @@ El modo automático se usa para que las palabras vayan apareciendo conforme al f
 
 ## Modo manual
 El modo manual se usa para hacer manualmente la batalla. Pulsando el botón comenzar batalla iniciará la pista y el temporizador. Al pulsar el botón "palabra" aparecerá una palabra en la pantalla principal y no aparecerá otra hasta que vuelvas a pulsar el botón.
-
+## Opciones Varias
+Carpeta de música.
+Selecciona tu carpeta donde tienes las instrumentales para usarlas en la batalla. El programa leerá los archivos WAV y MP3 del directorios y subdirectorios. Tras ello, en la pestaña de batalla aparecerán tus instrumentales.
+Reproducir bocina al final de la batalla. Reemplaza el archivo horn.mp3 por el tuyo personalizado para reemplazar el sonido que se reproducirá al final de la batalla.
 ## Diccionarios
 En la pestaña de diccionarios encontrarás los diccionarios que se van a usar para las batallas. Los diccionarios son archivos de texto en formato TXT donde cada palabra va en una línea o separado por comas. Abre Dic_General.txt o cualquier diccionario incluido para ver el ejemplo. En el programa, marca los diccionarios que quieres que se aparezcan en la batalla. Si varios diccionarios son marcados, las palabras de los diccionarios se sumarán entre ellas. Marca la opción "aleatorizar diccionarios" para que el orden de las palabras se muestre al azar. Marca solo uno específico para hacer tus propias batallas temáticas. 
 
