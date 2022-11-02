@@ -2,16 +2,16 @@
 
 
 ## Introducción
-¿Te gustaría **organizar una Batalla de Gallos**  en tu aula, con tu asociación o pequeño evento y **no sabes cómo hacerlo técnicamente**? ¿Quieres mostrar por una pantalla el cronómetro y las palabras? BatallaRAAP nace como un software sencillo y a la vez práctico para cumplir con el objetivo.
+¿Te gustaría **organizar una Batalla de Gallos**  en tu aula, con tu asociación o pequeño evento y **no sabes cómo hacerlo técnicamente**? ¿Quieres mostrar por una pantalla el cronómetro y las palabras? BatallaRAAP nace como un software sencillo y a la vez práctico para cumplir con el objetivo. También servirá para practicar tus batallas.
 
-Además es personalizable; podrás cambiar el fondo de pantalla, el formato del texto de la pantalla principal. Podrás usar tus instrumentales y añadir tus propias palabras para la batalla. Es una primera versión y puede ser que le haga mejoras más adelante, pero por ahora quizás puede valerte. Molando. Lee este documento para conocer el funcionamiento o comienza a usarlo por tu cuenta para entenderlo y consultalo si te surgen dudas.
+Además es personalizable; podrás cambiar el fondo de pantalla, el formato del texto de la pantalla principal. Podrás usar tus instrumentales y añadir tus propias palabras para la batalla. Es una primera versión y puede ser que tengaa mejoras más adelante, pero por ahora quizás puede valerte. Molando. Lee este documento para conocer el funcionamiento o comienza a usarlo por tu cuenta para entenderlo y consúltalo si te surgen dudas.
 
 
 ## Características 
 BatallaRAAP es un programa para Windows que tiene dos ventanas, la ventana de control, donde podrás hacer las configuraciones de las batallas, y la ventana principal, donde se muestra el tiempo y las palabras. 
 
 ## ¿Por qué en dos ventanas?
-Lo he diseñado de esta manera para que puedas utilizarlo en el modo de escritorio extendido, usando una ventana en cada pantalla usando como segunda pantalla el proyector o pantalla inalámbrica de tu aula o evento. De tal manera el control no se muestra a los participantes.
+Lo he diseñado de esta manera para que puedas utilizarlo en el modo de escritorio extendido, usando una ventana en cada pantalla usando como segunda pantalla el proyector o pantalla inalámbrica de tu aula o evento. De tal manera el control no se muestra a los participantes. 
 
 ## Personalización
 ** Diccionarios ** 
@@ -50,19 +50,18 @@ El modo automático se usa para que las palabras vayan apareciendo conforme al f
 El modo manual se usa para hacer manualmente la batalla. Pulsando el botón comenzar batalla iniciará la pista y el temporizador. Al pulsar el botón "palabra" aparecerá una palabra en la pantalla principal y no aparecerá otra hasta que vuelvas a pulsar el botón.
 
 ## Diccionarios
-En la pestaña de diccionarios encontrarás los diccionarios que se van a usar para las batallas. Los diccionarios son archivos de texto en formato TXT donde cada palabra va en una línea o separado por comas.
-Abre Dic_General.txt o cualquier diccionario incluido para ver el ejemplo. Marca los diccionarios que quieres que se aparezcan en  la batalla. Si varios diccionarios son marcados, las palabras de los diccionarios aparecerán mezcladas. Marca solo uno específico para hacer tus propias batallas temáticas. 
+En la pestaña de diccionarios encontrarás los diccionarios que se van a usar para las batallas. Los diccionarios son archivos de texto en formato TXT donde cada palabra va en una línea o separado por comas. Abre Dic_General.txt o cualquier diccionario incluido para ver el ejemplo. En el programa, marca los diccionarios que quieres que se aparezcan en la batalla. Si varios diccionarios son marcados, las palabras de los diccionarios se sumarán entre ellas. Marca la opción "aleatorizar diccionarios" para que el orden de las palabras se muestre al azar. Marca solo uno específico para hacer tus propias batallas temáticas. 
 
 ## Añadiendo un diccionario
-Crea tu diccionario personalizado creando un archivo de texto (con el Notepad de tu Windows por ejemplo) con palabras en cada línea o separadas por comas. Abre el Dic_General para ver cómo es el formato. Cuando lo tengas, guardalo en el mismo directorio con el nombre Dic_ELNOMBREDETUDICCIONARIO.txt 
+Crea tu diccionario personalizado creando un archivo de texto (con el Notepad de tu Windows, por ejemplo) con palabras en cada línea o separadas por comas. Abre el Dic_General para ver cómo es el formato. Cuando lo tengas, guardalo en el mismo directorio con el nombre Dic_ELNOMBREDETUDICCIONARIO.txt 
 Abre el programa y verás que tu diccionario aparece en la pestaña diccionarios. 
 
 ## Sobre el proyecto
-Esta es una humilde aportación con la intención de que sirva  de un programa sencillo, pero que creo puede dar mucho juego para usarlo. Sé que podría tener muchas más opciones y mejoras, pero es algo que he hecho desde mi poco conocimiento, en mis pocos ratos libres, durante tiempo, por pasar el rato y matar el gusanillo de la programación. Si quieres contribuir a mejorarlo, el programa está desarrollado en .Net con Visual Studio y el código está abierto en GitHub. También puedes contribuir creando diccionarios temáticos que sí resultan de interés pondré disponibles para todos en el proyecto.
-Si te ha resultado útil y lo deseas, también puedes hacer una donación. 
+Esta es una humilde aportación con la intención de ayudar a la comunidad  a ofrecer un programa sencillo, pero que creo puede dar mucho juego para usarlo, y cuyo fuerte es la personalización. Sé que podría tener muchas más opciones y mejoras, pero es algo que he hecho desde mi poco conocimiento, en mis pocos ratos libres, durante tiempo, por pasar el rato y matar el gusanillo de la programación. Si quieres contribuir a mejorarlo, el programa está desarrollado en .Net con Visual Studio y el código está abierto en GitHub. También puedes contribuir creando diccionarios temáticos que sí resultan de interés pondré disponibles para todos en el proyecto.
+Si te ha resultado útil y lo deseas, también puedes hacer una donación.
 
 **Posibles mejoras en el futuro**
-Internacionalización 
 Participantes
 Puntuaciones 
+Internacionalización 
 Mejoras en la interfaz
