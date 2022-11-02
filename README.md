@@ -8,9 +8,13 @@ Windows 7, .NET Framework (4.5.2) 1GB RAM
 
 Además es personalizable; podrás cambiar el fondo de pantalla, el formato del texto de la pantalla principal. Podrás usar tus instrumentales y añadir tus propias palabras para la batalla. Es una primera versión y puede ser que tengaa mejoras más adelante, pero por ahora quizás puede valerte. Molando. Lee este documento para conocer el funcionamiento o comienza a usarlo por tu cuenta para entenderlo y consúltalo si te surgen dudas.
 
+![screenshot1](https://user-images.githubusercontent.com/4362846/199621778-1cf70c0b-78cb-4b00-b808-866203ce9ef3.jpg)
 
 ## Características 
 BatallaRAAP es un programa para Windows que tiene dos ventanas, la ventana de control, donde podrás hacer las configuraciones de las batallas, y la ventana principal, donde se muestra el tiempo y las palabras. 
+
+![screenshot2](https://user-images.githubusercontent.com/4362846/199621820-c52d9faa-f1e8-43ae-a7bb-92370f857359.jpg)
+
 
 ## ¿Por qué en dos ventanas?
 Lo he diseñado de esta manera para que puedas utilizarlo en el modo de escritorio extendido, usando una ventana en cada pantalla usando como segunda pantalla el proyector o pantalla inalámbrica de tu aula o evento. De tal manera el control no se muestra a los participantes. 
