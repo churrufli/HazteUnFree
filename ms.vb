@@ -1,6 +1,6 @@
 ﻿Imports System.IO
 
-Public Class ms
+Public Class Ms
     Public Shared MySettings 'aqui guardaré para leer
     'Public Shared MainBackGroundImage As String
     'Public Shared LbWordFont As String
@@ -12,11 +12,11 @@ Public Class ms
     'Public Shared cbBattleType As String
 
     Public Shared Sub LoadSettings()
-        MySettings = File.ReadAllText(vars.UserDir & "\" & vars.MySettingsFileName)
+        MySettings = File.ReadAllText(Vars.UserDir & "\" & Vars.MySettingsFileName)
     End Sub
 
     Public Shared Sub InitSettings()
-        If File.Exists(vars.UserDir & "\" & vars.MySettingsFileName) = False Then
+        If File.Exists(Vars.UserDir & "\" & Vars.MySettingsFileName) = False Then
             CreateDefaultSettings()
         End If
         CheckSettings()
@@ -24,7 +24,7 @@ Public Class ms
 
     Public Shared Sub CreateDefaultSettings()
         Dim t = ""
-        t = t & AddSetting("MainBackGroundImage", vars.UserDir & "bg.jpg")
+        t = t & AddSetting("MainBackGroundImage", Vars.UserDir & "bg.jpg")
         t = t & AddSetting("LbWordFont", "Impact")
         t = t & AddSetting("LbWordSize", "130pt")
         t = t & AddSetting("lbWordColor", "0; 47; 65")
@@ -34,12 +34,12 @@ Public Class ms
         t = t & AddSetting("cbBattleType", "2")
         t = t & AddSetting("MusicDirectory", Directory.GetCurrentDirectory)
         t = t & AddSetting("TbWordsWaittoStart", "3")
-        File.Create(vars.MySettingsFileName).Dispose()
-        File.WriteAllText(vars.MySettingsFileName, t)
+        File.Create(Vars.MySettingsFileName).Dispose()
+        File.WriteAllText(Vars.MySettingsFileName, t)
     End Sub
 
     Public Shared Sub CheckSettings()
-        WriteIfNotExistSetting("MainBackGroundImage", vars.UserDir & "bg.jpg")
+        WriteIfNotExistSetting("MainBackGroundImage", Vars.UserDir & "bg.jpg")
         WriteIfNotExistSetting("LbWordFont", "Impact")
         WriteIfNotExistSetting("LbWordSize", "130pt")
         WriteIfNotExistSetting("lbWordColor", "0; 47; 65")
@@ -62,10 +62,10 @@ Public Class ms
             MySettings = MySettings & "<" & setting & ">" & value & "</" & setting & ">" & Environment.NewLine
             MySettings = Replace(MySettings, "><", ">" & Environment.NewLine & "<")
             Try
-                File.Delete(vars.MySettingsFileName)
+                File.Delete(Vars.MySettingsFileName)
             Catch
             End Try
-            File.WriteAllText(vars.MySettingsFileName, MySettings)
+            File.WriteAllText(Vars.MySettingsFileName, MySettings)
             LoadSettings()
         End If
     End Sub
@@ -81,7 +81,7 @@ Public Class ms
     End Sub
 
     Public Shared Sub SaveSetting(setting, myvalue)
-        Dim mylog As String = My.Computer.FileSystem.ReadAllText(vars.UserDir & vars.MySettingsFileName)
+        Dim mylog As String = My.Computer.FileSystem.ReadAllText(Vars.UserDir & Vars.MySettingsFileName)
         Dim previousmyvalue = Fn.GetDelimitedText(mylog, "<" & setting & ">", "</" & setting & ">")
         Dim newlog As String
         If previousmyvalue = myvalue Then Exit Sub
@@ -93,27 +93,27 @@ Public Class ms
             newlog = mylog & "<" & setting & ">" & myvalue & "</" & setting & ">" & Environment.NewLine
         End If
         Try
-            File.Delete(vars.UserDir & "/" & vars.MySettingsFileName)
+            File.Delete(Vars.UserDir & "/" & Vars.MySettingsFileName)
         Catch
         End Try
         Try
-            File.WriteAllText(vars.UserDir & "/" & vars.MySettingsFileName, newlog)
+            File.WriteAllText(Vars.UserDir & "/" & Vars.MySettingsFileName, newlog)
         Catch
         End Try
         LoadSettings()
     End Sub
 
     Public Shared Sub UpdateSettings(idsetting, myvalue)
-        Dim mylog As String = My.Computer.FileSystem.ReadAllText(vars.MySettingsFileName)
+        Dim mylog As String = My.Computer.FileSystem.ReadAllText(Vars.MySettingsFileName)
         Dim previousmyvalue = Fn.GetDelimitedText(mylog, "<" & idsetting & ">", "</" & idsetting & ">")
         Dim newSetting = Replace(mylog, "<" & idsetting & ">" & previousmyvalue & "</" & idsetting & ">",
                                  "<" & idsetting & ">" & myvalue & "</" & idsetting & ">")
         Try
-            File.Delete(vars.UserDir & vars.MySettingsFileName)
+            File.Delete(Vars.UserDir & Vars.MySettingsFileName)
         Catch
         End Try
         Try
-            File.WriteAllText(vars.UserDir & vars.MySettingsFileName, newSetting)
+            File.WriteAllText(Vars.UserDir & Vars.MySettingsFileName, newSetting)
         Catch
         End Try
         LoadSettings()

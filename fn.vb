@@ -7,78 +7,125 @@ Imports VB = Microsoft.VisualBasic
 Public Class Fn
     Public Shared Sub SetMySettings()
 
-        ms.InitSettings()
-        ms.LoadSettings()
+        Ms.InitSettings()
+        Ms.LoadSettings()
 
-        If ms.ReadSetting("MainBackGroundImage") <> Nothing Then
+        If Ms.ReadSetting("MainBackGroundImage") <> Nothing Then
             Try
-                ControlModule.BackgroundImage = New Bitmap(ms.ReadSetting("MainBackGroundImage").ToString)
+                ControlModule.BackgroundImage = New Bitmap(Ms.ReadSetting("MainBackGroundImage").ToString)
                 MainModule.BackgroundImage = ControlModule.BackgroundImage
             Catch
-                WriteLog("No se encontró la imagen de fondo " & ms.ReadSetting("MainBackGroundImage").ToString)
+                WriteLog("No se encontró la imagen de fondo " & Ms.ReadSetting("MainBackGroundImage").ToString)
             End Try
         End If
 
-        If ms.ReadSetting("lbWordColor") <> Nothing Then
-            MainModule.LbWord.ForeColor = Color.FromArgb(ms.ReadSetting("lbWordColor"))
-        End If
-
-        If ms.ReadSetting("lbWordFont") <> Nothing Then
-            MainModule.LbWord.Font = GetFontByString(ms.ReadSetting("lbWordFont"))
-        End If
-
-        If ms.ReadSetting("lbCountDownColor") <> Nothing Then
-            MainModule.LbCountDown.ForeColor = Color.FromArgb(ms.ReadSetting("lbCountDownColor"))
-        End If
-
-        If ms.ReadSetting("lbCountDownFont") <> Nothing Then
-            MainModule.LbCountDown.Font = GetFontByString(ms.ReadSetting("lbCountDownFont"))
-        End If
-
-        If ms.ReadSetting("MusicDirectory") <> Nothing Then
-            ControlModule.tbmusicdir.Text = ms.ReadSetting("MusicDirectory")
-        Else
-            ControlModule.tbmusicdir.Text = vars.UserDir
-        End If
-
-        If ms.ReadSetting("lbCountDownPositionX") <> Nothing And ms.ReadSetting("lbCountDownPositionY") <> Nothing Then
-            MainModule.LbCountDown.Location = New Point(CInt(ms.ReadSetting("lbCountDownPositionX")),
-                                                        CInt(ms.ReadSetting("lbCountDownPositionY")))
-        End If
-        If ms.ReadSetting("lbWordPositionX") <> Nothing And ms.ReadSetting("lbWordPositionY") <> Nothing Then
-            MainModule.LbWord.Location = New Point(CInt(ms.ReadSetting("lbWordPositionX")),
-                                                   CInt(ms.ReadSetting("lbWordPositionY")))
-        End If
-
-        If ms.ReadSetting("MainWidth") <> Nothing Then
-            MainModule.Width = ms.ReadSetting("MainWidth")
-        End If
-
-        If ms.ReadSetting("MainHeight") <> Nothing Then
-            MainModule.Height = ms.ReadSetting("MainWidth")
-        End If
-
-        If ms.ReadSetting("chkHorn") <> Nothing Then
-            If ms.ReadSetting("chkHorn") = "1" Then
-                ControlModule.chkHorn.Checked = True
-            Else
-                ControlModule.chkHorn.Checked = False
+        Try
+            If Ms.ReadSetting("lbWordColor") <> Nothing Then
+                MainModule.LbWord.ForeColor = Color.FromArgb(Ms.ReadSetting("lbWordColor"))
             End If
-        End If
-        If ms.ReadSetting("chkMinimize") <> Nothing Then
-            If ms.ReadSetting("chkMinimize") = "1" Then
-                ControlModule.chkMinimize.Checked = True
-            Else
-                ControlModule.chkMinimize.Checked = False
+        Catch ex As Exception
+            Fn.WriteLog(ex.ToString())
+        End Try
+        Try
+            If Ms.ReadSetting("lbWordFont") <> Nothing Then
+                MainModule.LbWord.Font = GetFontByString(Ms.ReadSetting("lbWordFont"))
             End If
-        End If
-        If ms.ReadSetting("chPlayMusic") <> Nothing Then
-            If ms.ReadSetting("chPlayMusic") = "1" Then
-                ControlModule.chPlayMusic.Checked = True
-            Else
-                ControlModule.chPlayMusic.Checked = False
+        Catch ex As Exception
+            Fn.WriteLog(ex.ToString())
+        End Try
+        Try
+            If Ms.ReadSetting("lbCountDownColor") <> Nothing Then
+                MainModule.LbCountDown.ForeColor = Color.FromArgb(Ms.ReadSetting("lbCountDownColor"))
             End If
-        End If
+        Catch ex As Exception
+            Fn.WriteLog(ex.ToString())
+        End Try
+        Try
+
+            If Ms.ReadSetting("lbCountDownFont") <> Nothing Then
+                MainModule.LbCountDown.Font = GetFontByString(Ms.ReadSetting("lbCountDownFont"))
+            End If
+        Catch ex As Exception
+            Fn.WriteLog(ex.ToString())
+        End Try
+        Try
+            If Ms.ReadSetting("MusicDirectory") <> Nothing Then
+                ControlModule.tbmusicdir.Text = Ms.ReadSetting("MusicDirectory")
+            Else
+                ControlModule.tbmusicdir.Text = Vars.UserDir
+            End If
+        Catch ex As Exception
+            Fn.WriteLog(ex.ToString())
+        End Try
+        Try
+            If Ms.ReadSetting("lbCountDownPositionX") <> Nothing And Ms.ReadSetting("lbCountDownPositionY") <> Nothing Then
+                MainModule.LbCountDown.Location = New Point(CInt(Ms.ReadSetting("lbCountDownPositionX")),
+                                                            CInt(Ms.ReadSetting("lbCountDownPositionY")))
+            End If
+            If Ms.ReadSetting("lbWordPositionX") <> Nothing And Ms.ReadSetting("lbWordPositionY") <> Nothing Then
+                MainModule.LbWord.Location = New Point(CInt(Ms.ReadSetting("lbWordPositionX")),
+                                                   CInt(Ms.ReadSetting("lbWordPositionY")))
+            End If
+        Catch ex As Exception
+            Fn.WriteLog(ex.ToString())
+        End Try
+        Try
+            If Ms.ReadSetting("MainWidth") <> Nothing Then
+                MainModule.Width = Ms.ReadSetting("MainWidth")
+            End If
+        Catch ex As Exception
+            Fn.WriteLog(ex.ToString())
+        End Try
+        Try
+
+            If Ms.ReadSetting("MainHeight") <> Nothing Then
+                MainModule.Height = Ms.ReadSetting("MainWidth")
+            End If
+        Catch ex As Exception
+            Fn.WriteLog(ex.ToString())
+        End Try
+        Try
+
+            If Ms.ReadSetting("WindowState") <> Nothing Then
+                Dim fws As FormWindowState = [Enum].Parse(GetType(FormWindowState), Ms.ReadSetting("WindowState"))
+                'MainModule.WindowState = fws
+            End If
+        Catch ex As Exception
+            Fn.WriteLog(ex.ToString())
+        End Try
+        Try
+            If Ms.ReadSetting("chkSoundFx") <> Nothing Then
+                If Ms.ReadSetting("chkSoundFx") = "1" Then
+                    ControlModule.chkSoundFx.Checked = True
+                Else
+                    ControlModule.chkSoundFx.Checked = False
+                End If
+            End If
+        Catch ex As Exception
+            Fn.WriteLog(ex.ToString())
+        End Try
+        Try
+            If Ms.ReadSetting("chkMinimize") <> Nothing Then
+                If Ms.ReadSetting("chkMinimize") = "1" Then
+                    ControlModule.chkMinimize.Checked = True
+                Else
+                    ControlModule.chkMinimize.Checked = False
+                End If
+            End If
+        Catch ex As Exception
+            Fn.WriteLog(ex.ToString())
+        End Try
+        Try
+            If Ms.ReadSetting("chPlayMusic") <> Nothing Then
+                If Ms.ReadSetting("chPlayMusic") = "1" Then
+                    ControlModule.chPlayMusic.Checked = True
+                Else
+                    ControlModule.chPlayMusic.Checked = False
+                End If
+            End If
+        Catch ex As Exception
+            Fn.WriteLog(ex.ToString())
+        End Try
         InitMusic()
     End Sub
 
@@ -136,9 +183,9 @@ Public Class Fn
         Return fallbackColour
     End Function
 
-    Public Shared Function ImageToString(Img As Image)
+    Public Shared Function ImageToString(img As Image)
         Dim imgConverter As New ImageConverter()
-        Dim imgBytes As Byte() = imgConverter.ConvertTo(Img, GetType(Byte()))
+        Dim imgBytes As Byte() = imgConverter.ConvertTo(img, GetType(Byte()))
         Return Convert.ToBase64String(imgBytes)
     End Function
 
@@ -171,8 +218,8 @@ Public Class Fn
     Public Shared Sub Shuffle(items As String())
         Dim j As Int32
         Dim temp As String
-        For n As Int32 = items.Length - 1 To 0 Step - 1
-            j = MainModule.rnd.Next(0, n + 1)
+        For n As Int32 = items.Length - 1 To 0 Step -1
+            j = MainModule.Rnd.Next(0, n + 1)
             temp = items(n)
             items(n) = items(j)
             items(j) = temp
@@ -189,73 +236,86 @@ Public Class Fn
     End Sub
 
     Public Shared Sub InitMusic()
-        Dim dir = ms.ReadSetting("MusicDirectory")
-        If dir = Nothing Then Exit Sub
-        vars.files =
-            Directory.GetFiles(dir, "*.*").Where(
-                Function(file) file.ToLower().EndsWith(".mp3") OrElse file.ToLower().EndsWith(".wav")).ToArray()
+        Try
+            Dim dir = Ms.ReadSetting("MusicDirectory")
+            If dir = Nothing Then Exit Sub
+            Vars.Files =
+                Directory.GetFiles(dir, "*.*").Where(
+                    Function(file) file.ToLower().EndsWith(".mp3") OrElse file.ToLower().EndsWith(".wav")).ToArray()
+        Catch ex As Exception
+            Fn.WriteLog(ex.ToString())
+        End Try
     End Sub
 
 
     Public Shared Sub LoadMusic()
-        If ControlModule.chPlayMusic.Checked = False Then Exit Sub
-        Dim comboSource As New Dictionary(Of String, String)()
-        'Dim dir = ms.ReadSetting("MusicDirectory")
-        'If dir = Nothing Then Exit Sub
-        'vars.files = Directory.GetFiles(dir, "*.*").Where(Function(file) file.ToLower().EndsWith(".mp3") OrElse file.ToLower().EndsWith(".wav")).ToArray()
+        Try
+            'If ControlModule.chPlayMusic.Checked = False Then Exit Sub
+            Dim comboSource As New Dictionary(Of String, String)()
+            'Dim dir = ms.ReadSetting("MusicDirectory")
+            'If dir = Nothing Then Exit Sub
+            'vars.files = Directory.GetFiles(dir, "*.*").Where(Function(file) file.ToLower().EndsWith(".mp3") OrElse file.ToLower().EndsWith(".wav")).ToArray()
 
-        If ControlModule.chshufflemusic.Checked Then
-            Shuffle(vars.files)
-        End If
-        Dim dir = ms.ReadSetting("MusicDirectory")
-        Dim i = 0
-        For Each u In vars.files
-
-            i = i + 1
-            Dim n = u
-            'esto funciona pero ralentiza el tiempo de carga de las batallas
-            'n = n & " (" & TimeSpan.FromSeconds(Math.Round(GetMediaDuration(u))).ToString("mm\:ss") & ")"
-            n = Replace(n, ".mp3", "")
-            n = Replace(n, ".wav", "")
-            n = Replace(n, dir & "\", Nothing)
-            If n <> "horn" Then
-                comboSource.Add(u, n)
-            Else
-                n = n
+            If ControlModule.chshufflemusic.Checked Then
+                Shuffle(Vars.Files)
             End If
+            Dim dir = Ms.ReadSetting("MusicDirectory")
+            Dim i = 0
+            For Each u In Vars.Files
 
-        Next
-        ControlModule.cbMusicList.DataSource = New BindingSource(comboSource, Nothing)
-        ControlModule.cbMusicList.DisplayMember = "Value"
-        ControlModule.cbMusicList.ValueMember = "Key"
-        WriteLog(i & " instrumentales cargadas")
-        If InStr(ControlModule.chshufflemusic.Text, "(") < 0 Then
-            ControlModule.chshufflemusic.Text = ControlModule.chshufflemusic.Text & (" (" & i & " instrumentales)")
-        End If
+                i = i + 1
+                Dim n = u
+                n = Replace(n, ".mp3", "")
+                n = Replace(n, ".wav", "")
+                n = Replace(n, dir & "\", Nothing)
+                If n <> "SoundFx" Then
+                    n = n & " (" & TimeSpan.FromSeconds(Math.Round(GetMediaDuration(u))).ToString("mm\:ss") & ")"
+                    comboSource.Add(u, n)
+                Else
+                    n = n
+                End If
+                'esto funciona pero ralentiza el tiempo de carga de las batallas
+
+
+            Next
+            ControlModule.cbMusicList.DataSource = New BindingSource(comboSource, Nothing)
+            ControlModule.cbMusicList.DisplayMember = "Value"
+            ControlModule.cbMusicList.ValueMember = "Key"
+            WriteLog(i & " instrumentales cargadas")
+            If InStr(ControlModule.chshufflemusic.Text, "(") < 0 Then
+                ControlModule.chshufflemusic.Text = ControlModule.chshufflemusic.Text & (" (" & i & " instrumentales)")
+            End If
+        Catch
+            Fn.WriteLog("No se encontraron instrumentales en " & Ms.ReadSetting("MusicDirectory"))
+        End Try
     End Sub
 
     Public Shared Function PlayMusic()
-        If ControlModule.chPlayMusic.Checked = False Then Exit Function
+        Try
+            If ControlModule.chPlayMusic.Checked = False Then Exit Function
 
-        If ControlModule.chshufflemusic.Checked Then
-            LoadMusic()
-        End If
-        '///// MUSIC //////
-        Dim Vidhhmmss As String
-        Dim u = ControlModule.cbMusicList.SelectedValue
-        vars.Player.URL = u
-        vars.Player.controls.play()
-        Dim VidSecs As Integer = Math.Round(GetMediaDuration(u.ToString)) 'Get total seconds
-        If ControlModule.CbBattleType.SelectedIndex = 3 Then
-            Vidhhmmss = TimeSpan.FromSeconds(Math.Round(GetMediaDuration(u))).ToString("mm\:ss") ' Format hh:mm:ss
-            MainModule.CountDownFrom = TimeSpan.FromSeconds(VidSecs)
-        End If
-        WriteLog("Reproduciendo " & Replace(u, Directory.GetCurrentDirectory() & "\", ""))
-        Return VidSecs
+            If ControlModule.chshufflemusic.Checked Then
+                LoadMusic()
+            End If
+            '///// MUSIC //////
+            Dim vidhhmmss As String
+            Dim u = ControlModule.cbMusicList.SelectedValue
+            Vars.Player.URL = u
+            Vars.Player.controls.play()
+            Dim vidSecs As Integer = Math.Round(GetMediaDuration(u.ToString)) 'Get total seconds
+            If ControlModule.CbBattleType.SelectedIndex = 3 Then
+                vidhhmmss = TimeSpan.FromSeconds(Math.Round(GetMediaDuration(u))).ToString("mm\:ss") ' Format hh:mm:ss
+                MainModule.CountDownFrom = TimeSpan.FromSeconds(vidSecs)
+            End If
+            WriteLog("Reproduciendo " & Replace(u, Directory.GetCurrentDirectory() & "\", ""))
+            Return vidSecs
+        Catch
+            Fn.WriteLog("No se ha encontrado música para reproducir")
+        End Try
     End Function
 
     Public Shared Sub Wait(seconds As Single)
-        If vars.StopBattle <> True Then
+        If Vars.StopBattle <> True Then
             Static start As Single
             start = VB.Timer()
             Do While VB.Timer() < start + seconds
@@ -455,31 +515,31 @@ Public Class Fn
         End Try
     End Function
 
-    Public Shared Function GetDelimitedText(Text As String, OpenDelimiter As String, CloseDelimiter As String,
+    Public Shared Function GetDelimitedText(text As String, openDelimiter As String, closeDelimiter As String,
                                             Optional index As Long = 0) As String
         Dim i As Long, j As Long
 
         If index = 0 Then index = 1
 
         ' search the opening mark
-        i = InStr(index, Text, OpenDelimiter, vbTextCompare)
+        i = InStr(index, text, openDelimiter, vbTextCompare)
         If i = 0 Then
             index = 0
             Exit Function
         End If
-        i = i + Len(OpenDelimiter)
+        i = i + Len(openDelimiter)
 
         ' search the closing mark
-        j = InStr(i + 1, Text, CloseDelimiter, vbTextCompare)
+        j = InStr(i + 1, text, closeDelimiter, vbTextCompare)
         If j = 0 Then
             index = 0
             Exit Function
         End If
 
         ' get the text between the two Delimiters
-        GetDelimitedText = Mid$(Text, i, j - i)
+        GetDelimitedText = Mid$(text, i, j - i)
 
         ' advanced the index after the closing Delimiter
-        index = j + Len(CloseDelimiter)
+        index = j + Len(closeDelimiter)
     End Function
 End Class

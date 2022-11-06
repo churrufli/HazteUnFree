@@ -3,9 +3,9 @@ Imports System.Net
 Imports WMPLib
 
 Public Class MainModule
-    Private TargetDT As DateTime
+    Private _targetDt As DateTime
     Public CountDownFrom As TimeSpan = TimeSpan.FromSeconds(60)
-    Public Shared rnd As New Random()
+    Public Shared Rnd As New Random()
     Public Shared Startwords As Boolean = True
     Public Shared InitAll As Boolean = True
     Public Shared CountWords As Integer = 0
@@ -30,22 +30,22 @@ Public Class MainModule
 
     Sub SetBattle(manualorauto As String)
         If ControlModule.chkShuffle.Checked = True Then
-            Fn.Shuffle(vars.arr)
+            Fn.Shuffle(Vars.Arr)
             Fn.WriteLog("Aleatorizando orden de aparición de palabras...")
         End If
-        Dim Mode As String = ControlModule.CbBattleType.SelectedIndex
-        Select Case Mode
+        Dim mode As String = ControlModule.CbBattleType.SelectedIndex
+        Select Case mode
             Case 0
-                Mode = 10
+                mode = 10
             Case 1
-                Mode = 5
+                mode = 5
             Case 2
-                Mode = 2
+                mode = 2
             Case 3
-                Mode = 3
+                mode = 3
             Case Else
-                Mode = 0
-                ControlModule.CbBattleType.SelectedIndex = Mode
+                mode = 0
+                ControlModule.CbBattleType.SelectedIndex = mode
         End Select
 
         Select Case ControlModule.CbDuration.SelectedIndex
@@ -56,14 +56,14 @@ Public Class MainModule
             Case 2
                 Me.CountDownFrom = TimeSpan.FromSeconds(120)
             Case Else
-                Me.CountDownFrom = TimeSpan.FromSeconds(vars.SongDuration)
+                Me.CountDownFrom = TimeSpan.FromSeconds(Vars.SongDuration)
         End Select
 
-        PlayBattle(Mode, ControlModule.TbWordsWaittoStart.Text, Nothing, Me.CountDownFrom, manualorauto)
+        PlayBattle(mode, ControlModule.TbWordsWaittoStart.Text, Nothing, Me.CountDownFrom, manualorauto)
     End Sub
 
 
-    Sub PlayBattle(Mode, WordswaittoStart, Song, duration, manualorauto)
+    Sub PlayBattle(mode, wordswaittoStart, song, duration, manualorauto)
         '///////////////////////////////////////
         LbCountDown.Visible = True
         LbWord.Text = ""
@@ -71,38 +71,39 @@ Public Class MainModule
 
         Dim settimer = False
 
-        TargetDT = DateTime.Now.Add(CountDownFrom)
+        _targetDt = DateTime.Now.Add(CountDownFrom)
         ControlModule.btStopBattle.Enabled = True
 
+
         'esto llama a la funcion tick y el contador del tiempo
-        TimerVisualCountDown.Interval = (900)
+        TimerVisualCountDown.Interval = (980)
         TimerVisualCountDown.Start()
 
-        'If ControlModule.chautoinitwords.Checked Then
         'espera 
-        Dim espera = CInt(WordswaittoStart)
+        Dim espera = CInt(wordswaittoStart)
         Fn.Wait(espera)
         'pongo la primera palabra
 
 
-        If Mode <> 3 Then
-            LbWord.Text = UCase(vars.arr(0).ToString)
-            ControlModule.LbWord.Text = UCase(vars.arr(0).ToString)
+        If mode <> 3 Then
+
+            LbWord.Text = UCase(Vars.Arr(0).ToString)
+            ControlModule.LbWord.Text = UCase(Vars.Arr(0).ToString)
         Else
             'aqui tengo que cambiar el tamaño de la fuente
-            Dim myfont As Font = Fn.GetFontByString(ms.ReadSetting("lbWordFont"))
+            Dim myfont As Font = Fn.GetFontByString(Ms.ReadSetting("lbWordFont"))
             Dim fontName As FontFamily = myfont.FontFamily
             Dim fontsize = myfont.Size - Math.Round(myfont.Size / 3)
             LbWord.Font = New Font(fontName, fontsize)
 
-            Dim CountWords = 0
+            Dim countWords = 0
             Dim cadena = ""
             Dim salir = 0
 
-            For Each w In vars.arr
-                CountWords = CountWords + 1
+            For Each w In Vars.Arr
+                countWords = countWords + 1
 
-                Select Case CountWords
+                Select Case countWords
                     Case 1, 3
                         cadena = cadena & w
                     Case 2
@@ -111,20 +112,20 @@ Public Class MainModule
                         cadena = cadena & "/" & w & ";"
                 End Select
 
-                If CountWords >= 4 Then
-                    CountWords = 0
+                If countWords >= 4 Then
+                    countWords = 0
                 End If
                 salir = salir + 1
                 If salir > 1000 Then Exit For
             Next
 
-            vars.arr4words = Split(cadena, ";")
-            LbWord.Text = UCase(vars.arr4words(0).ToString)
-            ControlModule.LbWord.Text = Replace(UCase(vars.arr4words(0).ToString), vbNewLine, "/")
-
-            '////////////////
+            Vars.Arr4Words = Split(cadena, ";")
+            LbWord.Text = UCase(Vars.Arr4Words(0).ToString)
+            Dim otherword As String = LbWord.Text
+            otherword = Replace(otherword, vbNewLine, "/")
+            otherword = otherword
+            ControlModule.LbWord.Text = otherword
         End If
-
 
         'ahora inicio el temporizador para las palabras
         CountWords = CountWords + 1
@@ -149,11 +150,16 @@ Public Class MainModule
 
             If ControlModule.rbAutoMode.Checked Then
                 TimerWord.Start()
+            Else
+                TimerWord.Stop()
+
             End If
 
         Else
             'es manual 
             TimerWord.Interval = (1000000)
+
+            TimerWord.Stop()
         End If
 
 
@@ -168,18 +174,32 @@ Public Class MainModule
     Sub GetWord()
         Try
             If ControlModule.CbBattleType.SelectedIndex <> 3 Then
-                LbWord.Text = UCase(vars.arr(CountWords).ToString)
-                ControlModule.LbWord.Text = UCase(vars.arr(CountWords).ToString)
+
+                If InStr("%" & Vars.WordsShowed & "%", "%" & UCase(Vars.Arr(CountWords).ToString) & "%") = 0 Then
+                    LbWord.Text = UCase(Vars.Arr(CountWords).ToString)
+                    ControlModule.LbWord.Text = UCase(Vars.Arr(CountWords).ToString)
+
+                    If Vars.WordsShowed = "" Then
+                        Vars.WordsShowed = "%" & LbWord.Text & "%"
+                    Else
+                        Vars.WordsShowed = Vars.WordsShowed & LbWord.Text & "%"
+                    End If
+                Else
+                    CountWords = CountWords + 1
+                    GetWord()
+                End If
+
 
             Else
-                LbWord.Text = UCase(vars.arr4words(CountWords).ToString)
-                ControlModule.LbWord.Text = UCase(vars.arr4words(CountWords).ToString)
+                    LbWord.Text = UCase(Vars.Arr4Words(CountWords).ToString)
+                ControlModule.LbWord.Text = UCase(Vars.Arr4Words(CountWords).ToString)
 
             End If
             CountWords = CountWords + 1
         Catch
             CountWords = 0
-            Fn.WriteLog("Repitiendo palabras, se han mostrado todas.")
+            Vars.WordsShowed = ""
+            Fn.WriteLog("Repitiendo palabras, se han mostrado todas o no hay nada seleccionado en los diccionarios.")
         End Try
     End Sub
 
@@ -224,15 +244,16 @@ Public Class MainModule
 
     Public Shared Sub StopBattleFunctions()
         Try
-            vars.StopBattle = True
+            Vars.StopBattle = True
             MainModule.LbCountDown.Text = "00"
             ControlModule.LbCountDown.Text = "00"
             MainModule.TimerVisualCountDown.Stop()
-            MainModule.LbWord.Text = "-"
+            MainModule.LbWord.Text = "BatallaRAAP"
+            ControlModule.LbWord.Text = "BatallaRAAP"
 
             MainModule.TimerWord.Stop()
             Fn.Wait(1)
-            vars.Player.controls.stop()
+            Vars.Player.controls.stop()
             ControlModule.LbWord.Text = ""
             ControlModule.BtStartBattle.Enabled = True
             ControlModule.Enabled = True
@@ -247,36 +268,31 @@ Public Class MainModule
     End Sub
 
     Private Sub tmrCountdown_Tick(sender As Object, e As EventArgs) Handles TimerVisualCountDown.Tick
-        Dim ts As TimeSpan = TargetDT.Subtract(DateTime.Now)
+        Dim ts As TimeSpan = _targetDt.Subtract(DateTime.Now)
         Dim t = ""
         Select Case ts.TotalMilliseconds
             Case > 60000
                 t = ts.ToString("mm\:ss").Remove(0, 1)
-                Dim myfont As Font = Fn.GetFontByString(ms.ReadSetting("lbCountDownFont"))
+                Dim myfont As Font = Fn.GetFontByString(Ms.ReadSetting("lbCountDownFont"))
                 Dim fontName As FontFamily = myfont.FontFamily
                 Dim fontsize = myfont.Size - Math.Round(myfont.Size / 3)
                 LbCountDown.Font = New Font(fontName, fontsize)
             Case < 60000
                 t = ts.ToString("ss")
-                LbCountDown.Font = Fn.GetFontByString(ms.ReadSetting("lbCountDownFont"))
+                LbCountDown.Font = Fn.GetFontByString(Ms.ReadSetting("lbCountDownFont"))
         End Select
 
         LbCountDown.Text = t
         ControlModule.LbCountDown.Text = t
-
-
         'If ProgressBar1.Value = ProgressBar1.Maximum Then ProgressBar1.Value = 1
         'ProgressBar1.Value = ProgressBar1.Value + 1
-
         If ts.TotalMilliseconds <= 0 Then
-
             TimerVisualCountDown.Stop()
-
-            If ms.ReadSetting("chkHorn") = "1" Then
-                Dim wplayer = New WindowsMediaPlayer()
-                wplayer.URL = "horn.mp3"
-                wplayer.controls.play()
-                wplayer = Nothing
+            If Ms.ReadSetting("chkSoundFx") = "1" Then
+                Dim wmplayer = New WindowsMediaPlayer()
+                wmplayer.URL = "SoundFx.mp3"
+                wmplayer.controls.play()
+                wmplayer = Nothing
             End If
             If ControlModule.chkMinimize.Checked Then
                 ControlModule.Show()
@@ -288,23 +304,25 @@ Public Class MainModule
 
     Private Sub Main_FormClosing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
         StopBattleFunctions()
-        ms.SaveSetting("MainWidth", Me.Width)
-        ms.SaveSetting("MainHeight", Me.Height)
+        Ms.SaveSetting("MainWidth", Me.Width)
+        Ms.SaveSetting("MainHeight", Me.Height)
+        Ms.SaveSetting("WindowState", Me.WindowState.ToString())
+
     End Sub
 
     'Private Sub Button1_Click(sender As Object, e As EventArgs)
     '    SetBattle()
     'End Sub
-    Public Shared Function ReadWeb(MyUrl As String)
+    Public Shared Function ReadWeb(myUrl As String)
         Dim reply As String
-        MyUrl = Replace(MyUrl, "'", "")
-        MyUrl = Replace(MyUrl, """", "")
+        myUrl = Replace(myUrl, "'", "")
+        myUrl = Replace(myUrl, """", "")
         Dim res As String
-        If MyUrl = "" Then Exit Function
+        If myUrl = "" Then Exit Function
         Try
             Dim client = New WebClient()
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12
-            reply = client.DownloadString(MyUrl)
+            reply = client.DownloadString(myUrl)
             Return reply
             Exit Function
         Catch ex As Exception
@@ -314,57 +332,57 @@ Public Class MainModule
     'Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
     '    TimerGetWords.Start()
     'End Sub
-    Sub sacapalabra()
+    Sub Sacapalabra()
     End Sub
 
     Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles TimerGetWords.Tick
-        sacapalabra()
+        Sacapalabra()
     End Sub
 
     Private Sub Button2_Click(sender As Object, e As EventArgs)
         Dim i = 0
         While i < 1000000
-            sacapalabra()
+            Sacapalabra()
             Fn.Wait(2)
             i = i + 1
         End While
     End Sub
 
-    Dim dragging
-    Dim beginX
-    Dim beginY
-    Dim PictureBox1 = LbCountDown
+    Dim _dragging
+    Dim _beginX
+    Dim _beginY
+    Dim _pictureBox1 = LbCountDown
 
     Private Sub LbCountDown_MouseDown(sender As Object, e As MouseEventArgs) Handles LbCountDown.MouseDown
-        dragging = True
-        beginX = e.X
-        beginY = e.Y
+        _dragging = True
+        _beginX = e.X
+        _beginY = e.Y
     End Sub
 
     Private Sub LbCountDown_MouseMove(sender As Object, e As MouseEventArgs) Handles LbCountDown.MouseMove
-        If dragging = True Then
-            LbCountDown.Location = New Point(LbCountDown.Location.X + e.X - beginX,
-                                             LbCountDown.Location.Y + e.Y - beginY)
+        If _dragging = True Then
+            LbCountDown.Location = New Point(LbCountDown.Location.X + e.X - _beginX,
+                                             LbCountDown.Location.Y + e.Y - _beginY)
             'Me.Refresh()
         End If
     End Sub
 
     Private Sub LbCountDown_MouseUp(sender As Object, e As MouseEventArgs) Handles LbCountDown.MouseUp
-        dragging = False
-        ms.SaveSetting("LbCountDownPositionX", sender.left)
-        ms.SaveSetting("LbCountDownPositionY", sender.top)
+        _dragging = False
+        Ms.SaveSetting("LbCountDownPositionX", sender.left)
+        Ms.SaveSetting("LbCountDownPositionY", sender.top)
         Fn.WriteLog("posición del contador guardada.")
     End Sub
 
     Private Sub LbCountDown_DragDrop(sender As Object, e As DragEventArgs) Handles LbCountDown.DragDrop
-        LbCountDown.Location = New Point(LbCountDown.Location.X + e.X - beginX, LbCountDown.Location.Y + e.Y - beginY)
+        LbCountDown.Location = New Point(LbCountDown.Location.X + e.X - _beginX, LbCountDown.Location.Y + e.Y - _beginY)
     End Sub
 
     ''''
     Private Sub LbWord_MouseDown(sender As Object, e As MouseEventArgs) Handles LbWord.MouseDown
-        dragging = True
-        beginX = e.X
-        beginY = e.Y
+        _dragging = True
+        _beginX = e.X
+        _beginY = e.Y
 
         If e.Button = MouseButtons.Right Then
 
@@ -372,21 +390,21 @@ Public Class MainModule
     End Sub
 
     Private Sub LbWord_MouseMove(sender As Object, e As MouseEventArgs) Handles LbWord.MouseMove
-        If dragging = True Then
-            LbWord.Location = New Point(LbWord.Location.X + e.X - beginX, LbWord.Location.Y + e.Y - beginY)
+        If _dragging = True Then
+            LbWord.Location = New Point(LbWord.Location.X + e.X - _beginX, LbWord.Location.Y + e.Y - _beginY)
             'Me.Refresh()
         End If
     End Sub
 
     Private Sub LbWord_MouseUp(sender As Object, e As MouseEventArgs) Handles LbWord.MouseUp
-        dragging = False
-        ms.SaveSetting("LbWordPositionX", sender.left)
-        ms.SaveSetting("LbWordPositionY", sender.top)
+        _dragging = False
+        Ms.SaveSetting("LbWordPositionX", sender.left)
+        Ms.SaveSetting("LbWordPositionY", sender.top)
         Fn.WriteLog("posición de la palabra guardada.")
     End Sub
 
     Private Sub LbWord_DragDrop(sender As Object, e As DragEventArgs) Handles LbWord.DragDrop
-        LbWord.Location = New Point(LbWord.Location.X + e.X - beginX, LbWord.Location.Y + e.Y - beginY)
+        LbWord.Location = New Point(LbWord.Location.X + e.X - _beginX, LbWord.Location.Y + e.Y - _beginY)
     End Sub
 
     Private Sub Button1_Click_1(sender As Object, e As EventArgs)

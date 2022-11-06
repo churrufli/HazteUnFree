@@ -61,7 +61,7 @@ Partial Class MainModule
         Me.LbCountDown.BackColor = System.Drawing.Color.Transparent
         Me.LbCountDown.Cursor = System.Windows.Forms.Cursors.Hand
         Me.LbCountDown.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.LbCountDown.Font = New System.Drawing.Font("Arial", 50.0!)
+        Me.LbCountDown.Font = New System.Drawing.Font("Impact", 170.0!)
         Me.LbCountDown.ForeColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(0, Byte), Integer))
         Me.LbCountDown.Location = New System.Drawing.Point(655, 84)
         Me.LbCountDown.Name = "LbCountDown"
@@ -85,8 +85,7 @@ Partial Class MainModule
         '
         'MainModule
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
-        Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None
         Me.BackColor = System.Drawing.Color.White
         Me.BackgroundImage = CType(resources.GetObject("$this.BackgroundImage"), System.Drawing.Image)
         Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
@@ -94,10 +93,10 @@ Partial Class MainModule
         Me.Controls.Add(Me.LbCountDown)
         Me.Controls.Add(Me.LbWord)
         Me.Controls.Add(Me.ProgressBar1)
+        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Name = "MainModule"
-        Me.ShowIcon = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "Main Screen - BatallaRAPP"
+        Me.Text = "Pantalla Principal - BatallaRAPP -  Versión 1.0.1"
         Me.ResumeLayout(False)
 
     End Sub

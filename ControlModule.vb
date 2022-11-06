@@ -18,7 +18,7 @@ Public Class ControlModule
     End Sub
 
     Sub InitStates()
-        TbWordsWaittoStart.Text = ms.ReadSetting("TbWordsWaittoStart")
+        TbWordsWaittoStart.Text = Ms.ReadSetting("TbWordsWaittoStart")
     End Sub
 
     Sub Calculate()
@@ -30,59 +30,91 @@ Public Class ControlModule
         Dim fiArr As FileInfo() = di.GetFiles("dic_*.txt")
         Dim fri As FileInfo
         For Each fri In fiArr
+
+            If chkDepureDic.Checked Then
+                DepureDictionary(fri.FullName)
+            End If
+
+
             Dim name = Split(Split(fri.Name, "_")(1).ToString, ".txt")(0).ToString
             ListBoxDictionaries.Items.Add(name, IIf(LCase(name) = "general", True, False))
         Next fri
         Dim checked = True   ' Set to True or False, as required.
         For i = 0 To ListBoxDictionaries.Items.Count - 1
-            ListBoxDictionaries.SetItemChecked(i, checked)
+
+            'ListBoxDictionaries.SetItemChecked(i, checked)
         Next
+    End Sub
+
+    Private Sub DepureDictionary(fullName As String)
+        Dim fileReader As String
+        fileReader = My.Computer.FileSystem.ReadAllText(fullName)
+
+        fileReader = Replace(fileReader, ",", vbNewLine)
+        fileReader = Replace(fileReader, vbNewLine & vbNewLine, vbNewLine)
+
+        Dim arr = Split(fileReader, vbNewLine)
+        Dim arrout As String = ""
+        For Each w In arr
+            w = RTrim(LTrim(w))
+            If InStr(arrout, vbNewLine & w & vbNewLine, CompareMethod.Text) = 0 Then
+                arrout = arrout & w & vbNewLine
+            Else
+                If w <> "" Then
+                    Fn.WriteLog("Se eliminó """ & w & """ del diccionario " & System.IO.Path.GetFileName(fullName).ToString() & " por duplicidad")
+                End If
+            End If
+        Next
+        'fixing double vbNewLine
+        arrout = Replace(arrout, vbNewLine & vbNewLine, vbNewLine)
+        arrout = Replace(arrout, vbNewLine & vbNewLine, vbNewLine)
+        arrout = Replace(arrout, ",,", ",")
+        arrout = Replace(arrout, ",,", ",")
+
+
+        System.IO.File.WriteAllText(fullName, arrout)
     End Sub
 
     Sub LoadWords()
 
-        Dim MyTotalWords As String = Nothing
+        Dim myTotalWords As String = Nothing
         For i = 0 To ListBoxDictionaries.Items.Count - 1
-            Dim Item As Object = ListBoxDictionaries.Items(i)
+            Dim item As Object = ListBoxDictionaries.Items(i)
             If ListBoxDictionaries.GetItemChecked(i) Then
-
-                Dim FullText As String
-                Dim a = Item
-                Item = "dic_" & Item & ".txt"
+                Dim fullText As String
+                Dim a = item
+                item = "dic_" & item & ".txt"
                 Try
-                    FullText = My.Computer.FileSystem.ReadAllText(vars.UserDir & "\" & Item)
-
-                    If IsNothing(MyTotalWords) Then
-                        MyTotalWords = FullText
+                    fullText = My.Computer.FileSystem.ReadAllText(Vars.UserDir & "\" & item)
+                    If myTotalWords Is Nothing Then
+                        myTotalWords = fullText
                     Else
-                        MyTotalWords = FullText & vbNewLine & MyTotalWords
+                        myTotalWords = fullText & vbNewLine & myTotalWords
                     End If
-
-                    Fn.WriteLog(CountWords(FullText) & " cargadas de Palabras - " & a.ToString)
-
+                    Fn.WriteLog(CountWords(fullText) & " palabras cargadas del diccionario - " & a.ToString)
                 Catch err As Exception
                     Fn.WriteLog(err.Message.ToString)
                 End Try
             End If
         Next
 
-        Dim MyTotalWordsArr As String()
-        If InStr(MyTotalWords, ",") > 0 Then
-            MyTotalWords = Replace(MyTotalWords, ",", vbNewLine)
+        Dim myTotalWordsArr As String()
+        If InStr(myTotalWords, ",") > 0 Then
+            myTotalWords = Replace(myTotalWords, ",", vbNewLine)
         End If
 
-        MyTotalWordsArr = Split(MyTotalWords, vbNewLine)
-        vars.arr = MyTotalWordsArr
+        myTotalWordsArr = Split(myTotalWords, vbNewLine)
+        Vars.Arr = myTotalWordsArr
     End Sub
 
     Function CountWords(s)
-        Dim MyTotalWordsArr As String()
+        Dim myTotalWordsArr As String()
         If InStr(s, ",") > 0 Then
             s = Replace(s, ",", vbNewLine)
         End If
-        MyTotalWordsArr = Split(s, vbNewLine)
-        vars.arr = MyTotalWordsArr
-        Return MyTotalWordsArr.Count
+        myTotalWordsArr = Split(s, vbNewLine)
+        Vars.Arr = myTotalWordsArr
+        Return myTotalWordsArr.Count
     End Function
 
     Public Sub BtClose_Click(sender As Object, e As EventArgs)
@@ -155,7 +187,7 @@ Public Class ControlModule
     Private Sub btchangetypo_Click(sender As Object, e As EventArgs)
         If FontDialog1.ShowDialog() <> DialogResult.Cancel Then
             MainModule.LbWord.Font = FontDialog1.Font
-            ms.SaveSetting("LbWordFont", FontDialog1.Font.ToString)
+            Ms.SaveSetting("LbWordFont", FontDialog1.Font.ToString)
         End If
         FontDialog1.Dispose()
     End Sub
@@ -166,7 +198,7 @@ Public Class ControlModule
         If result = DialogResult.OK Then
             Me.BackgroundImage = New Bitmap(OpenFileDialog1.FileName)
             MainModule.BackgroundImage = New Bitmap(OpenFileDialog1.FileName)
-            ms.SaveSetting("MainBackGroundImage", OpenFileDialog1.FileName)
+            Ms.SaveSetting("MainBackGroundImage", OpenFileDialog1.FileName)
         End If
         OpenFileDialog1.Dispose()
     End Sub
@@ -175,7 +207,7 @@ Public Class ControlModule
         If ColorDialog1.ShowDialog() <> DialogResult.Cancel Then
             Dim mycolor = ColorDialog1.Color.ToArgb.ToString
             MainModule.LbWord.ForeColor = Color.FromArgb(mycolor)
-            ms.SaveSetting("lbWordColor", mycolor)
+            Ms.SaveSetting("lbWordColor", mycolor)
 
         End If
         ColorDialog1.Dispose()
@@ -185,7 +217,7 @@ Public Class ControlModule
         If ColorDialog2.ShowDialog() <> DialogResult.Cancel Then
             Dim mycolor = ColorDialog2.Color.ToArgb.ToString
             MainModule.LbCountDown.ForeColor = Color.FromArgb(mycolor)
-            ms.SaveSetting("lbCountDownColor", mycolor)
+            Ms.SaveSetting("lbCountDownColor", mycolor)
         End If
         ColorDialog2.Dispose()
     End Sub
@@ -193,7 +225,7 @@ Public Class ControlModule
     Private Sub btchangecountertypo_Click(sender As Object, e As EventArgs)
         If FontDialog2.ShowDialog() <> DialogResult.Cancel Then
             MainModule.LbCountDown.Font = FontDialog2.Font
-            ms.SaveSetting("lbCountDownFont", FontDialog2.Font.ToString)
+            Ms.SaveSetting("lbCountDownFont", FontDialog2.Font.ToString)
         End If
         FontDialog2.Dispose()
     End Sub
@@ -221,12 +253,12 @@ Public Class ControlModule
             btNextWord.Enabled = True
         End If
 
-        vars.StopBattle = False
+        Vars.StopBattle = False
         CbBattleType.Enabled = False
         CbDuration.Enabled = False
         btNextWord.Enabled = True
 
-        vars.SongDuration = Fn.PlayMusic()
+        Vars.SongDuration = Fn.PlayMusic()
         If chkMinimize.Checked Then
             Me.WindowState = FormWindowState.Minimized
         End If
@@ -246,14 +278,16 @@ Public Class ControlModule
     Private Sub btmusicdir_Click(sender As Object, e As EventArgs) Handles btmusicdir.Click
         Dim result As DialogResult = FolderBrowserDialog1.ShowDialog()
         If result = DialogResult.OK Then
-            ms.SaveSetting("MusicDirectory", FolderBrowserDialog1.SelectedPath.ToString)
+            Ms.SaveSetting("MusicDirectory", FolderBrowserDialog1.SelectedPath.ToString)
             tbmusicdir.Text = FolderBrowserDialog1.SelectedPath.ToString
+            Fn.InitMusic()
+            Fn.LoadMusic()
         End If
         OpenFileDialog1.Dispose()
     End Sub
 
     Private Sub CheckBox2_CheckedChanged(sender As Object, e As EventArgs) Handles chshufflemusic.CheckedChanged
-        cbMusicList.Visible = IIf(chshufflemusic.Checked, False, True)
+        'cbMusicList.Visible = IIf(chshufflemusic.Checked, False, True)
         cbMusicList.Enabled = IIf(chshufflemusic.Checked, False, True)
         Try
             Fn.LoadMusic()
@@ -262,7 +296,7 @@ Public Class ControlModule
     End Sub
 
     Private Sub PictureBox6_Click(sender As Object, e As EventArgs)
-        ms.UpdateSettings("MainBackGroundImage", "")
+        Ms.UpdateSettings("MainBackGroundImage", "")
         Fn.WriteLog("El fondo de pantalla se reestableció a su valor por defecto.")
     End Sub
 
@@ -284,7 +318,7 @@ Public Class ControlModule
         If result = DialogResult.OK Then
             Me.BackgroundImage = New Bitmap(OpenFileDialog1.FileName)
             MainModule.BackgroundImage = New Bitmap(OpenFileDialog1.FileName)
-            ms.SaveSetting("MainBackGroundImage", OpenFileDialog1.FileName)
+            Ms.SaveSetting("MainBackGroundImage", OpenFileDialog1.FileName)
         End If
         OpenFileDialog1.Dispose()
     End Sub
@@ -293,7 +327,7 @@ Public Class ControlModule
         Handles FuenteYTamañoToolStripMenuItem.Click
         If FontDialog1.ShowDialog() <> DialogResult.Cancel Then
             MainModule.LbWord.Font = FontDialog1.Font
-            ms.SaveSetting("LbWordFont", FontDialog1.Font.ToString)
+            Ms.SaveSetting("LbWordFont", FontDialog1.Font.ToString)
         End If
         FontDialog1.Dispose()
     End Sub
@@ -302,7 +336,7 @@ Public Class ControlModule
         If ColorDialog1.ShowDialog() <> DialogResult.Cancel Then
             Dim mycolor = ColorDialog1.Color.ToArgb.ToString
             MainModule.LbWord.ForeColor = Color.FromArgb(mycolor)
-            ms.SaveSetting("lbWordColor", mycolor)
+            Ms.SaveSetting("lbWordColor", mycolor)
 
         End If
         ColorDialog1.Dispose()
@@ -311,7 +345,7 @@ Public Class ControlModule
     Private Sub ColorToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles ColorToolStripMenuItem1.Click
         If FontDialog2.ShowDialog() <> DialogResult.Cancel Then
             MainModule.LbCountDown.Font = FontDialog2.Font
-            ms.SaveSetting("lbCountDownFont", FontDialog2.Font.ToString)
+            Ms.SaveSetting("lbCountDownFont", FontDialog2.Font.ToString)
         End If
         FontDialog2.Dispose()
     End Sub
@@ -320,12 +354,12 @@ Public Class ControlModule
         Handles FuenteYTamañoToolStripMenuItem1.Click
         If FontDialog2.ShowDialog() <> DialogResult.Cancel Then
             MainModule.LbCountDown.Font = FontDialog2.Font
-            ms.SaveSetting("lbCountDownFont", FontDialog2.Font.ToString)
+            Ms.SaveSetting("lbCountDownFont", FontDialog2.Font.ToString)
         End If
         FontDialog2.Dispose()
     End Sub
 
-    Private Sub chautoinitwords_CheckedChanged(sender As Object, e As EventArgs) Handles chautoinitwords.CheckedChanged
+    Private Sub chautoinitwords_CheckedChanged(sender As Object, e As EventArgs)
         If chautoinitwords.Checked Then
             'btStartWords.Enabled = False
             'btNextWord.Enabled = False
@@ -352,20 +386,25 @@ Public Class ControlModule
     End Sub
 
     Private Sub TbWordsWaittoStart_TextChanged(sender As Object, e As EventArgs) Handles TbWordsWaittoStart.TextChanged
-        ms.SaveSetting("TbWordsWaittoStart", TbWordsWaittoStart.Text)
+        Ms.SaveSetting("TbWordsWaittoStart", TbWordsWaittoStart.Text)
     End Sub
 
     Private Sub ListBoxDictionaries_SelectedValueChanged(sender As Object, e As EventArgs) _
         Handles ListBoxDictionaries.SelectedValueChanged
         For Each item In ListBoxDictionaries.CheckedItems
             If ListBoxDictionaries.GetItemCheckState(ListBoxDictionaries.Items.IndexOf(item)) Then
-
+                'MsgBox(item)
             End If
         Next
     End Sub
 
     Private Sub ListBoxDictionaries_SelectedIndexChanged(sender As Object, e As EventArgs) _
         Handles ListBoxDictionaries.SelectedIndexChanged
+        If chkDepureDic.Checked Then
+            DepureDictionary(Directory.GetCurrentDirectory() & "\Dic_" & sender.selecteditem.ToString & ".txt")
+
+        End If
+        'LoadDictionaries()
         LoadWords()
     End Sub
 
@@ -382,7 +421,7 @@ Public Class ControlModule
     Private Sub MostrarPantallaPrincipalToolStripMenuItem_Click(sender As Object, e As EventArgs) _
         Handles MostrarPantallaPrincipalToolStripMenuItem.Click
         MainModule.Show()
-        Me.Show()
+        'Me.Show()
     End Sub
 
     Private Sub PosiciónToolStripMenuItem_Click(sender As Object, e As EventArgs) _
@@ -399,14 +438,14 @@ Public Class ControlModule
             MsgBoxStyle.Information)
     End Sub
 
-    Private Sub chkHorn_CheckedChanged(sender As Object, e As EventArgs) Handles chkHorn.CheckedChanged
-        ms.SaveSetting("chkHorn", IIf(chkHorn.Checked = True, "1", "0"))
-        Fn.WriteLog("Preferencia guardada")
+    Private Sub chkSoundFx_CheckedChanged(sender As Object, e As EventArgs) Handles chkSoundFx.CheckedChanged
+        Ms.SaveSetting("chkSoundFx", IIf(chkSoundFx.Checked = True, "1", "0"))
+        'Fn.WriteLog("Preferencia guardada")
     End Sub
 
     Private Sub chkminimize_CheckedChanged(sender As Object, e As EventArgs) Handles chkMinimize.CheckedChanged
-        ms.SaveSetting("chkMinimize", IIf(chkMinimize.Checked = True, "1", "0"))
-        Fn.WriteLog("Preferencia guardada")
+        Ms.SaveSetting("chkMinimize", IIf(chkMinimize.Checked = True, "1", "0"))
+        'Fn.WriteLog("Preferencia guardada")
     End Sub
 
     Private Sub rbManualMode_CheckedChanged(sender As Object, e As EventArgs) Handles rbManualMode.CheckedChanged
@@ -427,7 +466,30 @@ Public Class ControlModule
     End Sub
 
     Private Sub chPlayMusic_CheckedChanged(sender As Object, e As EventArgs) Handles chPlayMusic.CheckedChanged
-        ms.SaveSetting("chPlayMusic", IIf(chPlayMusic.Checked = True, "1", "0"))
-        Fn.WriteLog("Preferencia guardada")
+        Ms.SaveSetting("chPlayMusic", IIf(chPlayMusic.Checked = True, "1", "0"))
+        'Fn.WriteLog("Preferencia guardada")
+        If chPlayMusic.Checked Then
+            tbmusicdir.Enabled = True
+            btmusicdir.Enabled = True
+            chshufflemusic.Enabled = True
+            cbMusicList.Enabled = True
+        Else
+            tbmusicdir.Enabled = False
+            btmusicdir.Enabled = False
+            chshufflemusic.Enabled = False
+            cbMusicList.Enabled = False
+        End If
+    End Sub
+
+    Private Sub GithubToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles GithubToolStripMenuItem.Click
+        Process.Start("https://github.com/churrufli/batallaRAAP/releases/")
+    End Sub
+
+    Private Sub Button1_Click(sender As Object, e As EventArgs)
+        MainModule.GetWord()
+    End Sub
+
+    Private Sub DIscordToolStripMenuItem_Click_1(sender As Object, e As EventArgs) Handles DIscordToolStripMenuItem.Click
+        Process.Start("https://discord.gg/4JwTRxS8p3")
     End Sub
 End Class
