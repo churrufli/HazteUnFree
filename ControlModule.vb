@@ -1,7 +1,4 @@
-﻿
-
-Imports System.IO
-Imports VB = Microsoft.VisualBasic
+﻿Imports System.IO
 
 Public Class ControlModule
     Public CountDownFrom As TimeSpan = TimeSpan.FromSeconds(60) '76
@@ -49,7 +46,9 @@ Public Class ControlModule
     Private Sub DepureDictionary(fullName As String)
         Dim fileReader As String
         fileReader = My.Computer.FileSystem.ReadAllText(fullName)
-
+        fileReader = Replace(fileReader, ".", vbNewLine)
+        fileReader = Replace(fileReader, ":", vbNewLine)
+        fileReader = Replace(fileReader, ",,", vbNewLine)
         fileReader = Replace(fileReader, ",", vbNewLine)
         fileReader = Replace(fileReader, vbNewLine & vbNewLine, vbNewLine)
 
@@ -57,11 +56,13 @@ Public Class ControlModule
         Dim arrout As String = ""
         For Each w In arr
             w = RTrim(LTrim(w))
-            If InStr(arrout, vbNewLine & w & vbNewLine, CompareMethod.Text) = 0 Then
-                arrout = arrout & w & vbNewLine
-            Else
-                If w <> "" Then
-                    Fn.WriteLog("Se eliminó """ & w & """ del diccionario " & System.IO.Path.GetFileName(fullName).ToString() & " por duplicidad")
+            If Len(w) > 2 Then
+                If InStr(arrout, vbNewLine & w & vbNewLine, CompareMethod.Text) = 0 Then
+                    arrout = arrout & w & vbNewLine
+                Else
+                    If w <> "" Then
+                        Fn.WriteLog("Se eliminó """ & w & """ del diccionario " & System.IO.Path.GetFileName(fullName).ToString() & " por duplicidad")
+                    End If
                 End If
             End If
         Next
@@ -159,16 +160,6 @@ Public Class ControlModule
         Application.Exit()
     End Sub
 
-    Private Sub CheckBox1_CheckedChanged(sender As Object, e As EventArgs)
-        If chautoinitwords.Checked = True Then
-            btStartWords.Enabled = False
-            'btNextWord.Enabled = False
-        Else
-            btStartWords.Enabled = True
-        End If
-    End Sub
-
-
     Private Sub TbWordsWaittoStart_KeyPress(sender As Object, e As KeyPressEventArgs)
         '97 - 122 = Ascii codes for simple letters
         '65 - 90  = Ascii codes for capital letters
@@ -191,8 +182,6 @@ Public Class ControlModule
         End If
         FontDialog1.Dispose()
     End Sub
-
-
     Private Sub Button2_Click(sender As Object, e As EventArgs)
         Dim result As DialogResult = OpenFileDialog1.ShowDialog()
         If result = DialogResult.OK Then
@@ -208,7 +197,6 @@ Public Class ControlModule
             Dim mycolor = ColorDialog1.Color.ToArgb.ToString
             MainModule.LbWord.ForeColor = Color.FromArgb(mycolor)
             Ms.SaveSetting("lbWordColor", mycolor)
-
         End If
         ColorDialog1.Dispose()
     End Sub
@@ -231,7 +219,6 @@ Public Class ControlModule
     End Sub
 
     Private Sub btstartwords_Click_1(sender As Object, e As EventArgs) Handles btStartWords.Click
-        'MainModule.GetWord()
         MainModule.TimerWord.Start()
         btStartWords.Enabled = False
         btNextWord.Enabled = True
@@ -245,13 +232,9 @@ Public Class ControlModule
     Sub StartBattle(mode As String)
         BtStartBattle.Enabled = False
         MainModule.Show()
-        If chautoinitwords.Checked = True Then
-            MainModule.Startwords = True
-            btNextWord.Enabled = False
-        Else
-            MainModule.Startwords = False
-            btNextWord.Enabled = True
-        End If
+
+        MainModule.Startwords = False
+        btNextWord.Enabled = True
 
         Vars.StopBattle = False
         CbBattleType.Enabled = False
@@ -287,7 +270,6 @@ Public Class ControlModule
     End Sub
 
     Private Sub CheckBox2_CheckedChanged(sender As Object, e As EventArgs) Handles chshufflemusic.CheckedChanged
-        'cbMusicList.Visible = IIf(chshufflemusic.Checked, False, True)
         cbMusicList.Enabled = IIf(chshufflemusic.Checked, False, True)
         Try
             Fn.LoadMusic()
@@ -337,17 +319,19 @@ Public Class ControlModule
             Dim mycolor = ColorDialog1.Color.ToArgb.ToString
             MainModule.LbWord.ForeColor = Color.FromArgb(mycolor)
             Ms.SaveSetting("lbWordColor", mycolor)
-
         End If
         ColorDialog1.Dispose()
     End Sub
 
     Private Sub ColorToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles ColorToolStripMenuItem1.Click
-        If FontDialog2.ShowDialog() <> DialogResult.Cancel Then
-            MainModule.LbCountDown.Font = FontDialog2.Font
-            Ms.SaveSetting("lbCountDownFont", FontDialog2.Font.ToString)
+
+        If ColorDialog1.ShowDialog() <> DialogResult.Cancel Then
+            Dim mycolor = ColorDialog1.Color.ToArgb.ToString
+            MainModule.LbCountDown.ForeColor = Color.FromArgb(mycolor)
+            Ms.SaveSetting("lbCountDownColor", mycolor)
         End If
-        FontDialog2.Dispose()
+        ColorDialog1.Dispose()
+
     End Sub
 
     Private Sub FuenteYTamañoToolStripMenuItem1_Click(sender As Object, e As EventArgs) _
@@ -359,27 +343,11 @@ Public Class ControlModule
         FontDialog2.Dispose()
     End Sub
 
-    Private Sub chautoinitwords_CheckedChanged(sender As Object, e As EventArgs)
-        If chautoinitwords.Checked Then
-            'btStartWords.Enabled = False
-            'btNextWord.Enabled = False
-            'chamanuailnitwords.Checked = False
-            'BtStartBattle.Enabled = True
-        Else
-            'btStartWords.Enabled = True
-            'btNextWord.Enabled = True
-            ''chamanuailnitwords.Checked = True
-            'BtStartBattle.Enabled = False
-
-        End If
-    End Sub
-
     Private Sub TbWordsWaittoStart_KeyPress_1(sender As Object, e As KeyPressEventArgs) _
         Handles TbWordsWaittoStart.KeyPress
         If Not Char.IsControl(e.KeyChar) AndAlso Not Char.IsDigit(e.KeyChar) AndAlso (e.KeyChar <> "."c) Then
             e.Handled = True
         End If
-
         If (e.KeyChar = "."c) AndAlso ((TryCast(sender, TextBox)).Text.IndexOf("."c) > -1) Then
             e.Handled = True
         End If
@@ -389,22 +357,12 @@ Public Class ControlModule
         Ms.SaveSetting("TbWordsWaittoStart", TbWordsWaittoStart.Text)
     End Sub
 
-    Private Sub ListBoxDictionaries_SelectedValueChanged(sender As Object, e As EventArgs) _
-        Handles ListBoxDictionaries.SelectedValueChanged
-        For Each item In ListBoxDictionaries.CheckedItems
-            If ListBoxDictionaries.GetItemCheckState(ListBoxDictionaries.Items.IndexOf(item)) Then
-                'MsgBox(item)
-            End If
-        Next
-    End Sub
 
     Private Sub ListBoxDictionaries_SelectedIndexChanged(sender As Object, e As EventArgs) _
         Handles ListBoxDictionaries.SelectedIndexChanged
         If chkDepureDic.Checked Then
             DepureDictionary(Directory.GetCurrentDirectory() & "\Dic_" & sender.selecteditem.ToString & ".txt")
-
         End If
-        'LoadDictionaries()
         LoadWords()
     End Sub
 
@@ -412,16 +370,9 @@ Public Class ControlModule
         MainModule.GetWord()
     End Sub
 
-    Private Sub PictureBox4_Click(sender As Object, e As EventArgs)
-    End Sub
-
-    Private Sub chkShuffle_CheckedChanged(sender As Object, e As EventArgs) Handles chkShuffle.CheckedChanged
-    End Sub
-
     Private Sub MostrarPantallaPrincipalToolStripMenuItem_Click(sender As Object, e As EventArgs) _
         Handles MostrarPantallaPrincipalToolStripMenuItem.Click
         MainModule.Show()
-        'Me.Show()
     End Sub
 
     Private Sub PosiciónToolStripMenuItem_Click(sender As Object, e As EventArgs) _
@@ -440,12 +391,10 @@ Public Class ControlModule
 
     Private Sub chkSoundFx_CheckedChanged(sender As Object, e As EventArgs) Handles chkSoundFx.CheckedChanged
         Ms.SaveSetting("chkSoundFx", IIf(chkSoundFx.Checked = True, "1", "0"))
-        'Fn.WriteLog("Preferencia guardada")
     End Sub
 
     Private Sub chkminimize_CheckedChanged(sender As Object, e As EventArgs) Handles chkMinimize.CheckedChanged
         Ms.SaveSetting("chkMinimize", IIf(chkMinimize.Checked = True, "1", "0"))
-        'Fn.WriteLog("Preferencia guardada")
     End Sub
 
     Private Sub rbManualMode_CheckedChanged(sender As Object, e As EventArgs) Handles rbManualMode.CheckedChanged
@@ -467,7 +416,6 @@ Public Class ControlModule
 
     Private Sub chPlayMusic_CheckedChanged(sender As Object, e As EventArgs) Handles chPlayMusic.CheckedChanged
         Ms.SaveSetting("chPlayMusic", IIf(chPlayMusic.Checked = True, "1", "0"))
-        'Fn.WriteLog("Preferencia guardada")
         If chPlayMusic.Checked Then
             tbmusicdir.Enabled = True
             btmusicdir.Enabled = True
@@ -480,9 +428,8 @@ Public Class ControlModule
             cbMusicList.Enabled = False
         End If
     End Sub
-
     Private Sub GithubToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles GithubToolStripMenuItem.Click
-        Process.Start("https://github.com/churrufli/batallaRAAP/releases/")
+        Process.Start("https://github.com/churrufli/BatallaRAPP/releases/")
     End Sub
 
     Private Sub Button1_Click(sender As Object, e As EventArgs)
@@ -491,5 +438,12 @@ Public Class ControlModule
 
     Private Sub DIscordToolStripMenuItem_Click_1(sender As Object, e As EventArgs) Handles DIscordToolStripMenuItem.Click
         Process.Start("https://discord.gg/4JwTRxS8p3")
+    End Sub
+
+    Private Sub ReestablecerPersonalizaciónToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ReestablecerPersonalizaciónToolStripMenuItem.Click
+        If (MsgBox("¿Deseas reestablecer la personalización a los valores por defecto del programa?", MsgBoxStyle.YesNo) = MsgBoxResult.Yes) Then
+            Ms.CreateDefaultSettings()
+            Ms.LoadSettings()
+        End If
     End Sub
 End Class

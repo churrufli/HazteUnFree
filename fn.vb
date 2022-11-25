@@ -1,8 +1,6 @@
-﻿
-Imports System.IO
-Imports System.Text.RegularExpressions
+﻿Imports System.IO
+'Imports System.Text.RegularExpressions
 Imports WMPLib
-Imports VB = Microsoft.VisualBasic
 
 Public Class Fn
     Public Shared Sub SetMySettings()
@@ -129,60 +127,6 @@ Public Class Fn
         InitMusic()
     End Sub
 
-
-    Public Shared Function ColourFromData(s As String) As Color
-        Dim fallbackColour = Color.Black
-
-        If Not s.StartsWith("color", StringComparison.OrdinalIgnoreCase) Then
-            Return fallbackColour
-        End If
-
-        ' Extract whatever is between the brackets.
-        Dim re = New Regex("\[(.+?)]")
-        Dim colorNameMatch = re.Match(s)
-        If Not colorNameMatch.Success Then
-            Return fallbackColour
-        End If
-
-        Dim colourName = colorNameMatch.Groups(1).Value
-
-        ' Get the names of the known colours.
-        'TODO: If this function is called frequently, consider creating allColours as a variable with a larger scope.
-        Dim allColours = [Enum].GetNames(GetType(KnownColor))
-
-        ' Attempt a case-insensitive match to the known colours.
-        Dim nameOfColour =
-                allColours.FirstOrDefault(
-                    Function(c) String.Compare(c, colourName, StringComparison.OrdinalIgnoreCase) = 0)
-
-        If Not String.IsNullOrEmpty(nameOfColour) Then
-            Return Color.FromName(nameOfColour)
-        End If
-
-        ' Was not a named colour. Parse for ARGB values.
-        re = New Regex("A=(\d+).*?R=(\d+).*?G=(\d+).*?B=(\d+)", RegexOptions.IgnoreCase)
-        Dim componentMatches = re.Match(colourName)
-
-        If componentMatches.Success Then
-
-            Dim a = Integer.Parse(componentMatches.Groups(1).Value)
-            Dim r = Integer.Parse(componentMatches.Groups(2).Value)
-            Dim g = Integer.Parse(componentMatches.Groups(3).Value)
-            Dim b = Integer.Parse(componentMatches.Groups(4).Value)
-
-            Dim maxValue = 255
-
-            If a > maxValue OrElse r > maxValue OrElse g > maxValue OrElse b > maxValue Then
-                Return fallbackColour
-            End If
-
-            Return Color.FromArgb(a, r, g, b)
-
-        End If
-
-        Return fallbackColour
-    End Function
-
     Public Shared Function ImageToString(img As Image)
         Dim imgConverter As New ImageConverter()
         Dim imgBytes As Byte() = imgConverter.ConvertTo(img, GetType(Byte()))
@@ -204,7 +148,6 @@ Public Class Fn
     '        WriteLog("Archivo de configuración no encontrado")
     '    End Try
     'End Sub
-
 
     Public Shared Sub WriteLog(msg)
         Try
@@ -315,59 +258,27 @@ Public Class Fn
     End Function
 
     Public Shared Sub Wait(seconds As Single)
-        If Vars.StopBattle <> True Then
-            Static start As Single
-            start = VB.Timer()
-            Do While VB.Timer() < start + seconds
-                Application.DoEvents()
-            Loop
-        Else
-            Exit Sub
-        End If
+        'If Vars.StopBattle <> True Then
+        '    Static start As Single
+        '    start = VB.Timer()
+        '    Do While VB.Timer() < start + seconds
+        '        Application.DoEvents()
+        '    Loop
+        'Else
+        '    Exit Sub
+        'End If
+        'Do While Vars.StopBattle <> True
+        ' Threading.Thread.Sleep(seconds & "000")
+        'Loop
+
+        Dim dteFutureDate = Date.Now().AddSeconds(seconds)
+
+        'And wait.
+        Do Until Date.Now() > dteFutureDate
+            Application.DoEvents()
+        Loop
+
     End Sub
-
-    'Public Shared Function GetFontByString(ByVal sFont As String) As Font
-
-
-    '    Dim myFontConv As New FontConverter
-    '    Dim myNewFont As Font
-
-    '    myNewFont = CType(myFontConv.ConvertFromString(sFont), Font)
-    '    Return myNewFont
-
-    '    sFont = sFont.Substring(1, sFont.Length - 2)
-    '    sFont = Replace(sFont, ",", vbNullString)
-    '    sFont = Replace(sFont, "Font:", vbNullString)
-    '    Dim sElement() As String = Split(sFont, " ")
-    '    Dim sSingle() As String
-    '    Dim sValue As String
-    '    Dim FontName As String
-    '    Dim FontSize As Single
-    '    Dim FontStyle As FontStyle = Drawing.FontStyle.Regular
-    '    Dim FontUnit As GraphicsUnit = GraphicsUnit.Point
-    '    Dim gdiCharSet As Byte
-    '    Dim gdiVerticalFont As Boolean
-
-    '    For Each sValue In sElement
-    '        sValue = Trim(sValue)
-    '        sSingle = Split(sValue, "=")
-    '        If sSingle.GetUpperBound(0) > 0 Then
-    '            If sSingle(0) = "Name" Then
-    '                FontName = sSingle(1)
-    '            ElseIf sSingle(0) = "Size" Then
-    '                FontSize = CSng(sSingle(1))
-    '            ElseIf sSingle(0) = "Units" Then
-    '                FontUnit = CInt(sSingle(1))
-    '            ElseIf sSingle(0) = "GdiCharSet" Then
-    '                FontName = CByte(sSingle(1))
-    '            ElseIf sSingle(0) = "GdiVerticalFont" Then
-    '                FontName = CBool(sSingle(1))
-    '            End If
-    '        End If
-    '    Next
-    '    Return New Font(FontName, FontSize, FontStyle, FontUnit, gdiCharSet, gdiVerticalFont)
-    'End Function
-
 
     Public Shared Function GetFontByString(s As String) As Font
         ' A function that returnes a font from the given string

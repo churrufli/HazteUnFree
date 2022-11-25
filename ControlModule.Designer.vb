@@ -33,7 +33,6 @@ Partial Class ControlModule
         Me.chshufflemusic = New System.Windows.Forms.CheckBox()
         Me.chkShuffle = New System.Windows.Forms.CheckBox()
         Me.TbWordsWaittoStart = New System.Windows.Forms.TextBox()
-        Me.chautoinitwords = New System.Windows.Forms.CheckBox()
         Me.chkDepureDic = New System.Windows.Forms.CheckBox()
         Me.CbBattleType = New System.Windows.Forms.ComboBox()
         Me.rbManualMode = New System.Windows.Forms.RadioButton()
@@ -82,7 +81,6 @@ Partial Class ControlModule
         Me.Label2 = New System.Windows.Forms.Label()
         Me.Panel3 = New System.Windows.Forms.Panel()
         Me.Label1 = New System.Windows.Forms.Label()
-        Me.chamanuailnitwords = New System.Windows.Forms.CheckBox()
         Me.Label4 = New System.Windows.Forms.Label()
         Me.TextBox1 = New System.Windows.Forms.TextBox()
         Me.tabcontrol1 = New System.Windows.Forms.TabControl()
@@ -90,6 +88,8 @@ Partial Class ControlModule
         Me.LbCountDown = New System.Windows.Forms.Label()
         Me.LbWord = New System.Windows.Forms.Label()
         Me.Panel1 = New System.Windows.Forms.Panel()
+        Me.TimerWait = New System.Windows.Forms.Timer(Me.components)
+        Me.ReestablecerPersonalizaciónToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.MenuStrip1.SuspendLayout()
         Me.TabPage3.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
@@ -173,20 +173,6 @@ Partial Class ControlModule
         Me.TbWordsWaittoStart.TabIndex = 32
         Me.TbWordsWaittoStart.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         Me.ToolTip1.SetToolTip(Me.TbWordsWaittoStart, "segundos")
-        '
-        'chautoinitwords
-        '
-        Me.chautoinitwords.AutoSize = True
-        Me.chautoinitwords.Location = New System.Drawing.Point(171, 569)
-        Me.chautoinitwords.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
-        Me.chautoinitwords.Name = "chautoinitwords"
-        Me.chautoinitwords.Size = New System.Drawing.Size(423, 24)
-        Me.chautoinitwords.TabIndex = 47
-        Me.chautoinitwords.Text = "Las palabras aparecen pasados los primeros          segundos"
-        Me.ToolTip1.SetToolTip(Me.chautoinitwords, "Las palabras se inician automáticamente al comenzar la batalla, con una pausa en " &
-        "segundos establecida (por defecto, 0).")
-        Me.chautoinitwords.UseVisualStyleBackColor = True
-        Me.chautoinitwords.Visible = False
         '
         'chkDepureDic
         '
@@ -279,7 +265,7 @@ Partial Class ControlModule
         '
         'ConfiguraciónToolStripMenuItem
         '
-        Me.ConfiguraciónToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.PersonalizarToolStripMenuItem})
+        Me.ConfiguraciónToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.PersonalizarToolStripMenuItem, Me.ReestablecerPersonalizaciónToolStripMenuItem})
         Me.ConfiguraciónToolStripMenuItem.Name = "ConfiguraciónToolStripMenuItem"
         Me.ConfiguraciónToolStripMenuItem.Size = New System.Drawing.Size(106, 23)
         Me.ConfiguraciónToolStripMenuItem.Text = "Configuración"
@@ -288,7 +274,7 @@ Partial Class ControlModule
         '
         Me.PersonalizarToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.PalabrasToolStripMenuItem, Me.RelojToolStripMenuItem, Me.VentanaPrincipalToolStripMenuItem})
         Me.PersonalizarToolStripMenuItem.Name = "PersonalizarToolStripMenuItem"
-        Me.PersonalizarToolStripMenuItem.Size = New System.Drawing.Size(150, 24)
+        Me.PersonalizarToolStripMenuItem.Size = New System.Drawing.Size(250, 24)
         Me.PersonalizarToolStripMenuItem.Text = "Personalizar"
         '
         'PalabrasToolStripMenuItem
@@ -377,18 +363,18 @@ Partial Class ControlModule
         Me.SobreBatallaRAAPToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.GithubToolStripMenuItem, Me.DIscordToolStripMenuItem})
         Me.SobreBatallaRAAPToolStripMenuItem.Name = "SobreBatallaRAAPToolStripMenuItem"
         Me.SobreBatallaRAAPToolStripMenuItem.Size = New System.Drawing.Size(134, 23)
-        Me.SobreBatallaRAAPToolStripMenuItem.Text = "Sobre BatallaRAAP"
+        Me.SobreBatallaRAAPToolStripMenuItem.Text = "Sobre BatallaRAPP"
         '
         'GithubToolStripMenuItem
         '
         Me.GithubToolStripMenuItem.Name = "GithubToolStripMenuItem"
-        Me.GithubToolStripMenuItem.Size = New System.Drawing.Size(152, 24)
+        Me.GithubToolStripMenuItem.Size = New System.Drawing.Size(124, 24)
         Me.GithubToolStripMenuItem.Text = "Github"
         '
         'DIscordToolStripMenuItem
         '
         Me.DIscordToolStripMenuItem.Name = "DIscordToolStripMenuItem"
-        Me.DIscordToolStripMenuItem.Size = New System.Drawing.Size(152, 24)
+        Me.DIscordToolStripMenuItem.Size = New System.Drawing.Size(124, 24)
         Me.DIscordToolStripMenuItem.Text = "Discord"
         '
         'TabPage3
@@ -627,18 +613,6 @@ Partial Class ControlModule
         Me.Label1.TabIndex = 25
         Me.Label1.Text = "Duración"
         '
-        'chamanuailnitwords
-        '
-        Me.chamanuailnitwords.AutoSize = True
-        Me.chamanuailnitwords.Location = New System.Drawing.Point(495, 537)
-        Me.chamanuailnitwords.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
-        Me.chamanuailnitwords.Name = "chamanuailnitwords"
-        Me.chamanuailnitwords.Size = New System.Drawing.Size(246, 24)
-        Me.chamanuailnitwords.TabIndex = 37
-        Me.chamanuailnitwords.Text = "Iniciar manualmente las palabras"
-        Me.chamanuailnitwords.UseVisualStyleBackColor = True
-        Me.chamanuailnitwords.Visible = False
-        '
         'Label4
         '
         Me.Label4.AutoSize = True
@@ -692,7 +666,7 @@ Partial Class ControlModule
         Me.LbWord.Name = "LbWord"
         Me.LbWord.Size = New System.Drawing.Size(674, 37)
         Me.LbWord.TabIndex = 43
-        Me.LbWord.Text = "BatallaRAAP"
+        Me.LbWord.Text = "BatallaRAPP"
         Me.LbWord.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'Panel1
@@ -704,15 +678,19 @@ Partial Class ControlModule
         Me.Panel1.Size = New System.Drawing.Size(776, 40)
         Me.Panel1.TabIndex = 44
         '
+        'ReestablecerPersonalizaciónToolStripMenuItem
+        '
+        Me.ReestablecerPersonalizaciónToolStripMenuItem.Name = "ReestablecerPersonalizaciónToolStripMenuItem"
+        Me.ReestablecerPersonalizaciónToolStripMenuItem.Size = New System.Drawing.Size(250, 24)
+        Me.ReestablecerPersonalizaciónToolStripMenuItem.Text = "Reestablecer Personalización"
+        '
         'ControlModule
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(96.0!, 96.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi
         Me.ClientSize = New System.Drawing.Size(805, 762)
         Me.Controls.Add(Me.TextBox1)
-        Me.Controls.Add(Me.chamanuailnitwords)
         Me.Controls.Add(Me.Panel1)
-        Me.Controls.Add(Me.chautoinitwords)
         Me.Controls.Add(Me.Label4)
         Me.Controls.Add(Me.tabcontrol1)
         Me.Controls.Add(Me.MenuStrip1)
@@ -725,7 +703,7 @@ Partial Class ControlModule
         Me.MaximizeBox = False
         Me.Name = "ControlModule"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "Control - BatallaRAAP - Versión 1.0.1"
+        Me.Text = "Control - BatallaRAPP - Versión 1.0.1"
         Me.MenuStrip1.ResumeLayout(False)
         Me.MenuStrip1.PerformLayout()
         Me.TabPage3.ResumeLayout(False)
@@ -782,7 +760,6 @@ Partial Class ControlModule
     Friend WithEvents chshufflemusic As CheckBox
     Friend WithEvents BtStartBattle As Button
     Friend WithEvents btNextWord As Button
-    Friend WithEvents chamanuailnitwords As CheckBox
     Friend WithEvents TbWordsWaittoStart As TextBox
     Friend WithEvents btStartWords As Button
     Friend WithEvents TextBox1 As TextBox
@@ -809,9 +786,10 @@ Partial Class ControlModule
     Friend WithEvents rbAutoMode As RadioButton
     Friend WithEvents GroupBox1 As GroupBox
     Friend WithEvents Panel2 As Panel
-    Friend WithEvents chautoinitwords As CheckBox
     Friend WithEvents Panel3 As Panel
     Friend WithEvents chkDepureDic As CheckBox
     Friend WithEvents Label2 As Label
     Friend WithEvents DIscordToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents TimerWait As Timer
+    Friend WithEvents ReestablecerPersonalizaciónToolStripMenuItem As ToolStripMenuItem
 End Class

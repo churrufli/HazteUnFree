@@ -29,7 +29,6 @@ Partial Class MainModule
         Me.TimerVisualCountDown = New System.Windows.Forms.Timer(Me.components)
         Me.ToolTip1 = New System.Windows.Forms.ToolTip(Me.components)
         Me.TimerProgressBar = New System.Windows.Forms.Timer(Me.components)
-        Me.ProgressBar1 = New System.Windows.Forms.ProgressBar()
         Me.LbCountDown = New System.Windows.Forms.Label()
         Me.LbWord = New System.Windows.Forms.Label()
         Me.SuspendLayout()
@@ -45,17 +44,6 @@ Partial Class MainModule
         'TimerVisualCountDown
         '
         '
-        'TimerProgressBar
-        '
-        '
-        'ProgressBar1
-        '
-        Me.ProgressBar1.Location = New System.Drawing.Point(550, 977)
-        Me.ProgressBar1.Name = "ProgressBar1"
-        Me.ProgressBar1.Size = New System.Drawing.Size(775, 10)
-        Me.ProgressBar1.TabIndex = 37
-        Me.ProgressBar1.Visible = False
-        '
         'LbCountDown
         '
         Me.LbCountDown.BackColor = System.Drawing.Color.Transparent
@@ -63,12 +51,13 @@ Partial Class MainModule
         Me.LbCountDown.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.LbCountDown.Font = New System.Drawing.Font("Impact", 170.0!)
         Me.LbCountDown.ForeColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(0, Byte), Integer))
-        Me.LbCountDown.Location = New System.Drawing.Point(655, 84)
+        Me.LbCountDown.Location = New System.Drawing.Point(665, 94)
         Me.LbCountDown.Name = "LbCountDown"
         Me.LbCountDown.Size = New System.Drawing.Size(600, 470)
         Me.LbCountDown.TabIndex = 6
         Me.LbCountDown.Text = "00"
         Me.LbCountDown.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        Me.ToolTip1.SetToolTip(Me.LbCountDown, "Arrastra y suelta el contador para posicionarlo en la pantalla.")
         '
         'LbWord
         '
@@ -80,8 +69,9 @@ Partial Class MainModule
         Me.LbWord.Name = "LbWord"
         Me.LbWord.Size = New System.Drawing.Size(1900, 290)
         Me.LbWord.TabIndex = 3
-        Me.LbWord.Text = "BatallaRAAP"
+        Me.LbWord.Text = "BatallaRAPP"
         Me.LbWord.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        Me.ToolTip1.SetToolTip(Me.LbWord, "Arrastra y suelta la palabra para posicionarla en la pantalla.")
         '
         'MainModule
         '
@@ -92,7 +82,6 @@ Partial Class MainModule
         Me.ClientSize = New System.Drawing.Size(1904, 1041)
         Me.Controls.Add(Me.LbCountDown)
         Me.Controls.Add(Me.LbWord)
-        Me.Controls.Add(Me.ProgressBar1)
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Name = "MainModule"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
@@ -105,7 +94,6 @@ Partial Class MainModule
     Friend WithEvents TimerVisualCountDown As Timer
     Friend WithEvents ToolTip1 As ToolTip
     Friend WithEvents TimerProgressBar As Timer
-    Friend WithEvents ProgressBar1 As ProgressBar
     Public WithEvents LbCountDown As Label
     Public WithEvents LbWord As Label
 End Class

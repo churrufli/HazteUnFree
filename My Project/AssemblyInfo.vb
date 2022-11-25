@@ -7,10 +7,10 @@ Imports System.Runtime.InteropServices
 
 ' Revisar los valores de los atributos del ensamblado
 
-<Assembly: AssemblyTitle("BatallaRAAP")>
-<Assembly: AssemblyDescription("")>
+<Assembly: AssemblyTitle("BatallaRAPP")>
+<Assembly: AssemblyDescription("https://github.com/churrufli/BatallaRAPP/")>
 <Assembly: AssemblyCompany("")>
-<Assembly: AssemblyProduct("BatallaRAAP")>
+<Assembly: AssemblyProduct("BatallaRAPP")>
 <Assembly: AssemblyCopyright("Copyright ©  2022")>
 <Assembly: AssemblyTrademark("")>
 

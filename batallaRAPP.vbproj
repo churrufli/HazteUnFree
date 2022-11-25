@@ -6,9 +6,9 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{E8AF5E1C-7303-49A4-8F2D-8BFFC52BB38E}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <StartupObject>BatallaRAAP.My.MyApplication</StartupObject>
-    <RootNamespace>BatallaRAAP</RootNamespace>
-    <AssemblyName>BatallaRAAP</AssemblyName>
+    <StartupObject>BatallaRAPP.My.MyApplication</StartupObject>
+    <RootNamespace>BatallaRAPP</RootNamespace>
+    <AssemblyName>BatallaRAPP</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>WindowsForms</MyType>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
@@ -49,7 +49,7 @@
     <DefineDebug>false</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <Optimize>true</Optimize>
-    <OutputPath>..\..\..\..\..\..\BatallaRAAP\</OutputPath>
+    <OutputPath>..\..\..\..\..\..\BatallaRAPP\</OutputPath>
     <DocumentationFile>
     </DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
@@ -68,16 +68,16 @@
     <OptionInfer>On</OptionInfer>
   </PropertyGroup>
   <PropertyGroup>
-    <SignManifests>true</SignManifests>
+    <SignManifests>false</SignManifests>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>BatallaRAAP.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
-    <TargetZone>LocalIntranet</TargetZone>
+    <TargetZone>Internet</TargetZone>
   </PropertyGroup>
   <PropertyGroup>
-    <GenerateManifests>false</GenerateManifests>
+    <GenerateManifests>true</GenerateManifests>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationManifest>My Project\app.manifest</ApplicationManifest>
@@ -86,12 +86,9 @@
     <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="PresentationCore" />
     <Reference Include="System" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Core" />
-    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <Import Include="Microsoft.VisualBasic" />
@@ -143,6 +140,7 @@
   <ItemGroup>
     <EmbeddedResource Include="ControlModule.resx">
       <DependentUpon>ControlModule.vb</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="MainModule.resx">
       <DependentUpon>MainModule.vb</DependentUpon>
@@ -158,9 +156,6 @@
   <ItemGroup>
     <None Include=".gitattributes" />
     <None Include=".gitignore" />
-    <None Include="bin\Debug\freestylelizeme.exe.config" />
-    <None Include="bin\Debug\Freestyler.exe.config" />
-    <None Include="bin\Debug\Freestyler.vshost.exe.config" />
     <None Include="My Project\app.manifest" />
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
@@ -174,53 +169,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <COMReference Include="WMPLib">
-      <Guid>{6BF52A50-394A-11D3-B153-00C04F79FAA6}</Guid>
-      <VersionMajor>1</VersionMajor>
-      <VersionMinor>0</VersionMinor>
-      <Lcid>0</Lcid>
-      <WrapperTool>tlbimp</WrapperTool>
-      <Isolated>False</Isolated>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </COMReference>
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="BatallaRAAP.ico" />
-    <Content Include="bin\Debug\AlbumArtSmall.jpg" />
-    <Content Include="bin\Debug\backup.txt" />
-    <Content Include="bin\Debug\Folder.jpg" />
-    <Content Include="bin\Debug\freestylelizeme.exe" />
-    <Content Include="bin\Debug\freestylelizeme.pdb" />
-    <Content Include="bin\Debug\Freestyler.exe" />
-    <Content Include="bin\Debug\Freestyler.pdb" />
-    <Content Include="bin\Debug\Freestyler.vshost.exe" />
-    <Content Include="bin\Debug\Freestyler.xml" />
-    <Content Include="bin\Debug\HtmlAgilityPack.dll" />
-    <Content Include="bin\Debug\HtmlAgilityPack.pdb" />
-    <Content Include="bin\Debug\HtmlAgilityPack.xml" />
-    <Content Include="bin\Debug\MyWords.txt" />
-    <Content Include="bin\Debug\pexels-rostislav-uzunov-5453622.mp4" />
-    <Content Include="bin\Debug\Red Bull Batalla - King s Throne.mp3" />
-    <Content Include="bin\Debug\Red Bull Batalla - New Ages.mp3" />
-    <Content Include="bin\Debug\Red Bull Batalla - Patiando la Puerta.mp3" />
-    <Content Include="bin\Debug\Red Bull Batalla - West Nicest.mp3" />
-    <Content Include="bin\Debug\Red Bull Batalla de los Gallos - Apollo.mp3" />
-    <Content Include="bin\Debug\Red Bull Batalla de los Gallos - Bang.mp3" />
-    <Content Include="bin\Debug\Red Bull Batalla de los Gallos - Collapse.mp3" />
-    <Content Include="bin\Debug\Red Bull Batalla de los Gallos - Don t Like.mp3" />
-    <Content Include="bin\Debug\Red Bull Batalla de los Gallos - Drunky.mp3" />
-    <Content Include="bin\Debug\Red Bull Batalla de los Gallos - El Bufalo Blanco.mp3" />
-    <Content Include="bin\Debug\Red Bull Batalla de los Gallos - End.mp3" />
-    <Content Include="bin\Debug\Red Bull Batalla de los Gallos - Hate.mp3" />
-    <Content Include="bin\Debug\Red Bull Batalla de los Gallos - Honey.mp3" />
-    <Content Include="bin\Debug\Red Bull Batalla de los Gallos - Hypnotic Dance.mp3" />
-    <Content Include="bin\Debug\Red Bull Batalla de los Gallos - Kanna.mp3" />
-    <Content Include="bin\Debug\Red Bull Batalla de los Gallos - Madison.mp3" />
-    <Content Include="bin\Debug\Red Bull Batalla de los Gallos - Moses.mp3" />
-    <Content Include="bin\Debug\Red Bull Batalla de los Gallos - Pandemia.mp3" />
-    <Content Include="bin\Debug\Red Bull Batalla de los Gallos - Pianic.mp3" />
-    <Content Include="bin\Debug\Red Bull Batalla de los Gallos - Rebellious.mp3" />
-    <Content Include="bin\Debug\Red Bull Batalla de los Gallos - Round   Round.mp3" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="bin\Release\" />
@@ -237,6 +186,17 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="WMPLib">
+      <Guid>{6BF52A50-394A-11D3-B153-00C04F79FAA6}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
