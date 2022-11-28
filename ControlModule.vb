@@ -11,16 +11,12 @@ Public Class ControlModule
         Me.InitStates()
         MainModule.InitStates()
         Fn.LoadMusic()
-        Calculate()
-    End Sub
+   End Sub
 
     Sub InitStates()
         TbWordsWaittoStart.Text = Ms.ReadSetting("TbWordsWaittoStart")
     End Sub
-
-    Sub Calculate()
-        'toma todas las opciones y muestra en el log 
-    End Sub
+    
 
     Sub LoadDictionaries()
         Dim di As New DirectoryInfo(Directory.GetCurrentDirectory)
@@ -397,22 +393,22 @@ Public Class ControlModule
         Ms.SaveSetting("chkMinimize", IIf(chkMinimize.Checked = True, "1", "0"))
     End Sub
 
-    Private Sub rbManualMode_CheckedChanged(sender As Object, e As EventArgs) Handles rbManualMode.CheckedChanged
-        If rbManualMode.Checked = True Then
-            gbManualMode.Enabled = True
-            gbAutoMode.Enabled = False
-            btNextWord.Enabled = False
-        End If
-        MainModule.StopBattleFunctions()
-    End Sub
+    'Private Sub rbManualMode_CheckedChanged(sender As Object, e As EventArgs) 
+    '    If rbManualMode.Checked = True Then
+    '        gbManualMode.Enabled = True
+    '        gbAutoMode.Enabled = False
+    '        btNextWord.Enabled = False
+    '    End If
+    '    MainModule.StopBattleFunctions()
+    'End Sub
 
-    Private Sub rbAutoMode_CheckedChanged(sender As Object, e As EventArgs) Handles rbAutoMode.CheckedChanged
-        If rbAutoMode.Checked = True Then
-            gbManualMode.Enabled = False
-            gbAutoMode.Enabled = True
-        End If
-        MainModule.StopBattleFunctions()
-    End Sub
+    'Private Sub rbAutoMode_CheckedChanged(sender As Object, e As EventArgs) 
+    '    If rbAutoMode.Checked = True Then
+    '        gbManualMode.Enabled = False
+    '        gbAutoMode.Enabled = True
+    '    End If
+    '    MainModule.StopBattleFunctions()
+    'End Sub
 
     Private Sub chPlayMusic_CheckedChanged(sender As Object, e As EventArgs) Handles chPlayMusic.CheckedChanged
         Ms.SaveSetting("chPlayMusic", IIf(chPlayMusic.Checked = True, "1", "0"))
@@ -429,7 +425,7 @@ Public Class ControlModule
         End If
     End Sub
     Private Sub GithubToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles GithubToolStripMenuItem.Click
-        Process.Start("https://github.com/churrufli/BatallaRAPP/releases/")
+        Process.Start("https://github.com/churrufli/HazteUnFree/releases/")
     End Sub
 
     Private Sub Button1_Click(sender As Object, e As EventArgs)
@@ -446,4 +442,7 @@ Public Class ControlModule
             Ms.LoadSettings()
         End If
     End Sub
+
+
+
 End Class

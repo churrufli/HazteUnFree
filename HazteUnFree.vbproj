@@ -6,11 +6,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{E8AF5E1C-7303-49A4-8F2D-8BFFC52BB38E}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <StartupObject>BatallaRAPP.My.MyApplication</StartupObject>
-    <RootNamespace>BatallaRAPP</RootNamespace>
-    <AssemblyName>BatallaRAPP</AssemblyName>
+    <StartupObject>HazteUnFree.ControlModule</StartupObject>
+    <RootNamespace>HazteUnFree</RootNamespace>
+    <AssemblyName>HazteUnFree</AssemblyName>
     <FileAlignment>512</FileAlignment>
-    <MyType>WindowsForms</MyType>
+    <MyType>WindowsFormsWithCustomSubMain</MyType>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <IsWebBootstrapper>false</IsWebBootstrapper>
@@ -36,7 +36,7 @@
     <DebugType>full</DebugType>
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
-    <OutputPath>..\..\..\..\..\..\BatallaRAAP\</OutputPath>
+    <OutputPath>..\..\..\..\..\..\HazteUnFree\</OutputPath>
     <DocumentationFile>
     </DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
@@ -71,7 +71,7 @@
     <SignManifests>false</SignManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>BatallaRAAP.ico</ApplicationIcon>
+    <ApplicationIcon>HazteUnFree.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
     <TargetZone>Internet</TargetZone>
@@ -169,7 +169,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="BatallaRAAP.ico" />
+    <Content Include="HazteUnFree.ico" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="bin\Release\" />

@@ -7,6 +7,7 @@ Public Class Vars
     Public Shared MySettingsFileName As String = "MySettings.txt"
     Public Shared SongDuration As String
     Public Shared Arr As String()
+    Public Shared ArrShowed As String()
     Public Shared WordsShowed As String
     Public Shared Arr4Words As String()
     Public Shared Files() As String

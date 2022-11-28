@@ -130,8 +130,9 @@ Public Class MainModule
 
         'ahora inicio el temporizador para las palabras
         CountWords = CountWords + 1
-
-        If ControlModule.rbAutoMode.Checked Then
+        Dim MyMode as string = ControlModule.TabMode.SelectedTab.Text() 
+       
+        If MyMode = "Modo Automático"  Then
 
             Select Case ControlModule.CbBattleType.SelectedIndex
                 Case 0, 3
@@ -142,7 +143,7 @@ Public Class MainModule
                     TimerWord.Interval = (2000)
             End Select
 
-            If ControlModule.rbAutoMode.Checked Then
+            If MyMode = "Modo Automático"  Then
                 TimerWord.Start()
             Else
                 TimerWord.Stop()
@@ -151,7 +152,7 @@ Public Class MainModule
 
         Else
             'es manual 
-            TimerWord.Interval = (1000000)
+            'TimerWord.Interval = (1000000)
 
             TimerWord.Stop()
         End If
@@ -231,8 +232,8 @@ Public Class MainModule
             MainModule.LbCountDown.Text = "00"
             ControlModule.LbCountDown.Text = "00"
             MainModule.TimerVisualCountDown.Stop()
-            MainModule.LbWord.Text = "BatallaRAPP"
-            ControlModule.LbWord.Text = "BatallaRAPP"
+            MainModule.LbWord.Text = "HazteUnFree"
+            ControlModule.LbWord.Text = "HazteUnFree"
 
             MainModule.TimerWord.Stop()
             'Fn.Wait(1)
@@ -250,11 +251,15 @@ Public Class MainModule
         End Try
     End Sub
 
+    Dim fontreaded As Boolean = false
 
     Private Sub tmrCountdown_Tick(sender As Object, e As EventArgs) Handles TimerVisualCountDown.Tick
         Dim ts As TimeSpan = _targetDt.Subtract(DateTime.Now)
         Dim t = ""
-        Dim myfont As Font = Fn.GetFontByString(Ms.ReadSetting("lbCountDownFont"))
+
+        Dim myfont = Fn.GetFontByString(Ms.ReadSetting("lbCountDownFont"))
+      
+
         Dim fontName As FontFamily = myfont.FontFamily
         Dim fontsize = myfont.Size - Math.Round(myfont.Size / 3)
         Dim fontsizereal = myfont.Size
@@ -290,6 +295,8 @@ Public Class MainModule
 
             StopBattleFunctions()
         End If
+        myfont = Nothing
+
     End Sub
 
     Private Sub Main_FormClosing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
