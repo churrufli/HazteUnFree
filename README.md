@@ -1,5 +1,8 @@
 # HazteUnFree - software libre para batallas de rap (Windows)
-
+*****
+Descargar versión 1.0.1.
+https://github.com/churrufli/HazteUnFree/releases/tag/1.0.1
+*****
 ## Requisitos mínimos 
 Windows 7, .NET Framework (4.5.2) 1GB RAM
 
