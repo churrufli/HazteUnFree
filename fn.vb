@@ -206,7 +206,7 @@ Public Class Fn
             Dim i = 0
             For Each u In Vars.Files
 
-                i = i + 1
+             
                 Dim n = u
                 n = Replace(n, ".mp3", "")
                 n = Replace(n, ".wav", "")
@@ -214,12 +214,10 @@ Public Class Fn
                 If n <> "SoundFx" Then
                     n = n & " (" & TimeSpan.FromSeconds(Math.Round(GetMediaDuration(u))).ToString("mm\:ss") & ")"
                     comboSource.Add(u, n)
+                       i = i + 1
                 Else
                     n = n
                 End If
-                'esto funciona pero ralentiza el tiempo de carga de las batallas
-
-
             Next
             ControlModule.cbMusicList.DataSource = New BindingSource(comboSource, Nothing)
             ControlModule.cbMusicList.DisplayMember = "Value"

@@ -6,11 +6,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{E8AF5E1C-7303-49A4-8F2D-8BFFC52BB38E}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <StartupObject>HazteUnFree.ControlModule</StartupObject>
+    <StartupObject>HazteUnFree.My.MyApplication</StartupObject>
     <RootNamespace>HazteUnFree</RootNamespace>
     <AssemblyName>HazteUnFree</AssemblyName>
     <FileAlignment>512</FileAlignment>
-    <MyType>WindowsFormsWithCustomSubMain</MyType>
+    <MyType>WindowsForms</MyType>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <IsWebBootstrapper>false</IsWebBootstrapper>
@@ -49,7 +49,7 @@
     <DefineDebug>false</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <Optimize>true</Optimize>
-    <OutputPath>..\..\..\..\..\..\BatallaRAPP\</OutputPath>
+    <OutputPath>..\..\..\..\..\..\HazteUnFree\</OutputPath>
     <DocumentationFile>
     </DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
@@ -104,6 +104,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApplicationEvents.vb" />
     <Compile Include="ControlModule.Designer.vb">
       <DependentUpon>ControlModule.vb</DependentUpon>
     </Compile>

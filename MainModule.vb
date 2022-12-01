@@ -76,63 +76,44 @@ Public Class MainModule
 
 
         'esto llama a la funcion tick y el contador del tiempo
-        TimerVisualCountDown.Interval = (900)
+        TimerVisualCountDown.Interval = (950) '900 intervalo
         TimerVisualCountDown.Start()
-
+        If manualorauto = "manual" Or manualorauto ="semimanual" Then
+            wordswaittoStart = 0
+        End If
         'espera 
         Dim espera = CInt(wordswaittoStart)
         Fn.Wait(espera)
 
         'pongo la primera palabra
 
+        If manualorauto = "auto"  Then
+            If mode <> 3 Then
+                Dim myfont As Font = Fn.GetFontByString(Ms.ReadSetting("lbWordFont"))
+                Dim fontName As FontFamily = myfont.FontFamily
+                Dim fontsize = myfont.Size 
+                LbWord.Font = New Font(fontName, fontsize)
+                'LbWord.Text = UCase(Vars.Arr(0).ToString)
+                'ControlModule.LbWord.Text = UCase(Vars.Arr(0).ToString)
+                GetWord()
 
-        If mode <> 3 Then
+            Else
 
-            LbWord.Text = UCase(Vars.Arr(0).ToString)
-            ControlModule.LbWord.Text = UCase(Vars.Arr(0).ToString)
-        Else
-            'aqui tengo que cambiar el tamaño de la fuente
-            Dim myfont As Font = Fn.GetFontByString(Ms.ReadSetting("lbWordFont"))
-            Dim fontName As FontFamily = myfont.FontFamily
-            Dim fontsize = myfont.Size - Math.Round(myfont.Size / 3)
-            LbWord.Font = New Font(fontName, fontsize)
-
-            Dim countWords = 0
-            Dim cadena = ""
-            Dim salir = 0
-
-            For Each w In Vars.Arr
-                countWords = countWords + 1
-
-                Select Case countWords
-                    Case 1, 3
-                        cadena = cadena & w
-                    Case 2
-                        cadena = cadena & "/" & w & vbNewLine
-                    Case 4
-                        cadena = cadena & "/" & w & ";"
-                End Select
-
-                If countWords >= 4 Then
-                    countWords = 0
-                End If
-                salir = salir + 1
-                If salir > 1000 Then Exit For
-            Next
-
-            Vars.Arr4Words = Split(cadena, ";")
-            LbWord.Text = UCase(Vars.Arr4Words(0).ToString)
-            Dim otherword As String = LbWord.Text
-            otherword = Replace(otherword, vbNewLine, "/")
-            otherword = otherword
-            ControlModule.LbWord.Text = otherword
+                GenerateArray4Words
+              
+                LbWord.Text = UCase(Vars.Arr4Words(0).ToString)
+                Dim otherword As String = LbWord.Text
+                otherword = Replace(otherword, vbNewLine, "/")
+                otherword = otherword
+                ControlModule.LbWord.Text = otherword
+            End If
         End If
 
         'ahora inicio el temporizador para las palabras
         CountWords = CountWords + 1
-        Dim MyMode as string = ControlModule.TabMode.SelectedTab.Text() 
-       
-        If MyMode = "Modo Automático"  Then
+        Dim MyMode As String = ControlModule.TabMode.SelectedTab.Text()
+
+        If manualorauto = "auto" Or manualorauto = "semimanual" Then
 
             Select Case ControlModule.CbBattleType.SelectedIndex
                 Case 0, 3
@@ -143,7 +124,7 @@ Public Class MainModule
                     TimerWord.Interval = (2000)
             End Select
 
-            If MyMode = "Modo Automático"  Then
+            If manualorauto = "auto" Then
                 TimerWord.Start()
             Else
                 TimerWord.Stop()
@@ -159,6 +140,41 @@ Public Class MainModule
 
 
         'Fn.LoadMusic()
+    End Sub
+
+    Sub GenerateArray4Words
+
+                        'aqui tengo que cambiar el tamaño de la fuente
+                Dim myfont As Font = Fn.GetFontByString(Ms.ReadSetting("lbWordFont"))
+                Dim fontName As FontFamily = myfont.FontFamily
+                Dim fontsize = myfont.Size - Math.Round(myfont.Size / 3)
+                LbWord.Font = New Font(fontName, fontsize)
+
+
+          Dim countWords = 0
+                Dim cadena = ""
+                Dim salir = 0
+
+                For Each w In Vars.Arr
+                    countWords = countWords + 1
+
+                    Select Case countWords
+                        Case 1, 3
+                            cadena = cadena & w
+                        Case 2
+                            cadena = cadena & "/" & w & vbNewLine
+                        Case 4
+                            cadena = cadena & "/" & w & ";"
+                    End Select
+
+                    If countWords >= 4 Then
+                        countWords = 0
+                    End If
+                    salir = salir + 1
+                    If salir > 1000 Then Exit For
+                Next
+
+                Vars.Arr4Words = Split(cadena, ";")
     End Sub
 
     Private Sub TimerWord_Tick(sender As Object, e As EventArgs) Handles TimerWord.Tick
@@ -186,8 +202,12 @@ Public Class MainModule
 
 
             Else
+                if isnothing(Vars.Arr4Words) then
+                    GenerateArray4Words
+
+                End If
                 LbWord.Text = UCase(Vars.Arr4Words(CountWords).ToString)
-                ControlModule.LbWord.Text = UCase(Vars.Arr4Words(CountWords).ToString)
+                ControlModule.LbWord.Text = Replace(LbWord.Text,vbCrLf,"/")
 
             End If
             CountWords = CountWords + 1
@@ -247,19 +267,17 @@ Public Class MainModule
             ControlModule.CbDuration.Enabled = True
             'ControlModule.btStopBattle.Enabled = True
             CountWords = 0
+            ControlModule.Button3.Enabled = true
+            ControlModule.Button4.Enabled = true
         Catch
         End Try
     End Sub
-
-    Dim fontreaded As Boolean = false
 
     Private Sub tmrCountdown_Tick(sender As Object, e As EventArgs) Handles TimerVisualCountDown.Tick
         Dim ts As TimeSpan = _targetDt.Subtract(DateTime.Now)
         Dim t = ""
 
         Dim myfont = Fn.GetFontByString(Ms.ReadSetting("lbCountDownFont"))
-      
-
         Dim fontName As FontFamily = myfont.FontFamily
         Dim fontsize = myfont.Size - Math.Round(myfont.Size / 3)
         Dim fontsizereal = myfont.Size
@@ -275,7 +293,6 @@ Public Class MainModule
                 If LbCountDown.Font.Size <> fontsizereal Then
                     LbCountDown.Font = Fn.GetFontByString(Ms.ReadSetting("lbCountDownFont"))
                 End If
-                'End If
         End Select
 
         LbCountDown.Text = t

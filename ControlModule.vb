@@ -28,7 +28,6 @@ Public Class ControlModule
                 DepureDictionary(fri.FullName)
             End If
 
-
             Dim name = Split(Split(fri.Name, "_")(1).ToString, ".txt")(0).ToString
             ListBoxDictionaries.Items.Add(name, IIf(LCase(name) = "general", True, False))
         Next fri
@@ -117,10 +116,6 @@ Public Class ControlModule
     Public Sub BtClose_Click(sender As Object, e As EventArgs)
         MainModule.StopBattleFunctions()
         Application.Exit()
-    End Sub
-
-    Private Sub BtStop_Click(sender As Object, e As EventArgs)
-        MainModule.StopBattleFunctions()
     End Sub
 
     Private Sub BtStart_Click(sender As Object, e As EventArgs)
@@ -238,7 +233,7 @@ Public Class ControlModule
         btNextWord.Enabled = True
 
         Vars.SongDuration = Fn.PlayMusic()
-        If chkMinimize.Checked Then
+        If chkMinimize.Checked and mode <> "semimanual" Then
             Me.WindowState = FormWindowState.Minimized
         End If
 
@@ -267,6 +262,7 @@ Public Class ControlModule
 
     Private Sub CheckBox2_CheckedChanged(sender As Object, e As EventArgs) Handles chshufflemusic.CheckedChanged
         cbMusicList.Enabled = IIf(chshufflemusic.Checked, False, True)
+        Ms.SaveSetting("chshufflemusic", iif( cbMusicList.Enabled,"1","0"))
         Try
             Fn.LoadMusic()
         Catch
@@ -425,7 +421,7 @@ Public Class ControlModule
         End If
     End Sub
     Private Sub GithubToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles GithubToolStripMenuItem.Click
-        Process.Start("https://github.com/churrufli/HazteUnFree/releases/")
+        Process.Start("https://github.com/churrufli/HazteUnFree/")
     End Sub
 
     Private Sub Button1_Click(sender As Object, e As EventArgs)
@@ -443,6 +439,20 @@ Public Class ControlModule
         End If
     End Sub
 
+    Private Sub Button4_Click(sender As Object, e As EventArgs) Handles Button4.Click
+        MainModule.TimerWord.Start()
+        btStartWords.Enabled = False
+        btNextWord.Enabled = True
+        StartBattle("semimanual")
+        Button4.Enabled = false
+    End Sub
 
-
+    Private Sub Button3_Click_1(sender As Object, e As EventArgs) Handles Button3.Click
+        MainModule.GetWord()
+        MainModule.TimerWord.Start()
+        Button3.Enabled = false
+          If chkMinimize.Checked Then
+            Me.WindowState = FormWindowState.Minimized
+        End If
+    End Sub
 End Class

@@ -33,7 +33,11 @@ Public Class Ms
         t = t & AddSetting("lbCountDownColor", "-32768")
         t = t & AddSetting("cbBattleType", "2")
         t = t & AddSetting("MusicDirectory", Directory.GetCurrentDirectory)
-        t = t & AddSetting("TbWordsWaittoStart", "3")
+        t = t & AddSetting("TbWordsWaittoStart", "0")
+        t = t & AddSetting("chkSoundFx", "1")
+        t = t & AddSetting("chPlayMusic", "1")
+        t = t & AddSetting("chkMinimize", "0")
+
         File.Create(Vars.MySettingsFileName).Dispose()
         File.WriteAllText(Vars.MySettingsFileName, t)
     End Sub
@@ -49,6 +53,9 @@ Public Class Ms
         WriteIfNotExistSetting("cbBattleType", "2")
         WriteIfNotExistSetting("MusicDirectory", Directory.GetCurrentDirectory)
         WriteIfNotExistSetting("TbWordsWaittoStart", "3")
+        WriteIfNotExistSetting("chkSoundFx", "1")
+        WriteIfNotExistSetting("chkMinimize", "0")
+        WriteIfNotExistSetting("chPlayMusic", "1")
     End Sub
 
     Public Shared Function ReadSetting(setting)
