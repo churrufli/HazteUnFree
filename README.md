@@ -1,10 +1,10 @@
-# HazteUnFree - software libre para Batallas de Gallos (Windows)
+# HazteUnFree - software libre para batallas de rap (Windows)
 
 ## Requisitos mínimos 
 Windows 7, .NET Framework (4.5.2) 1GB RAM
 
 ## Introducción
-¿Te gustaría **organizar una Batalla de Gallos**  en tu aula, con tu asociación o pequeño evento y **no sabes cómo hacerlo técnicamente**? ¿Quieres mostrar por una pantalla el cronómetro y las palabras? HazteUnFree nace como un software sencillo y a la vez práctico para cumplir con el objetivo. También servirá para practicar tus batallas.
+¿Te gustaría **organizar una batalla de rap**  en tu aula, con tu asociación o pequeño evento y **no sabes cómo hacerlo técnicamente**? ¿Quieres mostrar por una pantalla el cronómetro y las palabras? HazteUnFree nace como un software sencillo y a la vez práctico para cumplir con el objetivo. También servirá para practicar tus batallas.
 
 Además, es personalizable; podrás cambiar el fondo de pantalla, el formato del texto de la pantalla principal. Podrás usar tus instrumentales y añadir tus propias palabras para la batalla. Es una primera versión y puede ser que tengaa mejoras más adelante, pero por ahora quizás puede valerte. Molando. Lee este documento para conocer el funcionamiento o comienza a usarlo por tu cuenta para entenderlo y consúltalo si te surgen dudas.
 
@@ -13,7 +13,13 @@ Además, es personalizable; podrás cambiar el fondo de pantalla, el formato del
 ## Características 
 HazteUnFree es un programa para Windows que tiene dos ventanas, la ventana de control, donde podrás hacer las configuraciones de las batallas, y la ventana principal, donde se muestra el tiempo y las palabras. 
 
-![screenshot2](https://user-images.githubusercontent.com/4362846/199621820-c52d9faa-f1e8-43ae-a7bb-92370f857359.jpg)
+## Ventana de Control, 3 modos de uso: Automático, Semi-automático y Manual.
+
+![control1](https://user-images.githubusercontent.com/4362846/205037092-edd4cda1-b0d2-4d78-88a0-fd2519b6a024.png)
+![control2](https://user-images.githubusercontent.com/4362846/205036807-4fe9db39-f73f-4c2f-9744-36157c4a07ba.png)
+![control3](https://user-images.githubusercontent.com/4362846/205036809-f9d37ed5-e6dd-48ce-91ee-5ae6f6372860.png)
+## Pestaña de Música y Diccionarios.
+![control4](https://user-images.githubusercontent.com/4362846/205036812-7eb62e35-92d2-471c-a492-1513a1516903.png)
 
 ## ¿Por qué en dos ventanas?
 Lo he diseñado de esta manera para que puedas utilizarlo en el modo de escritorio extendido, usando una ventana en cada pantalla usando como segunda pantalla el proyector o pantalla inalámbrica de tu aula o evento. De tal manera el control no se muestra a los participantes. 
