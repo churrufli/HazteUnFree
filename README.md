@@ -75,7 +75,10 @@ Abre el programa y verás que tu diccionario aparece en la pestaña diccionarios
 
 ## Sobre el proyecto
 Esta es una humilde aportación con la intención de ayudar a la comunidad a ofrecer un programa sencillo, pero que creo puede dar mucho juego para usarlo, y cuyo fuerte es la personalización. Sé que podría tener muchas más opciones y mejoras, pero es algo que he hecho desde mi poco conocimiento, en mis pocos ratos libres, durante tiempo, por pasar el rato y matar el gusanillo de la programación. Si quieres contribuir a mejorarlo, el programa está desarrollado en .Net con Visual Studio y el código está abierto en GitHub. También puedes contribuir creando diccionarios temáticos que sí resultan de interés pondré disponibles para todos en el proyecto.
-Si te ha resultado útil y lo deseas, también puedes hacer una donación.
+Sí el uso de este programa en una actividad te ha reportado económicamente, si te ha resultado útil o lo deseas, por favor, considera hacer una donación.
+
+http://bit.ly/3Hb9THn
+
 **Posibles mejoras en el futuro**
 Participantes
 Puntuaciones 
