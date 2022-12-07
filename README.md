@@ -5,6 +5,8 @@ https://github.com/churrufli/HazteUnFree/releases/tag/1.0.1
 *****
 ## Requisitos mínimos 
 Windows 7, .NET Framework (4.5.2) 1GB RAM
+##Discord
+https://discord.gg/4JwTRxS8p3
 
 ## Introducción
 ¿Te gustaría **organizar una batalla de rap**  en tu aula, con tu asociación o pequeño evento y **no sabes cómo hacerlo técnicamente**? ¿Quieres mostrar por una pantalla el cronómetro y las palabras? HazteUnFree nace como un software sencillo y a la vez práctico para cumplir con el objetivo. También servirá para practicar tus batallas.
