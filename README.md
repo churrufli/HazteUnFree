@@ -5,7 +5,7 @@ https://github.com/churrufli/HazteUnFree/releases/tag/1.0.1
 *****
 ## Requisitos mínimos 
 Windows 7, .NET Framework (4.5.2) 1GB RAM
-##Discord
+## Discord
 https://discord.gg/4JwTRxS8p3
 
 ## Introducción
