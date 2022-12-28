@@ -37,6 +37,7 @@ Partial Class ControlModule
         Me.CbBattleType = New System.Windows.Forms.ComboBox()
         Me.btNextWord = New System.Windows.Forms.Button()
         Me.CbDuration = New System.Windows.Forms.ComboBox()
+        Me.ListBoxDictionaries = New System.Windows.Forms.CheckedListBox()
         Me.ColorDialog1 = New System.Windows.Forms.ColorDialog()
         Me.ColorDialog2 = New System.Windows.Forms.ColorDialog()
         Me.FolderBrowserDialog1 = New System.Windows.Forms.FolderBrowserDialog()
@@ -55,14 +56,12 @@ Partial Class ControlModule
         Me.ModoVentanaToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ModoPantallaCompletaToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.FondoDePantallaToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ReestablecerPersonalizaciónToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.MostrarPantallaPrincipalToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.SobreHazteUnFreeAAPToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.GithubToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.DIscordToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.TabPage3 = New System.Windows.Forms.TabPage()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
-        Me.ListBoxDictionaries = New System.Windows.Forms.CheckedListBox()
         Me.GroupBox4 = New System.Windows.Forms.GroupBox()
         Me.chkSoundFx = New System.Windows.Forms.CheckBox()
         Me.tbmusicdir = New System.Windows.Forms.TextBox()
@@ -88,6 +87,8 @@ Partial Class ControlModule
         Me.LbWord = New System.Windows.Forms.Label()
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.TimerWait = New System.Windows.Forms.Timer(Me.components)
+        Me.ReestablecerConfiguraciónToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.SalirToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.MenuStrip1.SuspendLayout
         Me.TabPage3.SuspendLayout
         Me.GroupBox1.SuspendLayout
@@ -103,7 +104,7 @@ Partial Class ControlModule
         '
         'tbUserLog
         '
-        Me.tbUserLog.Font = New System.Drawing.Font("Segoe UI", 9!)
+        Me.tbUserLog.Font = New System.Drawing.Font("Segoe UI", 8!)
         Me.tbUserLog.Location = New System.Drawing.Point(10, 464)
         Me.tbUserLog.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
         Me.tbUserLog.Multiline = true
@@ -225,10 +226,26 @@ Partial Class ControlModule
         Me.CbDuration.TabIndex = 3
         Me.ToolTip1.SetToolTip(Me.CbDuration, "Tiempo de duración de la batalla")
         '
+        'ListBoxDictionaries
+        '
+        Me.ListBoxDictionaries.BackColor = System.Drawing.Color.WhiteSmoke
+        Me.ListBoxDictionaries.BorderStyle = System.Windows.Forms.BorderStyle.None
+        Me.ListBoxDictionaries.CheckOnClick = true
+        Me.ListBoxDictionaries.ColumnWidth = 250
+        Me.ListBoxDictionaries.Font = New System.Drawing.Font("Segoe UI", 9!)
+        Me.ListBoxDictionaries.FormattingEnabled = true
+        Me.ListBoxDictionaries.Location = New System.Drawing.Point(21, 29)
+        Me.ListBoxDictionaries.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.ListBoxDictionaries.MultiColumn = true
+        Me.ListBoxDictionaries.Name = "ListBoxDictionaries"
+        Me.ListBoxDictionaries.Size = New System.Drawing.Size(409, 90)
+        Me.ListBoxDictionaries.TabIndex = 35
+        Me.ToolTip1.SetToolTip(Me.ListBoxDictionaries, "Marca y desmarca para volver a cargar")
+        '
         'MenuStrip1
         '
         Me.MenuStrip1.Font = New System.Drawing.Font("Segoe UI", 9!)
-        Me.MenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ConfiguraciónToolStripMenuItem, Me.MostrarPantallaPrincipalToolStripMenuItem, Me.SobreHazteUnFreeAAPToolStripMenuItem})
+        Me.MenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ConfiguraciónToolStripMenuItem, Me.SobreHazteUnFreeAAPToolStripMenuItem, Me.MostrarPantallaPrincipalToolStripMenuItem})
         Me.MenuStrip1.Location = New System.Drawing.Point(0, 0)
         Me.MenuStrip1.Name = "MenuStrip1"
         Me.MenuStrip1.Padding = New System.Windows.Forms.Padding(9, 3, 0, 3)
@@ -238,23 +255,23 @@ Partial Class ControlModule
         '
         'ConfiguraciónToolStripMenuItem
         '
-        Me.ConfiguraciónToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.PersonalizarToolStripMenuItem, Me.ReestablecerPersonalizaciónToolStripMenuItem})
+        Me.ConfiguraciónToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.PersonalizarToolStripMenuItem, Me.SalirToolStripMenuItem})
         Me.ConfiguraciónToolStripMenuItem.Name = "ConfiguraciónToolStripMenuItem"
-        Me.ConfiguraciónToolStripMenuItem.Size = New System.Drawing.Size(95, 19)
-        Me.ConfiguraciónToolStripMenuItem.Text = "Configuración"
+        Me.ConfiguraciónToolStripMenuItem.Size = New System.Drawing.Size(50, 19)
+        Me.ConfiguraciónToolStripMenuItem.Text = "Menú"
         '
         'PersonalizarToolStripMenuItem
         '
-        Me.PersonalizarToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.PalabrasToolStripMenuItem, Me.RelojToolStripMenuItem, Me.VentanaPrincipalToolStripMenuItem})
+        Me.PersonalizarToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.PalabrasToolStripMenuItem, Me.RelojToolStripMenuItem, Me.VentanaPrincipalToolStripMenuItem, Me.ReestablecerConfiguraciónToolStripMenuItem})
         Me.PersonalizarToolStripMenuItem.Name = "PersonalizarToolStripMenuItem"
-        Me.PersonalizarToolStripMenuItem.Size = New System.Drawing.Size(225, 22)
+        Me.PersonalizarToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
         Me.PersonalizarToolStripMenuItem.Text = "Personalizar"
         '
         'PalabrasToolStripMenuItem
         '
         Me.PalabrasToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.FuenteYTamañoToolStripMenuItem, Me.ColorToolStripMenuItem, Me.PosiciónToolStripMenuItem})
         Me.PalabrasToolStripMenuItem.Name = "PalabrasToolStripMenuItem"
-        Me.PalabrasToolStripMenuItem.Size = New System.Drawing.Size(165, 22)
+        Me.PalabrasToolStripMenuItem.Size = New System.Drawing.Size(225, 22)
         Me.PalabrasToolStripMenuItem.Text = "Palabras"
         '
         'FuenteYTamañoToolStripMenuItem
@@ -279,7 +296,7 @@ Partial Class ControlModule
         '
         Me.RelojToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.FuenteYTamañoToolStripMenuItem1, Me.ColorToolStripMenuItem1, Me.PosiciónToolStripMenuItem1})
         Me.RelojToolStripMenuItem.Name = "RelojToolStripMenuItem"
-        Me.RelojToolStripMenuItem.Size = New System.Drawing.Size(165, 22)
+        Me.RelojToolStripMenuItem.Size = New System.Drawing.Size(225, 22)
         Me.RelojToolStripMenuItem.Text = "Reloj"
         '
         'FuenteYTamañoToolStripMenuItem1
@@ -304,7 +321,7 @@ Partial Class ControlModule
         '
         Me.VentanaPrincipalToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ModoVentanaToolStripMenuItem, Me.ModoPantallaCompletaToolStripMenuItem, Me.FondoDePantallaToolStripMenuItem})
         Me.VentanaPrincipalToolStripMenuItem.Name = "VentanaPrincipalToolStripMenuItem"
-        Me.VentanaPrincipalToolStripMenuItem.Size = New System.Drawing.Size(165, 22)
+        Me.VentanaPrincipalToolStripMenuItem.Size = New System.Drawing.Size(225, 22)
         Me.VentanaPrincipalToolStripMenuItem.Text = "Ventana Principal"
         '
         'ModoVentanaToolStripMenuItem
@@ -324,12 +341,6 @@ Partial Class ControlModule
         Me.FondoDePantallaToolStripMenuItem.Name = "FondoDePantallaToolStripMenuItem"
         Me.FondoDePantallaToolStripMenuItem.Size = New System.Drawing.Size(206, 22)
         Me.FondoDePantallaToolStripMenuItem.Text = "Fondo de Pantalla"
-        '
-        'ReestablecerPersonalizaciónToolStripMenuItem
-        '
-        Me.ReestablecerPersonalizaciónToolStripMenuItem.Name = "ReestablecerPersonalizaciónToolStripMenuItem"
-        Me.ReestablecerPersonalizaciónToolStripMenuItem.Size = New System.Drawing.Size(225, 22)
-        Me.ReestablecerPersonalizaciónToolStripMenuItem.Text = "Reestablecer Personalización"
         '
         'MostrarPantallaPrincipalToolStripMenuItem
         '
@@ -379,22 +390,6 @@ Partial Class ControlModule
         Me.GroupBox1.TabIndex = 48
         Me.GroupBox1.TabStop = false
         Me.GroupBox1.Text = "Diccionarios"
-        '
-        'ListBoxDictionaries
-        '
-        Me.ListBoxDictionaries.BackColor = System.Drawing.Color.WhiteSmoke
-        Me.ListBoxDictionaries.BorderStyle = System.Windows.Forms.BorderStyle.None
-        Me.ListBoxDictionaries.CheckOnClick = true
-        Me.ListBoxDictionaries.ColumnWidth = 250
-        Me.ListBoxDictionaries.Font = New System.Drawing.Font("Segoe UI", 9!)
-        Me.ListBoxDictionaries.FormattingEnabled = true
-        Me.ListBoxDictionaries.Location = New System.Drawing.Point(21, 29)
-        Me.ListBoxDictionaries.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
-        Me.ListBoxDictionaries.MultiColumn = true
-        Me.ListBoxDictionaries.Name = "ListBoxDictionaries"
-        Me.ListBoxDictionaries.Size = New System.Drawing.Size(409, 90)
-        Me.ListBoxDictionaries.TabIndex = 35
-        Me.ToolTip1.SetToolTip(Me.ListBoxDictionaries, "Marca y desmarca para volver a cargar")
         '
         'GroupBox4
         '
@@ -485,12 +480,13 @@ Partial Class ControlModule
         'chkMinimize
         '
         Me.chkMinimize.AutoSize = true
-        Me.chkMinimize.Location = New System.Drawing.Point(16, 305)
+        Me.chkMinimize.Location = New System.Drawing.Point(14, 305)
         Me.chkMinimize.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
         Me.chkMinimize.Name = "chkMinimize"
         Me.chkMinimize.Size = New System.Drawing.Size(412, 21)
         Me.chkMinimize.TabIndex = 40
         Me.chkMinimize.Text = "Modo Una Pantalla: Minimizar esta ventana al comenzar la batalla"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)
+        Me.ToolTip1.SetToolTip(Me.chkMinimize, "(excepto en modo manual)")
         Me.chkMinimize.UseVisualStyleBackColor = true
         '
         'TabMode
@@ -527,6 +523,7 @@ Partial Class ControlModule
         Me.BtStartBattle.Size = New System.Drawing.Size(285, 45)
         Me.BtStartBattle.TabIndex = 39
         Me.BtStartBattle.Text = "COMENZAR BATALLA"
+        Me.ToolTip1.SetToolTip(Me.BtStartBattle, "Comienza instrumental y palabras")
         Me.BtStartBattle.UseVisualStyleBackColor = false
         '
         'Label2
@@ -594,7 +591,7 @@ Partial Class ControlModule
         Me.btStartWords.Location = New System.Drawing.Point(27, 36)
         Me.btStartWords.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
         Me.btStartWords.Name = "btStartWords"
-        Me.btStartWords.Size = New System.Drawing.Size(183, 54)
+        Me.btStartWords.Size = New System.Drawing.Size(183, 51)
         Me.btStartWords.TabIndex = 33
         Me.btStartWords.Text = "COMENZAR INSTRUMENTAL"
         Me.btStartWords.UseVisualStyleBackColor = false
@@ -619,7 +616,7 @@ Partial Class ControlModule
         Me.btStopBattle.Location = New System.Drawing.Point(10, 411)
         Me.btStopBattle.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
         Me.btStopBattle.Name = "btStopBattle"
-        Me.btStopBattle.Size = New System.Drawing.Size(463, 45)
+        Me.btStopBattle.Size = New System.Drawing.Size(459, 45)
         Me.btStopBattle.TabIndex = 40
         Me.btStopBattle.Text = "PARAR BATALLA"
         Me.btStopBattle.UseVisualStyleBackColor = false
@@ -665,6 +662,18 @@ Partial Class ControlModule
         Me.Panel1.Name = "Panel1"
         Me.Panel1.Size = New System.Drawing.Size(459, 57)
         Me.Panel1.TabIndex = 44
+        '
+        'ReestablecerConfiguraciónToolStripMenuItem
+        '
+        Me.ReestablecerConfiguraciónToolStripMenuItem.Name = "ReestablecerConfiguraciónToolStripMenuItem"
+        Me.ReestablecerConfiguraciónToolStripMenuItem.Size = New System.Drawing.Size(225, 22)
+        Me.ReestablecerConfiguraciónToolStripMenuItem.Text = "Reestablecer Personalización"
+        '
+        'SalirToolStripMenuItem
+        '
+        Me.SalirToolStripMenuItem.Name = "SalirToolStripMenuItem"
+        Me.SalirToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.SalirToolStripMenuItem.Text = "Salir"
         '
         'ControlModule
         '
@@ -762,11 +771,12 @@ End Sub
     Friend WithEvents Label2 As Label
     Friend WithEvents DIscordToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents TimerWait As Timer
-    Friend WithEvents ReestablecerPersonalizaciónToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents Button3 As Button
     Friend WithEvents Button4 As Button
     Friend WithEvents TabMode As TabControl
     Friend WithEvents TabPage2 As TabPage
     Friend WithEvents TabPage4 As TabPage
     Friend WithEvents TabPage5 As TabPage
+    Friend WithEvents ReestablecerConfiguraciónToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents SalirToolStripMenuItem As ToolStripMenuItem
 End Class

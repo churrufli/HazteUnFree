@@ -233,7 +233,30 @@ Public Class ControlModule
         btNextWord.Enabled = True
 
         Vars.SongDuration = Fn.PlayMusic()
-        If chkMinimize.Checked and mode <> "semimanual" Then
+        Dim minimize As Boolean = False
+        If chkMinimize.Checked 
+            minimize = true
+            Else
+            minimize = false
+        End If
+
+      If  mode ="semimanual" Then
+             minimize = false
+            Else
+             minimize = false
+        End If
+         If mode ="auto" 
+            If chkMinimize.Checked 
+            minimize = true
+            Else
+            minimize = false
+        End If
+         End If
+        If mode = "manual" Then
+            minimize = false
+        End If
+
+        If minimize then
             Me.WindowState = FormWindowState.Minimized
         End If
 
@@ -432,11 +455,8 @@ Public Class ControlModule
         Process.Start("https://discord.gg/4JwTRxS8p3")
     End Sub
 
-    Private Sub ReestablecerPersonalizaciónToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ReestablecerPersonalizaciónToolStripMenuItem.Click
-        If (MsgBox("¿Deseas reestablecer la personalización a los valores por defecto del programa?", MsgBoxStyle.YesNo) = MsgBoxResult.Yes) Then
-            Ms.CreateDefaultSettings()
-            Ms.LoadSettings()
-        End If
+    Private Sub ReestablecerPersonalizaciónToolStripMenuItem_Click(sender As Object, e As EventArgs) 
+   
     End Sub
 
     Private Sub Button4_Click(sender As Object, e As EventArgs) Handles Button4.Click
@@ -454,5 +474,19 @@ Public Class ControlModule
           If chkMinimize.Checked Then
             Me.WindowState = FormWindowState.Minimized
         End If
+    End Sub
+
+    Private Sub ReestablecerConfiguraciónToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ReestablecerConfiguraciónToolStripMenuItem.Click
+             If (MsgBox("¿Deseas reestablecer la personalización a los valores por defecto del programa?", MsgBoxStyle.YesNo) = MsgBoxResult.Yes) Then
+            Ms.CreateDefaultSettings()
+            Ms.LoadSettings()
+        End If
+    End Sub
+
+    Private Sub SalirToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SalirToolStripMenuItem.Click
+           If (MsgBox("¿Salir del programa?", MsgBoxStyle.YesNo) = MsgBoxResult.Yes) Then
+        Application.Exit
+            End If
+
     End Sub
 End Class

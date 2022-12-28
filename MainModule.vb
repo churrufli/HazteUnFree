@@ -271,6 +271,12 @@ Public Class MainModule
             ControlModule.Button4.Enabled = true
         Catch
         End Try
+
+        Try
+          MainModule.show()
+        Catch 
+
+        End Try
     End Sub
 
     Private Sub tmrCountdown_Tick(sender As Object, e As EventArgs) Handles TimerVisualCountDown.Tick
