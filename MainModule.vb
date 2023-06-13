@@ -3,6 +3,20 @@ Imports System.Net
 Imports WMPLib
 
 Public Class MainModule
+    Sub PlayVideo()
+        'AxWindowsMediaPlayer1.URL = "video.mp4"
+        'AxWindowsMediaPlayer1.settings.autoStart = True
+        'AxWindowsMediaPlayer1.settings.mute = True
+        'AxWindowsMediaPlayer1.settings.setMode("loop", True)
+        'AxWindowsMediaPlayer1.uiMode = "None"
+        'AxWindowsMediaPlayer1.Dock = DockStyle.Fill
+        'AxWindowsMediaPlayer1.UseWaitCursor = False
+        'esto no lo usaba Do While AxWindowsMediaPlayer1.playState <> WMPLib.WMPPlayState.wmppsPlaying
+        '    Application.DoEvents()
+        'Loop
+        'AxWindowsMediaPlayer1.fullScreen = True
+    End Sub
+    
     Private _targetDt As DateTime
     Public CountDownFrom As TimeSpan = TimeSpan.FromSeconds(60)
     Public Shared Rnd As New Random()
@@ -11,6 +25,9 @@ Public Class MainModule
     Public Shared CountWords As Integer = 0
 
     Private Sub Main_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        PlayVideo()
+        LbCountDown.BackColor = System.Drawing.Color.Transparent
+        'Label1.BackColor = System.Drawing.Color.Transparent
         'Me.WindowState = FormWindowState.Maximized
         'Me.FormBorderStyle = FormBorderStyle.None
     End Sub
@@ -64,117 +81,95 @@ Public Class MainModule
 
 
     Sub PlayBattle(mode, wordswaittoStart, song, duration, manualorauto)
-        '///////////////////////////////////////
-        LbCountDown.Visible = True
-        LbWord.Text = ""
-        ControlModule.LbWord.Text = ""
+    LbCountDown.Visible = True
+    LbWord.Text = ""
+    ControlModule.LbWord.Text = ""
+    Dim settimer = False
+    _targetDt = DateTime.Now.Add(CountDownFrom)
+    ControlModule.btStopBattle.Enabled = True
 
-        Dim settimer = False
+    TimerVisualCountDown.Interval = 1000 ' Intervalo de 1 segundo
+    TimerVisualCountDown.Start()
 
-        _targetDt = DateTime.Now.Add(CountDownFrom)
-        ControlModule.btStopBattle.Enabled = True
+    If manualorauto = "manual" Or manualorauto = "semimanual" Then
+        wordswaittoStart = 0
+    End If
 
+    Fn.Wait(CInt(wordswaittoStart)) ' Espera
 
-        'esto llama a la funcion tick y el contador del tiempo
-        TimerVisualCountDown.Interval = (950) '900 intervalo
-        TimerVisualCountDown.Start()
-        If manualorauto = "manual" Or manualorauto ="semimanual" Then
-            wordswaittoStart = 0
-        End If
-        'espera 
-        Dim espera = CInt(wordswaittoStart)
-        Fn.Wait(espera)
-
-        'pongo la primera palabra
-
-        If manualorauto = "auto"  Then
-            If mode <> 3 Then
-                Dim myfont As Font = Fn.GetFontByString(Ms.ReadSetting("lbWordFont"))
-                Dim fontName As FontFamily = myfont.FontFamily
-                Dim fontsize = myfont.Size 
-                LbWord.Font = New Font(fontName, fontsize)
-                'LbWord.Text = UCase(Vars.Arr(0).ToString)
-                'ControlModule.LbWord.Text = UCase(Vars.Arr(0).ToString)
-                GetWord()
-
-            Else
-
-                GenerateArray4Words
-              
-                LbWord.Text = UCase(Vars.Arr4Words(0).ToString)
-                Dim otherword As String = LbWord.Text
-                otherword = Replace(otherword, vbNewLine, "/")
-                otherword = otherword
-                ControlModule.LbWord.Text = otherword
-            End If
-        End If
-
-        'ahora inicio el temporizador para las palabras
-        CountWords = CountWords + 1
-        Dim MyMode As String = ControlModule.TabMode.SelectedTab.Text()
-
-        If manualorauto = "auto" Or manualorauto = "semimanual" Then
-
-            Select Case ControlModule.CbBattleType.SelectedIndex
-                Case 0, 3
-                    TimerWord.Interval = (10000) 'ms
-                Case 1
-                    TimerWord.Interval = (5000)
-                Case 2
-                    TimerWord.Interval = (2000)
-            End Select
-
-            If manualorauto = "auto" Then
-                TimerWord.Start()
-            Else
-                TimerWord.Stop()
-
-            End If
-
+    If manualorauto = "auto" Then
+        If mode <> 3 Then
+            Dim myfont As Font = Fn.GetFontByString(Ms.ReadSetting("lbWordFont"))
+            Dim fontName As FontFamily = myfont.FontFamily
+            Dim fontsize = myfont.Size
+            LbWord.Font = New Font(fontName, fontsize)
+            GetWord()
         Else
-            'es manual 
-            'TimerWord.Interval = (1000000)
+            GenerateArray4Words()
+            LbWord.Text = UCase(Vars.Arr4Words(0).ToString)
+            Dim otherword As String = LbWord.Text
+            otherword = Replace(otherword, vbNewLine, "/")
+            ControlModule.LbWord.Text = otherword
+        End If
+    End If
 
+    CountWords = CountWords + 1
+    Dim MyMode As String = ControlModule.TabMode.SelectedTab.Text()
+
+    If manualorauto = "auto" Or manualorauto = "semimanual" Then
+        Select Case ControlModule.CbBattleType.SelectedIndex
+            Case 0, 3
+                TimerWord.Interval = 10000 ' Intervalo de 10 segundos
+            Case 1
+                TimerWord.Interval = 5000 ' Intervalo de 5 segundos
+            Case 2
+                TimerWord.Interval = 2000 ' Intervalo de 2 segundos
+        End Select
+
+        If manualorauto = "auto" Then
+            TimerWord.Start()
+        Else
             TimerWord.Stop()
         End If
+    Else
+        TimerWord.Stop()
+    End If
+End Sub
 
 
-        'Fn.LoadMusic()
-    End Sub
+    Sub GenerateArray4Words()
 
-    Sub GenerateArray4Words
-
-                        'aqui tengo que cambiar el tamaño de la fuente
-                Dim myfont As Font = Fn.GetFontByString(Ms.ReadSetting("lbWordFont"))
-                Dim fontName As FontFamily = myfont.FontFamily
-                Dim fontsize = myfont.Size - Math.Round(myfont.Size / 3)
-                LbWord.Font = New Font(fontName, fontsize)
+        'aqui tengo que cambiar el tamaño de la fuente
+        Dim myfont As Font = Fn.GetFontByString(Ms.ReadSetting("lbWordFont"))
+        Dim fontName As FontFamily = myfont.FontFamily
+        Dim fontsize = myfont.Size - Math.Round(myfont.Size / 3)
+        LbWord.Font = New Font(fontName, fontsize)
 
 
-          Dim countWords = 0
-                Dim cadena = ""
-                Dim salir = 0
+        Dim countWords = 0
+        Dim cadena = ""
+        Dim salir = 0
 
-                For Each w In Vars.Arr
-                    countWords = countWords + 1
+        For Each w In Vars.Arr
+            countWords = countWords + 1
 
-                    Select Case countWords
-                        Case 1, 3
-                            cadena = cadena & w
-                        Case 2
-                            cadena = cadena & "/" & w & vbNewLine
-                        Case 4
-                            cadena = cadena & "/" & w & ";"
-                    End Select
+            Select Case countWords
+                Case 1, 3
+                    cadena = cadena & w
+                Case 2
+                    cadena = cadena & "/" & w & vbNewLine
+                Case 4
+                    cadena = cadena & "/" & w & ";"
+            End Select
 
-                    If countWords >= 4 Then
-                        countWords = 0
-                    End If
-                    salir = salir + 1
-                    If salir > 1000 Then Exit For
-                Next
+            If countWords >= 4 Then
+                countWords = 0
+            End If
+            salir = salir + 1
+            If salir > 1000 Then Exit For
+        Next
 
-                Vars.Arr4Words = Split(cadena, ";")
+        Vars.Arr4Words = Split(cadena, ";")
     End Sub
 
     Private Sub TimerWord_Tick(sender As Object, e As EventArgs) Handles TimerWord.Tick
@@ -183,63 +178,63 @@ Public Class MainModule
     End Sub
 
     Sub GetWord()
-        Try
-            If ControlModule.CbBattleType.SelectedIndex <> 3 Then
+    Try
+        If ControlModule.CbBattleType.SelectedIndex <> 3 Then
+            Dim word = UCase(Vars.Arr(CountWords).ToString)
 
-                If InStr("%" & Vars.WordsShowed & "%", "%" & UCase(Vars.Arr(CountWords).ToString) & "%") = 0 Then
-                    LbWord.Text = UCase(Vars.Arr(CountWords).ToString)
-                    ControlModule.LbWord.Text = UCase(Vars.Arr(CountWords).ToString)
+            If Not InStr("%" & Vars.WordsShowed & "%", "%" & word & "%") <> 0 Then
+                LbWord.Text = word
+                ControlModule.LbWord.Text = word
 
-                    If Vars.WordsShowed = "" Then
-                        Vars.WordsShowed = "%" & LbWord.Text & "%"
-                    Else
-                        Vars.WordsShowed = Vars.WordsShowed & LbWord.Text & "%"
-                    End If
+                If Vars.WordsShowed = "" Then
+                    Vars.WordsShowed = "%" & LbWord.Text & "%"
                 Else
-                    CountWords = CountWords + 1
-                    GetWord()
+                    Vars.WordsShowed &= LbWord.Text & "%"
                 End If
-
-
             Else
-                if isnothing(Vars.Arr4Words) then
-                    GenerateArray4Words
-
-                End If
-                LbWord.Text = UCase(Vars.Arr4Words(CountWords).ToString)
-                ControlModule.LbWord.Text = Replace(LbWord.Text,vbCrLf,"/")
-
+                CountWords += 1
+                GetWord()
             End If
-            CountWords = CountWords + 1
-        Catch
-            CountWords = 0
-            Vars.WordsShowed = ""
-            Fn.WriteLog("Repitiendo palabras, se han mostrado todas o no hay nada seleccionado en los diccionarios.")
-        End Try
-    End Sub
-
-
-    Sub CheckIfStartwords(espera, b)
-        Try
-            If Startwords = True Then
-                'problema cuando es más de 60 minutos
-                'Dim tas As TimeSpan = TimeSpan.Parse("00:" & LblCountDown.Text.ToString, Globalization.CultureInfo.InvariantCulture)
-                'Dim x = tas.TotalSeconds
-
-                Dim totalsectranscurridos = TimeSpan.FromSeconds((LbCountDown.Text)).TotalSeconds
-                While CInt(totalsectranscurridos + espera) >= b
-                    totalsectranscurridos = TimeSpan.FromSeconds(LbCountDown.Text).TotalSeconds
-                    Fn.Wait(0.01)
-                End While
-            Else
-                While Startwords = False
-                    Fn.Wait(0.01)
-                End While
+        Else
+            If IsNothing(Vars.Arr4Words) Then
+                GenerateArray4Words()
             End If
-        Catch
-            'aqui da error MsgBox("Error en la espera")
-        End Try
-    End Sub
+
+            LbWord.Text = UCase(Vars.Arr4Words(CountWords).ToString)
+            ControlModule.LbWord.Text = Replace(LbWord.Text, vbCrLf, "/")
+        End If
+
+        CountWords += 1
+    Catch
+        CountWords = 0
+        Vars.WordsShowed = ""
+        Fn.WriteLog("Repitiendo palabras, se han mostrado todas o no hay nada seleccionado en los diccionarios.")
+    End Try
+End Sub
+
+
+
+    'Sub CheckIfStartwords(espera, b)
+    '    Try
+    '        If Startwords = True Then
+    '            'problema cuando es más de 60 minutos
+    '            'Dim tas As TimeSpan = TimeSpan.Parse("00:" & LblCountDown.Text.ToString, Globalization.CultureInfo.InvariantCulture)
+    '            'Dim x = tas.TotalSeconds
+
+    '            Dim totalsectranscurridos = TimeSpan.FromSeconds((LbCountDown.Text)).TotalSeconds
+    '            While CInt(totalsectranscurridos + espera) >= b
+    '                totalsectranscurridos = TimeSpan.FromSeconds(LbCountDown.Text).TotalSeconds
+    '                Fn.Wait(0.01)
+    '            End While
+    '        Else
+    '            While Startwords = False
+    '                Fn.Wait(0.01)
+    '            End While
+    '        End If
+    '    Catch
+    '        'aqui da error MsgBox("Error en la espera")
+    '    End Try
+    'End Sub
 
 
     Private Sub Button4_Click(sender As Object, e As EventArgs)
@@ -267,14 +262,21 @@ Public Class MainModule
             ControlModule.CbDuration.Enabled = True
             'ControlModule.btStopBattle.Enabled = True
             CountWords = 0
-            ControlModule.Button3.Enabled = true
-            ControlModule.Button4.Enabled = true
+            ControlModule.Button3.Enabled = True
+            ControlModule.Button4.Enabled = True
+
+            If Ms.ReadSetting("chkSoundFx") = "1" Then
+                Dim wmplayer = New WindowsMediaPlayer()
+                wmplayer.URL = "SoundFx.mp3"
+                wmplayer.controls.play()
+                wmplayer = Nothing
+            End If
         Catch
         End Try
 
         Try
-          MainModule.show()
-        Catch 
+            MainModule.Show()
+        Catch
 
         End Try
     End Sub
@@ -356,6 +358,12 @@ Public Class MainModule
         _dragging = True
         _beginX = e.X
         _beginY = e.Y
+
+        If e.Button = MouseButtons.Right Then
+            MsgBox("Right Button Clicked")
+            Exit Sub
+
+        End If
     End Sub
 
     Private Sub LbCountDown_MouseMove(sender As Object, e As MouseEventArgs) Handles LbCountDown.MouseMove
@@ -404,4 +412,15 @@ Public Class MainModule
     Private Sub LbWord_DragDrop(sender As Object, e As DragEventArgs) Handles LbWord.DragDrop
         LbWord.Location = New Point(LbWord.Location.X + e.X - _beginX, LbWord.Location.Y + e.Y - _beginY)
     End Sub
+
+'    Private Sub AxWindowsMediaPlayer1_PlayStateChange(sender As Object, e As AxWMPLib._WMPOCXEvents_PlayStateChangeEvent) 
+'        If e.newState = 8 Or e.newState = 9 Or e.newState = 10 Then
+
+'            If e.newState = 8 Then
+'            If axWindowsMediaPlayer1.playState = WMPLib.WMPPlayState.wmppsStopped Then
+'    axWindowsMediaPlayer1.Ctlcontrols.play()
+'End If
+'            End If
+'        End If
+'    End Sub
 End Class

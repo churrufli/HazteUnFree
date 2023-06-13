@@ -48,7 +48,6 @@ Partial Class MainModule
         '
         Me.LbCountDown.BackColor = System.Drawing.Color.Transparent
         Me.LbCountDown.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.LbCountDown.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.LbCountDown.Font = New System.Drawing.Font("Impact", 170!)
         Me.LbCountDown.ForeColor = System.Drawing.Color.FromArgb(CType(CType(192,Byte),Integer), CType(CType(64,Byte),Integer), CType(CType(0,Byte),Integer))
         Me.LbCountDown.Location = New System.Drawing.Point(665, 94)
@@ -77,8 +76,7 @@ Partial Class MainModule
         'MainModule
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None
-        Me.BackColor = System.Drawing.Color.White
-        Me.BackgroundImage = CType(resources.GetObject("$this.BackgroundImage"),System.Drawing.Image)
+        Me.BackColor = System.Drawing.Color.Black
         Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
         Me.ClientSize = New System.Drawing.Size(1904, 1041)
         Me.Controls.Add(Me.LbCountDown)
