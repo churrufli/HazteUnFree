@@ -38,6 +38,8 @@ Partial Class ControlModule
         Me.btNextWord = New System.Windows.Forms.Button()
         Me.CbDuration = New System.Windows.Forms.ComboBox()
         Me.ListBoxDictionaries = New System.Windows.Forms.CheckedListBox()
+        Me.chkMinimize = New System.Windows.Forms.CheckBox()
+        Me.BtStartBattle = New System.Windows.Forms.Button()
         Me.ColorDialog1 = New System.Windows.Forms.ColorDialog()
         Me.ColorDialog2 = New System.Windows.Forms.ColorDialog()
         Me.FolderBrowserDialog1 = New System.Windows.Forms.FolderBrowserDialog()
@@ -56,10 +58,12 @@ Partial Class ControlModule
         Me.ModoVentanaToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ModoPantallaCompletaToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.FondoDePantallaToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.MostrarPantallaPrincipalToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ReestablecerConfiguraciónToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.SalirToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.SobreHazteUnFreeAAPToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.GithubToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.DIscordToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.MostrarPantallaPrincipalToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.TabPage3 = New System.Windows.Forms.TabPage()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
         Me.GroupBox4 = New System.Windows.Forms.GroupBox()
@@ -69,10 +73,8 @@ Partial Class ControlModule
         Me.chPlayMusic = New System.Windows.Forms.CheckBox()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
         Me.Label1 = New System.Windows.Forms.Label()
-        Me.chkMinimize = New System.Windows.Forms.CheckBox()
         Me.TabMode = New System.Windows.Forms.TabControl()
         Me.TabPage2 = New System.Windows.Forms.TabPage()
-        Me.BtStartBattle = New System.Windows.Forms.Button()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.TabPage4 = New System.Windows.Forms.TabPage()
         Me.Button3 = New System.Windows.Forms.Button()
@@ -87,8 +89,6 @@ Partial Class ControlModule
         Me.LbWord = New System.Windows.Forms.Label()
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.TimerWait = New System.Windows.Forms.Timer(Me.components)
-        Me.ReestablecerConfiguraciónToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.SalirToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.MenuStrip1.SuspendLayout
         Me.TabPage3.SuspendLayout
         Me.GroupBox1.SuspendLayout
@@ -242,6 +242,31 @@ Partial Class ControlModule
         Me.ListBoxDictionaries.TabIndex = 35
         Me.ToolTip1.SetToolTip(Me.ListBoxDictionaries, "Marca y desmarca para volver a cargar")
         '
+        'chkMinimize
+        '
+        Me.chkMinimize.AutoSize = true
+        Me.chkMinimize.Location = New System.Drawing.Point(14, 305)
+        Me.chkMinimize.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.chkMinimize.Name = "chkMinimize"
+        Me.chkMinimize.Size = New System.Drawing.Size(412, 21)
+        Me.chkMinimize.TabIndex = 40
+        Me.chkMinimize.Text = "Modo Una Pantalla: Minimizar esta ventana al comenzar la batalla"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)
+        Me.ToolTip1.SetToolTip(Me.chkMinimize, "(excepto en modo manual)")
+        Me.chkMinimize.UseVisualStyleBackColor = true
+        '
+        'BtStartBattle
+        '
+        Me.BtStartBattle.BackColor = System.Drawing.Color.Gainsboro
+        Me.BtStartBattle.Font = New System.Drawing.Font("Segoe UI", 12!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0,Byte))
+        Me.BtStartBattle.Location = New System.Drawing.Point(69, 33)
+        Me.BtStartBattle.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.BtStartBattle.Name = "BtStartBattle"
+        Me.BtStartBattle.Size = New System.Drawing.Size(285, 45)
+        Me.BtStartBattle.TabIndex = 39
+        Me.BtStartBattle.Text = "COMENZAR BATALLA"
+        Me.ToolTip1.SetToolTip(Me.BtStartBattle, "Comienza instrumental y palabras")
+        Me.BtStartBattle.UseVisualStyleBackColor = false
+        '
         'MenuStrip1
         '
         Me.MenuStrip1.Font = New System.Drawing.Font("Segoe UI", 9!)
@@ -264,7 +289,7 @@ Partial Class ControlModule
         '
         Me.PersonalizarToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.PalabrasToolStripMenuItem, Me.RelojToolStripMenuItem, Me.VentanaPrincipalToolStripMenuItem, Me.ReestablecerConfiguraciónToolStripMenuItem})
         Me.PersonalizarToolStripMenuItem.Name = "PersonalizarToolStripMenuItem"
-        Me.PersonalizarToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.PersonalizarToolStripMenuItem.Size = New System.Drawing.Size(137, 22)
         Me.PersonalizarToolStripMenuItem.Text = "Personalizar"
         '
         'PalabrasToolStripMenuItem
@@ -342,11 +367,17 @@ Partial Class ControlModule
         Me.FondoDePantallaToolStripMenuItem.Size = New System.Drawing.Size(206, 22)
         Me.FondoDePantallaToolStripMenuItem.Text = "Fondo de Pantalla"
         '
-        'MostrarPantallaPrincipalToolStripMenuItem
+        'ReestablecerConfiguraciónToolStripMenuItem
         '
-        Me.MostrarPantallaPrincipalToolStripMenuItem.Name = "MostrarPantallaPrincipalToolStripMenuItem"
-        Me.MostrarPantallaPrincipalToolStripMenuItem.Size = New System.Drawing.Size(154, 19)
-        Me.MostrarPantallaPrincipalToolStripMenuItem.Text = "Mostrar Pantalla Principal"
+        Me.ReestablecerConfiguraciónToolStripMenuItem.Name = "ReestablecerConfiguraciónToolStripMenuItem"
+        Me.ReestablecerConfiguraciónToolStripMenuItem.Size = New System.Drawing.Size(225, 22)
+        Me.ReestablecerConfiguraciónToolStripMenuItem.Text = "Reestablecer Personalización"
+        '
+        'SalirToolStripMenuItem
+        '
+        Me.SalirToolStripMenuItem.Name = "SalirToolStripMenuItem"
+        Me.SalirToolStripMenuItem.Size = New System.Drawing.Size(137, 22)
+        Me.SalirToolStripMenuItem.Text = "Salir"
         '
         'SobreHazteUnFreeAAPToolStripMenuItem
         '
@@ -358,14 +389,20 @@ Partial Class ControlModule
         'GithubToolStripMenuItem
         '
         Me.GithubToolStripMenuItem.Name = "GithubToolStripMenuItem"
-        Me.GithubToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.GithubToolStripMenuItem.Size = New System.Drawing.Size(114, 22)
         Me.GithubToolStripMenuItem.Text = "Github"
         '
         'DIscordToolStripMenuItem
         '
         Me.DIscordToolStripMenuItem.Name = "DIscordToolStripMenuItem"
-        Me.DIscordToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.DIscordToolStripMenuItem.Size = New System.Drawing.Size(114, 22)
         Me.DIscordToolStripMenuItem.Text = "Discord"
+        '
+        'MostrarPantallaPrincipalToolStripMenuItem
+        '
+        Me.MostrarPantallaPrincipalToolStripMenuItem.Name = "MostrarPantallaPrincipalToolStripMenuItem"
+        Me.MostrarPantallaPrincipalToolStripMenuItem.Size = New System.Drawing.Size(154, 19)
+        Me.MostrarPantallaPrincipalToolStripMenuItem.Text = "Mostrar Pantalla Principal"
         '
         'TabPage3
         '
@@ -477,18 +514,6 @@ Partial Class ControlModule
         Me.Label1.TabIndex = 25
         Me.Label1.Text = "Duración"
         '
-        'chkMinimize
-        '
-        Me.chkMinimize.AutoSize = true
-        Me.chkMinimize.Location = New System.Drawing.Point(14, 305)
-        Me.chkMinimize.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
-        Me.chkMinimize.Name = "chkMinimize"
-        Me.chkMinimize.Size = New System.Drawing.Size(412, 21)
-        Me.chkMinimize.TabIndex = 40
-        Me.chkMinimize.Text = "Modo Una Pantalla: Minimizar esta ventana al comenzar la batalla"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)
-        Me.ToolTip1.SetToolTip(Me.chkMinimize, "(excepto en modo manual)")
-        Me.chkMinimize.UseVisualStyleBackColor = true
-        '
         'TabMode
         '
         Me.TabMode.Controls.Add(Me.TabPage2)
@@ -512,19 +537,6 @@ Partial Class ControlModule
         Me.TabPage2.Size = New System.Drawing.Size(435, 126)
         Me.TabPage2.TabIndex = 0
         Me.TabPage2.Text = "Modo Automático"
-        '
-        'BtStartBattle
-        '
-        Me.BtStartBattle.BackColor = System.Drawing.Color.Gainsboro
-        Me.BtStartBattle.Font = New System.Drawing.Font("Segoe UI", 12!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0,Byte))
-        Me.BtStartBattle.Location = New System.Drawing.Point(69, 33)
-        Me.BtStartBattle.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
-        Me.BtStartBattle.Name = "BtStartBattle"
-        Me.BtStartBattle.Size = New System.Drawing.Size(285, 45)
-        Me.BtStartBattle.TabIndex = 39
-        Me.BtStartBattle.Text = "COMENZAR BATALLA"
-        Me.ToolTip1.SetToolTip(Me.BtStartBattle, "Comienza instrumental y palabras")
-        Me.BtStartBattle.UseVisualStyleBackColor = false
         '
         'Label2
         '
@@ -662,18 +674,6 @@ Partial Class ControlModule
         Me.Panel1.Name = "Panel1"
         Me.Panel1.Size = New System.Drawing.Size(459, 57)
         Me.Panel1.TabIndex = 44
-        '
-        'ReestablecerConfiguraciónToolStripMenuItem
-        '
-        Me.ReestablecerConfiguraciónToolStripMenuItem.Name = "ReestablecerConfiguraciónToolStripMenuItem"
-        Me.ReestablecerConfiguraciónToolStripMenuItem.Size = New System.Drawing.Size(225, 22)
-        Me.ReestablecerConfiguraciónToolStripMenuItem.Text = "Reestablecer Personalización"
-        '
-        'SalirToolStripMenuItem
-        '
-        Me.SalirToolStripMenuItem.Name = "SalirToolStripMenuItem"
-        Me.SalirToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
-        Me.SalirToolStripMenuItem.Text = "Salir"
         '
         'ControlModule
         '

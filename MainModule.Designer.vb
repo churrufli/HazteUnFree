@@ -30,8 +30,9 @@ Partial Class MainModule
         Me.ToolTip1 = New System.Windows.Forms.ToolTip(Me.components)
         Me.LbCountDown = New System.Windows.Forms.Label()
         Me.LbWord = New System.Windows.Forms.Label()
-        Me.TimerProgressBar = New System.Windows.Forms.Timer(Me.components)
-        Me.SuspendLayout
+        Me.ProgressBar1 = New System.Windows.Forms.ProgressBar()
+        Me.TimerProgressBar1 = New System.Windows.Forms.Timer(Me.components)
+        Me.SuspendLayout()
         '
         'TimerGetWords
         '
@@ -48,8 +49,8 @@ Partial Class MainModule
         '
         Me.LbCountDown.BackColor = System.Drawing.Color.Transparent
         Me.LbCountDown.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.LbCountDown.Font = New System.Drawing.Font("Impact", 170!)
-        Me.LbCountDown.ForeColor = System.Drawing.Color.FromArgb(CType(CType(192,Byte),Integer), CType(CType(64,Byte),Integer), CType(CType(0,Byte),Integer))
+        Me.LbCountDown.Font = New System.Drawing.Font("Impact", 170.0!)
+        Me.LbCountDown.ForeColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(0, Byte), Integer))
         Me.LbCountDown.Location = New System.Drawing.Point(665, 94)
         Me.LbCountDown.Name = "LbCountDown"
         Me.LbCountDown.Size = New System.Drawing.Size(600, 470)
@@ -63,8 +64,8 @@ Partial Class MainModule
         Me.LbWord.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.LbWord.BackColor = System.Drawing.Color.Transparent
         Me.LbWord.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.LbWord.Font = New System.Drawing.Font("Impact", 130!)
-        Me.LbWord.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0,Byte),Integer), CType(CType(47,Byte),Integer), CType(CType(65,Byte),Integer))
+        Me.LbWord.Font = New System.Drawing.Font("Impact", 130.0!)
+        Me.LbWord.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(65, Byte), Integer))
         Me.LbWord.Location = New System.Drawing.Point(-72, 603)
         Me.LbWord.Name = "LbWord"
         Me.LbWord.Size = New System.Drawing.Size(1900, 290)
@@ -73,12 +74,24 @@ Partial Class MainModule
         Me.LbWord.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         Me.ToolTip1.SetToolTip(Me.LbWord, "Arrastra y suelta la palabra para posicionarla en la pantalla.")
         '
+        'ProgressBar1
+        '
+        Me.ProgressBar1.ForeColor = System.Drawing.SystemColors.ActiveCaption
+        Me.ProgressBar1.Location = New System.Drawing.Point(712, 930)
+        Me.ProgressBar1.Name = "ProgressBar1"
+        Me.ProgressBar1.Size = New System.Drawing.Size(480, 31)
+        Me.ProgressBar1.TabIndex = 7
+        '
+        'TimerProgressBar1
+        '
+        '
         'MainModule
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None
         Me.BackColor = System.Drawing.Color.Black
         Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
         Me.ClientSize = New System.Drawing.Size(1904, 1041)
+        Me.Controls.Add(Me.ProgressBar1)
         Me.Controls.Add(Me.LbCountDown)
         Me.Controls.Add(Me.LbWord)
         Me.Icon = CType(resources.GetObject("$this.Icon"),System.Drawing.Icon)
@@ -92,7 +105,8 @@ End Sub
     Friend WithEvents TimerWord As Timer
     Friend WithEvents TimerVisualCountDown As Timer
     Friend WithEvents ToolTip1 As ToolTip
-    Friend WithEvents TimerProgressBar As Timer
     Public WithEvents LbCountDown As Label
     Public WithEvents LbWord As Label
+    Friend WithEvents ProgressBar1 As ProgressBar
+    Friend WithEvents TimerProgressBar1 As Timer
 End Class

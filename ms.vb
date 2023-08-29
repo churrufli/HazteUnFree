@@ -124,4 +124,5 @@ Public Class Ms
         End Try
         LoadSettings()
     End Sub
+
 End Class

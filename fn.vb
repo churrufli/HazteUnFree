@@ -2,6 +2,7 @@
 Imports WMPLib
 
 Public Class Fn
+
     Public Shared Sub SetMySettings()
 
         Ms.InitSettings()
@@ -137,7 +138,6 @@ Public Class Fn
         Exit Function
     End Function
 
-
     'Public Shared Sub SaveSetting(setting, value)
     '    Try
     '        Dim objWriter As New System.IO.StreamWriter(IO.Directory.GetCurrentDirectory & "\" & vars.MySettingsFileName)
@@ -189,7 +189,6 @@ Public Class Fn
         End Try
     End Sub
 
-
     Public Shared Sub LoadMusic()
         Try
             'If ControlModule.chPlayMusic.Checked = False Then Exit Sub
@@ -205,7 +204,6 @@ Public Class Fn
             Dim i = 0
             For Each u In Vars.Files
 
-             
                 Dim n = u
                 n = Replace(n, ".mp3", "")
                 n = Replace(n, ".wav", "")
@@ -213,7 +211,7 @@ Public Class Fn
                 If n <> "SoundFx" Then
                     n = n & " (" & TimeSpan.FromSeconds(Math.Round(GetMediaDuration(u))).ToString("mm\:ss") & ")"
                     comboSource.Add(u, n)
-                       i = i + 1
+                    i = i + 1
                 Else
                     n = n
                 End If
@@ -318,7 +316,6 @@ Public Class Fn
             unit = Left(unit, int1 - 1) ' returns the string with the part after the , chopped off
         End If
 
-
         ' Find Font GdiCharSet
         int1 = InStr(s, "GdiCharSet=") ' find the location of the text GdiCharSet= in the string
         If int1 = 0 Then ' Checks if this has failed
@@ -329,18 +326,16 @@ Public Class Fn
             gdiChar = Left(gdiChar, int1 - 1) ' returns the string with the part after the , chopped off
         End If
 
-
         ' Find Font GdiVerticalFont
         int1 = InStr(s, "GdiVerticalFont=") ' find the location of the text GdiCharSet= in the string
         If int1 = 0 Then ' Checks if this has failed
-            gdiVertical = False ' Puts the default font GdiVertical into the GdiVertical boolean variable 
+            gdiVertical = False ' Puts the default font GdiVertical into the GdiVertical boolean variable
         Else
             gdiVerticalFont = Mid(s, int1 + 16) ' returns the string with the part before GdiVerticalFont= chopped off
             int1 = InStr(gdiVerticalFont, "]") ' Finds the location of the text ] in the string
             gdiVerticalFont = Left(gdiVerticalFont, int1 - 1) ' returns the string with the part after the ] chopped off
             gdiVertical = CBool(gdiVerticalFont) ' converts the returend string variable into a boolean variable
         End If
-
 
         ' Find Font Style
         int1 = InStr(s, "FontStyle=") ' returns the string with the part before FontStyle= chopped off
@@ -424,30 +419,30 @@ Public Class Fn
     End Function
 
     Public Shared Function GetDelimitedText(text As String, openDelimiter As String, closeDelimiter As String,
-                                            Optional index As Long = 0) As String
-        Dim i As Long, j As Long
+                                        Optional startIndex As Long = 0) As String
+        Dim openingIndex As Long
+        Dim closingIndex As Long
 
-        If index = 0 Then index = 1
+        If startIndex = 0 Then startIndex = 1
 
-        ' search the opening mark
-        i = InStr(index, text, openDelimiter, vbTextCompare)
-        If i = 0 Then
-            index = 0
-            Exit Function
+        ' Buscar la posición del marcador de apertura
+        openingIndex = InStr(startIndex, text, openDelimiter, vbTextCompare)
+        If openingIndex = 0 Then
+            ' No se encontró el marcador de apertura
+            Return ""
         End If
-        i = i + Len(openDelimiter)
+        openingIndex = openingIndex + Len(openDelimiter)
 
-        ' search the closing mark
-        j = InStr(i + 1, text, closeDelimiter, vbTextCompare)
-        If j = 0 Then
-            index = 0
-            Exit Function
+        ' Buscar la posición del marcador de cierre
+        closingIndex = InStr(openingIndex, text, closeDelimiter, vbTextCompare)
+        If closingIndex = 0 Then
+            ' No se encontró el marcador de cierre
+            Return ""
         End If
 
-        ' get the text between the two Delimiters
-        GetDelimitedText = Mid$(text, i, j - i)
-
-        ' advanced the index after the closing Delimiter
-        index = j + Len(closeDelimiter)
+        ' Obtener el texto entre los dos delimitadores
+        Return Mid$(text, openingIndex, closingIndex - openingIndex)
     End Function
+
+
 End Class

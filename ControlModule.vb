@@ -2,6 +2,7 @@
 
 Public Class ControlModule
     Public CountDownFrom As TimeSpan = TimeSpan.FromSeconds(60) '76
+
     Private Sub control_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         'Me.Location = New Point(0, 30)
         Fn.SetMySettings()
@@ -11,12 +12,11 @@ Public Class ControlModule
         Me.InitStates()
         MainModule.InitStates()
         Fn.LoadMusic()
-   End Sub
+    End Sub
 
     Sub InitStates()
         TbWordsWaittoStart.Text = Ms.ReadSetting("TbWordsWaittoStart")
     End Sub
-    
 
     Sub LoadDictionaries()
         Dim di As New DirectoryInfo(Directory.GetCurrentDirectory)
@@ -66,7 +66,6 @@ Public Class ControlModule
         arrout = Replace(arrout, vbNewLine & vbNewLine, vbNewLine)
         arrout = Replace(arrout, ",,", ",")
         arrout = Replace(arrout, ",,", ",")
-
 
         System.IO.File.WriteAllText(fullName, arrout)
     End Sub
@@ -173,6 +172,7 @@ Public Class ControlModule
         End If
         FontDialog1.Dispose()
     End Sub
+
     Private Sub Button2_Click(sender As Object, e As EventArgs)
         Dim result As DialogResult = OpenFileDialog1.ShowDialog()
         If result = DialogResult.OK Then
@@ -234,29 +234,29 @@ Public Class ControlModule
 
         Vars.SongDuration = Fn.PlayMusic()
         Dim minimize As Boolean = False
-        If chkMinimize.Checked 
-            minimize = true
-            Else
-            minimize = false
+        If chkMinimize.Checked Then
+            minimize = True
+        Else
+            minimize = False
         End If
 
-      If  mode ="semimanual" Then
-             minimize = false
-            Else
-             minimize = false
+        If mode = "semimanual" Then
+            minimize = False
+        Else
+            minimize = False
         End If
-         If mode ="auto" 
-            If chkMinimize.Checked 
-            minimize = true
+        If mode = "auto" Then
+            If chkMinimize.Checked Then
+                minimize = True
             Else
-            minimize = false
+                minimize = False
+            End If
         End If
-         End If
         If mode = "manual" Then
-            minimize = false
+            minimize = False
         End If
 
-        If minimize then
+        If minimize Then
             Me.WindowState = FormWindowState.Minimized
         End If
 
@@ -285,7 +285,7 @@ Public Class ControlModule
 
     Private Sub CheckBox2_CheckedChanged(sender As Object, e As EventArgs) Handles chshufflemusic.CheckedChanged
         cbMusicList.Enabled = IIf(chshufflemusic.Checked, False, True)
-        Ms.SaveSetting("chshufflemusic", iif( cbMusicList.Enabled,"1","0"))
+        Ms.SaveSetting("chshufflemusic", IIf(cbMusicList.Enabled, "1", "0"))
         Try
             Fn.LoadMusic()
         Catch
@@ -372,7 +372,6 @@ Public Class ControlModule
         Ms.SaveSetting("TbWordsWaittoStart", TbWordsWaittoStart.Text)
     End Sub
 
-
     Private Sub ListBoxDictionaries_SelectedIndexChanged(sender As Object, e As EventArgs) _
         Handles ListBoxDictionaries.SelectedIndexChanged
         If chkDepureDic.Checked Then
@@ -412,7 +411,7 @@ Public Class ControlModule
         Ms.SaveSetting("chkMinimize", IIf(chkMinimize.Checked = True, "1", "0"))
     End Sub
 
-    'Private Sub rbManualMode_CheckedChanged(sender As Object, e As EventArgs) 
+    'Private Sub rbManualMode_CheckedChanged(sender As Object, e As EventArgs)
     '    If rbManualMode.Checked = True Then
     '        gbManualMode.Enabled = True
     '        gbAutoMode.Enabled = False
@@ -421,7 +420,7 @@ Public Class ControlModule
     '    MainModule.StopBattleFunctions()
     'End Sub
 
-    'Private Sub rbAutoMode_CheckedChanged(sender As Object, e As EventArgs) 
+    'Private Sub rbAutoMode_CheckedChanged(sender As Object, e As EventArgs)
     '    If rbAutoMode.Checked = True Then
     '        gbManualMode.Enabled = False
     '        gbAutoMode.Enabled = True
@@ -443,6 +442,7 @@ Public Class ControlModule
             cbMusicList.Enabled = False
         End If
     End Sub
+
     Private Sub GithubToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles GithubToolStripMenuItem.Click
         Process.Start("https://github.com/churrufli/HazteUnFree/")
     End Sub
@@ -455,8 +455,8 @@ Public Class ControlModule
         Process.Start("https://discord.gg/4JwTRxS8p3")
     End Sub
 
-    Private Sub ReestablecerPersonalizaciónToolStripMenuItem_Click(sender As Object, e As EventArgs) 
-   
+    Private Sub ReestablecerPersonalizaciónToolStripMenuItem_Click(sender As Object, e As EventArgs)
+
     End Sub
 
     Private Sub Button4_Click(sender As Object, e As EventArgs) Handles Button4.Click
@@ -464,29 +464,30 @@ Public Class ControlModule
         btStartWords.Enabled = False
         btNextWord.Enabled = True
         StartBattle("semimanual")
-        Button4.Enabled = false
+        Button4.Enabled = False
     End Sub
 
     Private Sub Button3_Click_1(sender As Object, e As EventArgs) Handles Button3.Click
         MainModule.GetWord()
         MainModule.TimerWord.Start()
-        Button3.Enabled = false
-          If chkMinimize.Checked Then
+        Button3.Enabled = False
+        If chkMinimize.Checked Then
             Me.WindowState = FormWindowState.Minimized
         End If
     End Sub
 
     Private Sub ReestablecerConfiguraciónToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ReestablecerConfiguraciónToolStripMenuItem.Click
-             If (MsgBox("¿Deseas reestablecer la personalización a los valores por defecto del programa?", MsgBoxStyle.YesNo) = MsgBoxResult.Yes) Then
+        If (MsgBox("¿Deseas reestablecer la personalización a los valores por defecto del programa?", MsgBoxStyle.YesNo) = MsgBoxResult.Yes) Then
             Ms.CreateDefaultSettings()
             Ms.LoadSettings()
         End If
     End Sub
 
     Private Sub SalirToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SalirToolStripMenuItem.Click
-           If (MsgBox("¿Salir del programa?", MsgBoxStyle.YesNo) = MsgBoxResult.Yes) Then
-        Application.Exit
-            End If
+        If (MsgBox("¿Salir del programa?", MsgBoxStyle.YesNo) = MsgBoxResult.Yes) Then
+            Application.Exit()
+        End If
 
     End Sub
+
 End Class
