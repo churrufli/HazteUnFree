@@ -30,8 +30,10 @@ Partial Class MainModule
         Me.ToolTip1 = New System.Windows.Forms.ToolTip(Me.components)
         Me.LbCountDown = New System.Windows.Forms.Label()
         Me.LbWord = New System.Windows.Forms.Label()
-        Me.ProgressBar1 = New System.Windows.Forms.ProgressBar()
+        Me.lbTipoBatalla = New System.Windows.Forms.Label()
+        Me.lbCaractBatalla = New System.Windows.Forms.Label()
         Me.TimerProgressBar1 = New System.Windows.Forms.Timer(Me.components)
+        Me.CustomProgressBar1 = New HazteUnFree.CustomProgressBar()
         Me.SuspendLayout()
         '
         'TimerGetWords
@@ -74,24 +76,54 @@ Partial Class MainModule
         Me.LbWord.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         Me.ToolTip1.SetToolTip(Me.LbWord, "Arrastra y suelta la palabra para posicionarla en la pantalla.")
         '
-        'ProgressBar1
+        'lbTipoBatalla
         '
-        Me.ProgressBar1.ForeColor = System.Drawing.SystemColors.ActiveCaption
-        Me.ProgressBar1.Location = New System.Drawing.Point(712, 930)
-        Me.ProgressBar1.Name = "ProgressBar1"
-        Me.ProgressBar1.Size = New System.Drawing.Size(480, 31)
-        Me.ProgressBar1.TabIndex = 7
+        Me.lbTipoBatalla.BackColor = System.Drawing.Color.Transparent
+        Me.lbTipoBatalla.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.lbTipoBatalla.Font = New System.Drawing.Font("Impact", 30.0!, System.Drawing.FontStyle.Italic)
+        Me.lbTipoBatalla.ForeColor = System.Drawing.Color.FromArgb(CType(CType(17, Byte), Integer), CType(CType(14, Byte), Integer), CType(CType(21, Byte), Integer))
+        Me.lbTipoBatalla.Location = New System.Drawing.Point(581, 879)
+        Me.lbTipoBatalla.Name = "lbTipoBatalla"
+        Me.lbTipoBatalla.Size = New System.Drawing.Size(372, 88)
+        Me.lbTipoBatalla.TabIndex = 9
+        Me.lbTipoBatalla.Text = "MODO"
+        Me.lbTipoBatalla.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        Me.ToolTip1.SetToolTip(Me.lbTipoBatalla, "Arrastra y suelta el contador para posicionarlo en la pantalla.")
+        '
+        'lbCaractBatalla
+        '
+        Me.lbCaractBatalla.BackColor = System.Drawing.Color.Transparent
+        Me.lbCaractBatalla.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.lbCaractBatalla.Font = New System.Drawing.Font("Impact", 30.0!, System.Drawing.FontStyle.Italic)
+        Me.lbCaractBatalla.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(65, Byte), Integer))
+        Me.lbCaractBatalla.Location = New System.Drawing.Point(959, 879)
+        Me.lbCaractBatalla.Name = "lbCaractBatalla"
+        Me.lbCaractBatalla.Size = New System.Drawing.Size(361, 88)
+        Me.lbCaractBatalla.TabIndex = 10
+        Me.lbCaractBatalla.Text = "MODO"
+        Me.lbCaractBatalla.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        Me.ToolTip1.SetToolTip(Me.lbCaractBatalla, "Arrastra y suelta el contador para posicionarlo en la pantalla.")
         '
         'TimerProgressBar1
         '
+        '
+        'CustomProgressBar1
+        '
+        Me.CustomProgressBar1.Location = New System.Drawing.Point(712, 979)
+        Me.CustomProgressBar1.Name = "CustomProgressBar1"
+        Me.CustomProgressBar1.Size = New System.Drawing.Size(480, 10)
+        Me.CustomProgressBar1.TabIndex = 8
         '
         'MainModule
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None
         Me.BackColor = System.Drawing.Color.Black
+        Me.BackgroundImage = CType(resources.GetObject("$this.BackgroundImage"), System.Drawing.Image)
         Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
         Me.ClientSize = New System.Drawing.Size(1904, 1041)
-        Me.Controls.Add(Me.ProgressBar1)
+        Me.Controls.Add(Me.CustomProgressBar1)
+        Me.Controls.Add(Me.lbCaractBatalla)
+        Me.Controls.Add(Me.lbTipoBatalla)
         Me.Controls.Add(Me.LbCountDown)
         Me.Controls.Add(Me.LbWord)
         Me.Icon = CType(resources.GetObject("$this.Icon"),System.Drawing.Icon)
@@ -107,6 +139,8 @@ End Sub
     Friend WithEvents ToolTip1 As ToolTip
     Public WithEvents LbCountDown As Label
     Public WithEvents LbWord As Label
-    Friend WithEvents ProgressBar1 As ProgressBar
     Friend WithEvents TimerProgressBar1 As Timer
+    Friend WithEvents CustomProgressBar1 As CustomProgressBar
+    Public WithEvents lbTipoBatalla As Label
+    Public WithEvents lbCaractBatalla As Label
 End Class

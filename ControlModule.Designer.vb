@@ -648,7 +648,7 @@ Partial Class ControlModule
         '
         Me.LbCountDown.AutoSize = true
         Me.LbCountDown.Font = New System.Drawing.Font("Segoe UI", 20!)
-        Me.LbCountDown.Location = New System.Drawing.Point(-3, 0)
+        Me.LbCountDown.Location = New System.Drawing.Point(2, 0)
         Me.LbCountDown.Name = "LbCountDown"
         Me.LbCountDown.Size = New System.Drawing.Size(47, 37)
         Me.LbCountDown.TabIndex = 0
@@ -661,7 +661,7 @@ Partial Class ControlModule
         Me.LbWord.Cursor = System.Windows.Forms.Cursors.Default
         Me.LbWord.Location = New System.Drawing.Point(57, 4)
         Me.LbWord.Name = "LbWord"
-        Me.LbWord.Size = New System.Drawing.Size(402, 33)
+        Me.LbWord.Size = New System.Drawing.Size(399, 33)
         Me.LbWord.TabIndex = 43
         Me.LbWord.Text = "HazteUnFree"
         Me.LbWord.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -677,9 +677,9 @@ Partial Class ControlModule
         '
         'ControlModule
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(96!, 96!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(96.0!, 96.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi
-        Me.ClientSize = New System.Drawing.Size(483, 629)
+        Me.ClientSize = New System.Drawing.Size(483, 705)
         Me.Controls.Add(Me.Panel1)
         Me.Controls.Add(Me.btStopBattle)
         Me.Controls.Add(Me.TabBattle)

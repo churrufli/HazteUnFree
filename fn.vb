@@ -4,127 +4,133 @@ Imports WMPLib
 Public Class Fn
 
     Public Shared Sub SetMySettings()
-
+        ' Inicializar y cargar la configuración
         Ms.InitSettings()
         Ms.LoadSettings()
 
-        If Ms.ReadSetting("MainBackGroundImage") <> Nothing Then
+        ' Establecer la imagen de fondo si está definida
+        Dim backgroundImagePath As String = Ms.ReadSetting("MainBackGroundImage")
+        If Not String.IsNullOrEmpty(backgroundImagePath) AndAlso IO.File.Exists(backgroundImagePath) Then
             Try
-                ControlModule.BackgroundImage = New Bitmap(Ms.ReadSetting("MainBackGroundImage").ToString)
+                ControlModule.BackgroundImage = New Bitmap(backgroundImagePath)
                 MainModule.BackgroundImage = ControlModule.BackgroundImage
-            Catch
-                WriteLog("No se encontró la imagen de fondo " & Ms.ReadSetting("MainBackGroundImage").ToString)
+            Catch ex As Exception
+                WriteLog("No se pudo cargar la imagen de fondo: " & ex.Message)
             End Try
         End If
 
+        ' Configurar el color y fuente del control LbWord
         Try
-            If Ms.ReadSetting("lbWordColor") <> Nothing Then
-                MainModule.LbWord.ForeColor = Color.FromArgb(Ms.ReadSetting("lbWordColor"))
-            End If
+            SetControlColor(MainModule.LbWord, "lbWordColor")
+            SetControlFont(MainModule.LbWord, "lbWordFont")
         Catch ex As Exception
-            Fn.WriteLog(ex.ToString())
+            WriteLog(ex.ToString())
         End Try
-        Try
-            If Ms.ReadSetting("lbWordFont") <> Nothing Then
-                MainModule.LbWord.Font = GetFontByString(Ms.ReadSetting("lbWordFont"))
-            End If
-        Catch ex As Exception
-            Fn.WriteLog(ex.ToString())
-        End Try
-        Try
-            If Ms.ReadSetting("lbCountDownColor") <> Nothing Then
-                MainModule.LbCountDown.ForeColor = Color.FromArgb(Ms.ReadSetting("lbCountDownColor"))
-            End If
-        Catch ex As Exception
-            Fn.WriteLog(ex.ToString())
-        End Try
-        Try
 
-            If Ms.ReadSetting("lbCountDownFont") <> Nothing Then
-                MainModule.LbCountDown.Font = GetFontByString(Ms.ReadSetting("lbCountDownFont"))
-            End If
-        Catch ex As Exception
-            Fn.WriteLog(ex.ToString())
-        End Try
+        ' Configurar el color y fuente del control LbCountDown
         Try
-            If Ms.ReadSetting("MusicDirectory") <> Nothing Then
-                ControlModule.tbmusicdir.Text = Ms.ReadSetting("MusicDirectory")
-            Else
-                ControlModule.tbmusicdir.Text = Vars.UserDir
-            End If
+            SetControlColor(MainModule.LbCountDown, "lbCountDownColor")
+            SetControlFont(MainModule.LbCountDown, "lbCountDownFont")
         Catch ex As Exception
-            Fn.WriteLog(ex.ToString())
+            WriteLog(ex.ToString())
         End Try
-        Try
-            If Ms.ReadSetting("lbCountDownPositionX") <> Nothing And Ms.ReadSetting("lbCountDownPositionY") <> Nothing Then
-                MainModule.LbCountDown.Location = New Point(CInt(Ms.ReadSetting("lbCountDownPositionX")),
-                                                            CInt(Ms.ReadSetting("lbCountDownPositionY")))
-            End If
-            If Ms.ReadSetting("lbWordPositionX") <> Nothing And Ms.ReadSetting("lbWordPositionY") <> Nothing Then
-                MainModule.LbWord.Location = New Point(CInt(Ms.ReadSetting("lbWordPositionX")),
-                                                   CInt(Ms.ReadSetting("lbWordPositionY")))
-            End If
-        Catch ex As Exception
-            Fn.WriteLog(ex.ToString())
-        End Try
-        Try
-            If Ms.ReadSetting("MainWidth") <> Nothing Then
-                MainModule.Width = Ms.ReadSetting("MainWidth")
-            End If
-        Catch ex As Exception
-            Fn.WriteLog(ex.ToString())
-        End Try
-        Try
 
-            If Ms.ReadSetting("MainHeight") <> Nothing Then
-                MainModule.Height = Ms.ReadSetting("MainWidth")
-            End If
-        Catch ex As Exception
-            Fn.WriteLog(ex.ToString())
-        End Try
+        ' Configurar la ubicación de controles
         Try
+            SetControlLocation(MainModule.LbCountDown, "lbCountDownPositionX", "lbCountDownPositionY")
+            SetControlLocation(MainModule.LbWord, "lbWordPositionX", "lbWordPositionY")
+            SetControlLocation(MainModule.lbTipoBatalla, "LbTipoBatallaPositionX", "LbTipoBatallaPositionY")
+            SetControlLocation(MainModule.lbCaractBatalla, "LbCaractBatallaPositionX", "LbCaractBatallaPositionY")
+            SetControlLocation(MainModule.CustomProgressBar1, "ProgressBar1PositionX", "ProgressBar1PositionY")
+        Catch ex As Exception
+            WriteLog(ex.ToString())
+        End Try
 
-            If Ms.ReadSetting("WindowState") <> Nothing Then
-                Dim fws As FormWindowState = [Enum].Parse(GetType(FormWindowState), Ms.ReadSetting("WindowState"))
-                'MainModule.WindowState = fws
-            End If
-        Catch ex As Exception
-            Fn.WriteLog(ex.ToString())
-        End Try
+        ' Configurar el tamaño del formulario principal si está definido
         Try
-            If Ms.ReadSetting("chkSoundFx") <> Nothing Then
-                If Ms.ReadSetting("chkSoundFx") = "1" Then
-                    ControlModule.chkSoundFx.Checked = True
-                Else
-                    ControlModule.chkSoundFx.Checked = False
-                End If
-            End If
+            SetControlSize(MainModule, "MainWidth", "MainHeight")
         Catch ex As Exception
-            Fn.WriteLog(ex.ToString())
+            WriteLog(ex.ToString())
         End Try
+
+        ' Configurar el estado de la ventana (maximizado o normal)
         Try
-            If Ms.ReadSetting("chkMinimize") <> Nothing Then
-                If Ms.ReadSetting("chkMinimize") = "1" Then
-                    ControlModule.chkMinimize.Checked = True
-                Else
-                    ControlModule.chkMinimize.Checked = False
-                End If
-            End If
+            SetWindowState()
         Catch ex As Exception
-            Fn.WriteLog(ex.ToString())
+            WriteLog(ex.ToString())
         End Try
+
+        ' Configurar las casillas de verificación
         Try
-            If Ms.ReadSetting("chPlayMusic") <> Nothing Then
-                If Ms.ReadSetting("chPlayMusic") = "1" Then
-                    ControlModule.chPlayMusic.Checked = True
-                Else
-                    ControlModule.chPlayMusic.Checked = False
-                End If
-            End If
+            SetCheckboxState(ControlModule.chkSoundFx, "chkSoundFx")
+            SetCheckboxState(ControlModule.chkMinimize, "chkMinimize")
+            SetCheckboxState(ControlModule.chPlayMusic, "chPlayMusic")
         Catch ex As Exception
-            Fn.WriteLog(ex.ToString())
+            WriteLog(ex.ToString())
         End Try
+
+        ' Inicializar la música
         InitMusic()
+    End Sub
+
+    Private Shared Sub SetControlColor(control As Control, settingName As String)
+        Dim colorValue As String = Ms.ReadSetting(settingName)
+        If Not String.IsNullOrEmpty(colorValue) Then
+            control.ForeColor = Color.FromArgb(Integer.Parse(colorValue))
+        End If
+    End Sub
+
+    Private Shared Sub SetControlFont(control As Control, settingName As String)
+        Dim fontValue As String = Ms.ReadSetting(settingName)
+        If Not String.IsNullOrEmpty(fontValue) Then
+            control.Font = GetFontByString(fontValue)
+        End If
+    End Sub
+
+    Private Shared Sub SetControlLocation(control As Control, posXSetting As String, posYSetting As String)
+        Dim posXValue As String = Ms.ReadSetting(posXSetting)
+        Dim posYValue As String = Ms.ReadSetting(posYSetting)
+
+        If Not String.IsNullOrEmpty(posXValue) AndAlso Not String.IsNullOrEmpty(posYValue) Then
+            Dim x As Integer
+            Dim y As Integer
+
+            If Integer.TryParse(posXValue, x) AndAlso Integer.TryParse(posYValue, y) Then
+                control.Location = New Point(x, y)
+            End If
+        End If
+    End Sub
+
+    Private Shared Sub SetControlSize(control As Control, widthSetting As String, heightSetting As String)
+        Dim widthValue As String = Ms.ReadSetting(widthSetting)
+        Dim heightValue As String = Ms.ReadSetting(heightSetting)
+
+        If Not String.IsNullOrEmpty(widthValue) AndAlso Not String.IsNullOrEmpty(heightValue) Then
+            Dim width As Integer
+            Dim height As Integer
+
+            If Integer.TryParse(widthValue, width) AndAlso Integer.TryParse(heightValue, height) Then
+                control.Width = width
+                control.Height = height
+            End If
+        End If
+    End Sub
+
+    Private Shared Sub SetWindowState()
+        Dim windowStateValue As String = Ms.ReadSetting("WindowState")
+        If Not String.IsNullOrEmpty(windowStateValue) Then
+            Dim formWindowState As FormWindowState
+            If [Enum].TryParse(windowStateValue, formWindowState) Then
+                MainModule.WindowState = formWindowState
+            End If
+        End If
+    End Sub
+
+    Private Shared Sub SetCheckboxState(checkbox As CheckBox, settingName As String)
+        Dim checkboxValue As String = Ms.ReadSetting(settingName)
+        If Not String.IsNullOrEmpty(checkboxValue) Then
+            checkbox.Checked = (checkboxValue = "1")
+        End If
     End Sub
 
     Public Shared Function ImageToString(img As Image)
@@ -158,23 +164,21 @@ Public Class Fn
     End Sub
 
     Public Shared Sub Shuffle(items As String())
-        Dim j As Int32
-        Dim temp As String
-        For n As Int32 = items.Length - 1 To 0 Step -1
-            j = MainModule.Rnd.Next(0, n + 1)
-            temp = items(n)
-            items(n) = items(j)
-            items(j) = temp
-        Next n
+        If items Is Nothing = False Then
+            Dim j As Int32
+            Dim temp As String
+            For n As Int32 = items.Length - 1 To 0 Step -1
+                j = MainModule.Rnd.Next(0, n + 1)
+                temp = items(n)
+                items(n) = items(j)
+                items(j) = temp
+            Next n
+        End If
+
     End Sub
 
     Public Shared Sub Alert(msg)
         MsgBox(msg)
-    End Sub
-
-    Public Shared Sub SaveSettings(a As String)
-        My.Settings.Save()
-        Alert("Configuración guardada.")
     End Sub
 
     Public Shared Sub InitMusic()
@@ -191,40 +195,48 @@ Public Class Fn
 
     Public Shared Sub LoadMusic()
         Try
-            'If ControlModule.chPlayMusic.Checked = False Then Exit Sub
-            Dim comboSource As New Dictionary(Of String, String)()
-            'Dim dir = ms.ReadSetting("MusicDirectory")
-            'If dir = Nothing Then Exit Sub
-            'vars.files = Directory.GetFiles(dir, "*.*").Where(Function(file) file.ToLower().EndsWith(".mp3") OrElse file.ToLower().EndsWith(".wav")).ToArray()
+            Dim musicFiles As New Dictionary(Of String, String)()
+            Dim musicDirectory = Ms.ReadSetting("MusicDirectory")
 
-            If ControlModule.chshufflemusic.Checked Then
-                Shuffle(Vars.Files)
-            End If
-            Dim dir = Ms.ReadSetting("MusicDirectory")
-            Dim i = 0
-            For Each u In Vars.Files
+            ' Verificar si el directorio de música existe
+            If Directory.Exists(musicDirectory) Then
+                Dim shuffled As Boolean = False
 
-                Dim n = u
-                n = Replace(n, ".mp3", "")
-                n = Replace(n, ".wav", "")
-                n = Replace(n, dir & "\", Nothing)
-                If n <> "SoundFx" Then
-                    n = n & " (" & TimeSpan.FromSeconds(Math.Round(GetMediaDuration(u))).ToString("mm\:ss") & ")"
-                    comboSource.Add(u, n)
-                    i = i + 1
-                Else
-                    n = n
+                If ControlModule.chshufflemusic.Checked Then
+                    Shuffle(Vars.Files)
+                    shuffled = True
                 End If
-            Next
-            ControlModule.cbMusicList.DataSource = New BindingSource(comboSource, Nothing)
-            ControlModule.cbMusicList.DisplayMember = "Value"
-            ControlModule.cbMusicList.ValueMember = "Key"
-            WriteLog(i & " instrumentales cargadas")
-            If InStr(ControlModule.chshufflemusic.Text, "(") < 0 Then
-                ControlModule.chshufflemusic.Text = ControlModule.chshufflemusic.Text & (" (" & i & " instrumentales)")
+
+                For Each musicFile In Vars.Files
+                    Dim fileName = Path.GetFileNameWithoutExtension(musicFile)
+
+                    If fileName <> "SoundFx" Then
+                        Dim duration As TimeSpan = TimeSpan.FromSeconds(Math.Round(GetMediaDuration(musicFile)))
+                        Dim formattedDuration As String = duration.ToString("mm\:ss")
+                        Dim displayName As String = $"{fileName} ({formattedDuration})"
+
+                        musicFiles.Add(musicFile, displayName)
+                    End If
+                Next
+
+                ' Enlazar los archivos de música al ComboBox
+                ControlModule.cbMusicList.DataSource = New BindingSource(musicFiles, Nothing)
+                ControlModule.cbMusicList.DisplayMember = "Value"
+                ControlModule.cbMusicList.ValueMember = "Key"
+
+                Dim instrumentalesCount As Integer = musicFiles.Count
+                Dim logMessage As String = $"{instrumentalesCount} instrumentales cargadas"
+
+                If shuffled Then
+                    logMessage &= " (orden aleatorio)"
+                End If
+
+                WriteLog(logMessage)
+            Else
+                WriteLog($"Error: El directorio de música '{musicDirectory}' no existe.")
             End If
-        Catch
-            Fn.WriteLog("No se encontraron instrumentales en " & Ms.ReadSetting("MusicDirectory"))
+        Catch ex As Exception
+            Fn.WriteLog($"Error al cargar instrumentales: {ex.Message}")
         End Try
     End Sub
 
@@ -419,22 +431,20 @@ Public Class Fn
     End Function
 
     Public Shared Function GetDelimitedText(text As String, openDelimiter As String, closeDelimiter As String,
-                                        Optional startIndex As Long = 0) As String
-        Dim openingIndex As Long
-        Dim closingIndex As Long
-
-        If startIndex = 0 Then startIndex = 1
+                                        Optional startIndex As Long = 1) As String
+        ' Asegurarse de que startIndex sea al menos 1
+        If startIndex < 1 Then startIndex = 1
 
         ' Buscar la posición del marcador de apertura
-        openingIndex = InStr(startIndex, text, openDelimiter, vbTextCompare)
+        Dim openingIndex As Long = InStr(startIndex, text, openDelimiter, CompareMethod.Text)
         If openingIndex = 0 Then
             ' No se encontró el marcador de apertura
             Return ""
         End If
-        openingIndex = openingIndex + Len(openDelimiter)
+        openingIndex += Len(openDelimiter)
 
         ' Buscar la posición del marcador de cierre
-        closingIndex = InStr(openingIndex, text, closeDelimiter, vbTextCompare)
+        Dim closingIndex As Long = InStr(openingIndex, text, closeDelimiter, CompareMethod.Text)
         If closingIndex = 0 Then
             ' No se encontró el marcador de cierre
             Return ""
@@ -443,6 +453,5 @@ Public Class Fn
         ' Obtener el texto entre los dos delimitadores
         Return Mid$(text, openingIndex, closingIndex - openingIndex)
     End Function
-
 
 End Class

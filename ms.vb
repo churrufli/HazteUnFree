@@ -1,6 +1,9 @@
 ﻿Imports System.IO
+Imports System.Text.RegularExpressions
 
 Public Class Ms
+    Public Shared ControlPositions As New Dictionary(Of String, Point)()
+
     Public Shared MySettings 'aqui guardaré para leer
     'Public Shared MainBackGroundImage As String
     'Public Shared LbWordFont As String
@@ -13,6 +16,12 @@ Public Class Ms
 
     Public Shared Sub LoadSettings()
         MySettings = File.ReadAllText(Vars.UserDir & "\" & Vars.MySettingsFileName)
+        ' Cargar las posiciones de los controles si están disponibles
+        For Each ctrl As Control In ControlModule.Controls ' Cambia ControlModule al nombre de tu formulario
+            If ControlPositions.ContainsKey(ctrl.Name) Then
+                ctrl.Location = ControlPositions(ctrl.Name)
+            End If
+        Next
     End Sub
 
     Public Shared Sub InitSettings()
@@ -86,27 +95,28 @@ Public Class Ms
         LoadSettings()
     End Sub
 
-    Public Shared Sub SaveSetting(setting, myvalue)
-        Dim mylog As String = My.Computer.FileSystem.ReadAllText(Vars.UserDir & Vars.MySettingsFileName)
-        Dim previousmyvalue = Fn.GetDelimitedText(mylog, "<" & setting & ">", "</" & setting & ">")
-        Dim newlog As String
-        If previousmyvalue = myvalue Then Exit Sub
+    Public Shared Sub SaveSetting(setting As String, myvalue As String)
+        Dim mylog As String = My.Computer.FileSystem.ReadAllText(Vars.UserDir & "\" & Vars.MySettingsFileName)
 
-        If previousmyvalue <> Nothing Then
-            newlog = Replace(mylog, "<" & setting & ">" & previousmyvalue & "</" & setting & ">",
-                             "<" & setting & ">" & myvalue & "</" & setting & ">")
+        ' Buscar si la configuración ya existe en el archivo
+        Dim settingPattern As String = $"<{setting}>(.*?)</{setting}>"
+        Dim settingMatch As Match = Regex.Match(mylog, settingPattern, RegexOptions.Singleline)
+
+        If settingMatch.Success Then
+            ' Si la configuración ya existe, actualiza su valor
+            mylog = Regex.Replace(mylog, settingPattern, $"<{setting}>{myvalue}</{setting}>", RegexOptions.Singleline)
         Else
-            newlog = mylog & "<" & setting & ">" & myvalue & "</" & setting & ">" & Environment.NewLine
+            ' Si la configuración no existe, crea una nueva entrada
+            mylog &= $"<{setting}>{myvalue}</{setting}>" & Environment.NewLine
         End If
+
         Try
-            File.Delete(Vars.UserDir & "/" & Vars.MySettingsFileName)
-        Catch
+            File.WriteAllText(Vars.UserDir & "\" & Vars.MySettingsFileName, mylog)
+            LoadSettings()
+        Catch ex As Exception
+            ' Manejar errores aquí
+            Fn.WriteLog($"Error al guardar la configuración '{setting}': {ex.Message}")
         End Try
-        Try
-            File.WriteAllText(Vars.UserDir & "/" & Vars.MySettingsFileName, newlog)
-        Catch
-        End Try
-        LoadSettings()
     End Sub
 
     Public Shared Sub UpdateSettings(idsetting, myvalue)

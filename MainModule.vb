@@ -3,6 +3,60 @@ Imports WMPLib
 
 Public Class MainModule
 
+    Public Shared ControlPositions As New Dictionary(Of String, Point)()
+
+    ' Variables para el seguimiento de la ubicación del control mientras se arrastra.
+    Private dragging As Boolean = False
+
+    Private dragCursorPoint As Point
+    Private dragControlPoint As Point
+
+    ' Función para habilitar el drag and drop en un control.
+    Private Sub EnableDragAndDrop(control As Control)
+        AddHandler control.MouseDown, AddressOf Control_MouseDown
+        AddHandler control.MouseMove, AddressOf Control_MouseMove
+        AddHandler control.MouseUp, AddressOf Control_MouseUp
+    End Sub
+
+    ' Manejador del evento MouseDown para iniciar el arrastre.
+    Private Sub Control_MouseDown(sender As Object, e As MouseEventArgs)
+        If e.Button = MouseButtons.Left Then
+            dragging = True
+            Dim control = TryCast(sender, Control)
+            dragCursorPoint = Cursor.Position
+            dragControlPoint = control.PointToScreen(New Point(0, 0))
+            dragControlPoint.X = dragControlPoint.X - dragCursorPoint.X
+            dragControlPoint.Y = dragControlPoint.Y - dragCursorPoint.Y
+            control.Capture = True
+        End If
+    End Sub
+
+    ' Manejador del evento MouseMove para mover el control arrastrado.
+    ' Manejador del evento MouseMove para mover el control arrastrado.
+    Private Sub Control_MouseMove(sender As Object, e As MouseEventArgs)
+        If dragging Then
+            Dim control = TryCast(sender, Control) ' Declarar la variable control aquí
+            Dim controlLocation As Point = Control.MousePosition
+            controlLocation.Offset(dragControlPoint.X, dragControlPoint.Y)
+            control.Location = control.Parent.PointToClient(controlLocation)
+        End If
+    End Sub
+
+    ' Manejador del evento MouseUp para finalizar el arrastre.
+    Private Sub Control_MouseUp(sender As Object, e As MouseEventArgs)
+        If e.Button = MouseButtons.Left Then
+            Dim control = TryCast(sender, Control)
+            control.Capture = False
+            dragging = False
+        End If
+    End Sub
+
+    Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        ' Llama a EnableDragAndDrop para habilitar el drag and drop en controles específicos.
+        EnableDragAndDrop(lbCaractBatalla) ' Cambia Button1 al control que quieras habilitar.
+        EnableDragAndDrop(lbTipoBatalla)  ' Cambia Label1 al control que quieras habilitar.
+    End Sub
+
     Sub PlayVideo()
         'AxWindowsMediaPlayer1.URL = "video.mp4"
         'AxWindowsMediaPlayer1.settings.autoStart = True
@@ -28,18 +82,20 @@ Public Class MainModule
         PlayVideo()
         LbCountDown.BackColor = System.Drawing.Color.Transparent
         'Label1.BackColor = System.Drawing.Color.Transparent
-        'Me.WindowState = FormWindowState.Maximized
+        If Ms.ReadSetting("WindowState") <> "normal" Then
+            Me.WindowState = FormWindowState.Maximized
+            Me.FormBorderStyle = FormBorderStyle.None
+        End If
+
         'Me.FormBorderStyle = FormBorderStyle.None
     End Sub
-
 
     Sub InitStates()
         ControlModule.CbBattleType.SelectedIndex = 1
         ControlModule.CbDuration.SelectedIndex = 0
-        CenterItems()
-    End Sub
+        ControlModule.EscribirTipoBatalla()
+        Me.Show()
 
-    Public Shared Sub CenterItems()
     End Sub
 
     Private Sub Button3_Click(sender As Object, e As EventArgs)
@@ -80,6 +136,8 @@ Public Class MainModule
         PlayBattle(mode, ControlModule.TbWordsWaittoStart.Text, Nothing, Me.CountDownFrom, manualorauto)
     End Sub
 
+    Dim intervalo As Long
+
     Sub PlayBattle(mode, wordswaittoStart, song, duration, manualorauto)
         LbCountDown.Visible = True
         LbWord.Text = ""
@@ -88,14 +146,13 @@ Public Class MainModule
         _targetDt = DateTime.Now.Add(CountDownFrom)
         ControlModule.btStopBattle.Enabled = True
 
-
         If manualorauto = "manual" Or manualorauto = "semimanual" Then
             wordswaittoStart = 0
         End If
 
         Fn.Wait(CInt(wordswaittoStart)) ' Espera
 
-        If manualorauto = "auto" Then
+        If manualorauto = "auto" Or manualorauto = "semimanual" Then
             If mode <> 3 Then
                 Dim myfont As Font = Fn.GetFontByString(Ms.ReadSetting("lbWordFont"))
                 Dim fontName As FontFamily = myfont.FontFamily
@@ -124,10 +181,10 @@ Public Class MainModule
                     TimerWord.Interval = 2000 ' Intervalo de 2 segundos
             End Select
 
+            intervalo = TimerWord.Interval
+
             If manualorauto = "auto" Then
-
-                iniciarprogressbar1()
-
+                iniciarCustomProgressBar1()
                 TimerWord.Start()
             Else
                 TimerWord.Stop()
@@ -139,40 +196,41 @@ Public Class MainModule
         TimerVisualCountDown.Interval = 100 ' Intervalo de 1 segundo
         TimerVisualCountDown.Start()
 
-
     End Sub
 
-    Sub iniciarprogressbar1()
-        ProgressBar1.Minimum = 0
-        ProgressBar1.Maximum = TimerWord.Interval
-        ProgressBar1.Value = TimerWord.Interval
+    Sub iniciarCustomProgressBar1()
+        CustomProgressBar1.Minimum = 0
+        CustomProgressBar1.Maximum = TimerWord.Interval - 100
+        CustomProgressBar1.Value = TimerWord.Interval - 100
+        CustomProgressBar1.Invalidate()
         TimerProgressBar1.Start()
     End Sub
 
-    Sub pararprogressbar1()
-        ProgressBar1.Minimum = 0
-        ProgressBar1.Maximum = TimerWord.Interval
-        ProgressBar1.Value = 0
+    Sub pararCustomProgressBar1()
+        CustomProgressBar1.Minimum = 0
+        CustomProgressBar1.Maximum = TimerWord.Interval
+        CustomProgressBar1.Value = 0
+        CustomProgressBar1.Invalidate()
         TimerProgressBar1.Stop()
     End Sub
 
-
     Private Sub TimerProgressBar1_Tick(sender As Object, e As EventArgs) Handles TimerProgressBar1.Tick
-        If ProgressBar1.Value >= 1 Then
-            ProgressBar1.Value -= 100
+        If CustomProgressBar1.Value >= 100 Then
+            CustomProgressBar1.Value -= 100
+            CustomProgressBar1.Invalidate()
         Else
-            ProgressBar1.Value = ProgressBar1.Minimum ' Asegurar que el valor nunca sea menor que el mínimo
+            CustomProgressBar1.Value = 0
+            CustomProgressBar1.Invalidate()
             TimerProgressBar1.Stop() ' Detener el temporizador
             ' Realizar otras acciones necesarias
-            ' iniciarprogressbar1()
         End If
     End Sub
-
 
     Sub GenerateArray4Words()
 
         'aqui tengo que cambiar el tamaño de la fuente
         Dim myfont As Font = Fn.GetFontByString(Ms.ReadSetting("lbWordFont"))
+
         Dim fontName As FontFamily = myfont.FontFamily
         Dim fontsize = myfont.Size - Math.Round(myfont.Size / 3)
         LbWord.Font = New Font(fontName, fontsize)
@@ -204,10 +262,19 @@ Public Class MainModule
     End Sub
 
     Private Sub TimerWord_Tick(sender As Object, e As EventArgs) Handles TimerWord.Tick
-        'aqui mostraría la palabra siguiente
-        GetWord()
-        Me.Invoke(New Action(AddressOf iniciarprogressbar1))
-
+        Dim tiempo As TimeSpan
+        If TimeSpan.TryParse(LbCountDown.Text, tiempo) Then
+            Dim segundos As Double = tiempo.TotalSeconds
+            If intervalo < (segundos * 1000) Then
+                GetWord()
+                Me.Invoke(New Action(AddressOf iniciarCustomProgressBar1))
+            Else
+                LbWord.Text = ""
+            End If
+        Else
+            ' Manejar el caso en el que LbCountDown.Text no es un formato de tiempo válido
+            ' Puedes mostrar un mensaje de error o tomar otra acción apropiada.
+        End If
     End Sub
 
     Sub GetWord()
@@ -271,7 +338,7 @@ Public Class MainModule
         StopBattleFunctions()
     End Sub
 
-    Public Shared Sub StopBattleFunctions()
+    Public Shared Sub StopBattleFunctions(Optional ByVal ManualStop As Boolean = False)
         Try
             Vars.StopBattle = True
             MainModule.LbCountDown.Text = "00"
@@ -279,8 +346,9 @@ Public Class MainModule
             MainModule.TimerVisualCountDown.Stop()
             MainModule.LbWord.Text = "HazteUnFree"
             ControlModule.LbWord.Text = "HazteUnFree"
-            MainModule.pararprogressbar1()
+            MainModule.pararCustomProgressBar1()
 
+            MainModule.TimerProgressBar1.Stop()
 
             MainModule.TimerWord.Stop()
             'Fn.Wait(1)
@@ -296,12 +364,13 @@ Public Class MainModule
             CountWords = 0
             ControlModule.Button3.Enabled = True
             ControlModule.Button4.Enabled = True
-
-            If Ms.ReadSetting("chkSoundFx") = "1" Then
-                Dim wmplayer = New WindowsMediaPlayer()
-                wmplayer.URL = "SoundFx.mp3"
-                wmplayer.controls.play()
-                wmplayer = Nothing
+            If ManualStop = False Then
+                If Ms.ReadSetting("chkSoundFx") = "1" Then
+                    Dim wmplayer = New WindowsMediaPlayer()
+                    wmplayer.URL = "SoundFx.mp3"
+                    wmplayer.controls.play()
+                    wmplayer = Nothing
+                End If
             End If
         Catch
         End Try
@@ -355,12 +424,32 @@ Public Class MainModule
         countdownFont.Dispose() ' Dispose the font when done to prevent memory leaks
     End Sub
 
+    Public Shared Sub SaveControlPositions()
+        For Each ctrl As Control In ControlModule.Controls ' Cambia ControlModule al nombre de tu formulario
+            ControlPositions(ctrl.Name) = ctrl.Location
+        Next
+    End Sub
+
     Private Sub Main_FormClosing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
-        StopBattleFunctions()
+        'SaveControlPositions()
+        StopBattleFunctions(True)
+        SavePositions()
+    End Sub
+
+    Sub SavePositions()
         Ms.SaveSetting("MainWidth", Me.Width)
         Ms.SaveSetting("MainHeight", Me.Height)
         Ms.SaveSetting("WindowState", Me.WindowState.ToString())
-
+        Ms.SaveSetting("LbCountDownPositionX", LbCountDown.Left)
+        Ms.SaveSetting("LbCountDownPositionY", LbCountDown.Top)
+        Ms.SaveSetting("LbTipoBatallaPositionX", lbTipoBatalla.Left)
+        Ms.SaveSetting("LbTipoBatallaPositionY", lbTipoBatalla.Top)
+        Ms.SaveSetting("LbCaractBatallaPositionX", lbCaractBatalla.Left)
+        Ms.SaveSetting("LbCaractBatallaPositionY", lbCaractBatalla.Top)
+        Ms.SaveSetting("LbWordPositionX", LbWord.Left)
+        Ms.SaveSetting("LbWordPositionY", LbWord.Top)
+        Ms.SaveSetting("ProgressBar1PositionX", CustomProgressBar1.Location.X)
+        Ms.SaveSetting("ProgressBar1PositionY", CustomProgressBar1.Location.Y)
     End Sub
 
     Public Shared Function ReadWeb(myUrl As String)
@@ -407,9 +496,7 @@ Public Class MainModule
 
     Private Sub LbCountDown_MouseUp(sender As Object, e As MouseEventArgs) Handles LbCountDown.MouseUp
         _dragging = False
-        Ms.SaveSetting("LbCountDownPositionX", sender.left)
-        Ms.SaveSetting("LbCountDownPositionY", sender.top)
-        Fn.WriteLog("posición del contador guardada.")
+
     End Sub
 
     Private Sub LbCountDown_DragDrop(sender As Object, e As DragEventArgs) Handles LbCountDown.DragDrop
@@ -433,19 +520,51 @@ Public Class MainModule
         End If
     End Sub
 
+    Private Sub Form1_KeyDown(sender As Object, e As KeyEventArgs) Handles MyBase.KeyDown
+        If e.KeyCode = Keys.Escape Then
+            Me.WindowState = FormWindowState.Normal
+            Me.FormBorderStyle = FormBorderStyle.Sizable
+        End If
+    End Sub
+
     Private Sub LbWord_MouseUp(sender As Object, e As MouseEventArgs) Handles LbWord.MouseUp
         _dragging = False
-        Ms.SaveSetting("LbWordPositionX", sender.left)
-        Ms.SaveSetting("LbWordPositionY", sender.top)
-        Fn.WriteLog("posición de la palabra guardada.")
+        'Ms.SaveSetting("LbWordPositionX", sender.left)
+        'Ms.SaveSetting("LbWordPositionY", sender.top)
+        'Fn.WriteLog("posición de la palabra guardada.")
     End Sub
 
     Private Sub LbWord_DragDrop(sender As Object, e As DragEventArgs) Handles LbWord.DragDrop
         LbWord.Location = New Point(LbWord.Location.X + e.X - _beginX, LbWord.Location.Y + e.Y - _beginY)
     End Sub
 
+    Private isDragging As Boolean = False
+    Private dragStartPoint As Point
 
+    Private Sub CustomProgressBar1_MouseDown(sender As Object, e As MouseEventArgs) Handles CustomProgressBar1.MouseDown
+        If e.Button = MouseButtons.Left Then
+            isDragging = True
+            dragStartPoint = New Point(e.X, e.Y)
+        End If
+    End Sub
 
+    Private Sub CustomProgressBar1_MouseMove(sender As Object, e As MouseEventArgs) Handles CustomProgressBar1.MouseMove
+        If isDragging Then
+            Dim deltaX As Integer = e.X - dragStartPoint.X
+            Dim deltaY As Integer = e.Y - dragStartPoint.Y
+            CustomProgressBar1.Location = New Point(CustomProgressBar1.Location.X + deltaX, CustomProgressBar1.Location.Y + deltaY)
+        End If
+    End Sub
+
+    Private Sub CustomProgressBar1_MouseUp(sender As Object, e As MouseEventArgs) Handles CustomProgressBar1.MouseUp
+        If e.Button = MouseButtons.Left Then
+            isDragging = False
+        End If
+    End Sub
+
+    Private Sub Label2_Click(sender As Object, e As EventArgs) Handles lbCaractBatalla.Click
+
+    End Sub
 
     '    Private Sub AxWindowsMediaPlayer1_PlayStateChange(sender As Object, e As AxWMPLib._WMPOCXEvents_PlayStateChangeEvent)
     '        If e.newState = 8 Or e.newState = 9 Or e.newState = 10 Then

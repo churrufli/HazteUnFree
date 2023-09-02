@@ -5,17 +5,21 @@ Public Class ControlModule
 
     Private Sub control_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         'Me.Location = New Point(0, 30)
+        'MainModule.Show()
         Fn.SetMySettings()
-        MainModule.Show()
+
         LoadDictionaries()
         LoadWords()
         Me.InitStates()
         MainModule.InitStates()
         Fn.LoadMusic()
+        EscribirTipoBatalla()
+
     End Sub
 
     Sub InitStates()
         TbWordsWaittoStart.Text = Ms.ReadSetting("TbWordsWaittoStart")
+        tbmusicdir.Text = Ms.ReadSetting("MusicDirectory")
     End Sub
 
     Sub LoadDictionaries()
@@ -146,6 +150,7 @@ Public Class ControlModule
     End Sub
 
     Private Sub ControlModule_FormClosing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
+        MainModule.SavePositions()
         MainModule.StopBattleFunctions()
         Application.Exit()
     End Sub
@@ -220,51 +225,35 @@ Public Class ControlModule
         StartBattle("auto")
     End Sub
 
-    Sub StartBattle(mode As String)
+    Sub StartBattle(mode As String, Optional ByVal startsong As Boolean = True)
         BtStartBattle.Enabled = False
         MainModule.Show()
-
         MainModule.Startwords = False
         btNextWord.Enabled = True
-
         Vars.StopBattle = False
         CbBattleType.Enabled = False
         CbDuration.Enabled = False
         btNextWord.Enabled = True
 
-        Vars.SongDuration = Fn.PlayMusic()
+        ' Determinar si se debe minimizar la ventana
         Dim minimize As Boolean = False
-        If chkMinimize.Checked Then
+        If mode = "auto" AndAlso chkMinimize.Checked Then
             minimize = True
-        Else
-            minimize = False
-        End If
-
-        If mode = "semimanual" Then
-            minimize = False
-        Else
-            minimize = False
-        End If
-        If mode = "auto" Then
-            If chkMinimize.Checked Then
-                minimize = True
-            Else
-                minimize = False
-            End If
-        End If
-        If mode = "manual" Then
-            minimize = False
         End If
 
         If minimize Then
             Me.WindowState = FormWindowState.Minimized
         End If
 
+        ' Iniciar la batalla con el modo y la reproducción de música según sea necesario
         MainModule.SetBattle(mode)
+        If startsong Then
+            Vars.SongDuration = Fn.PlayMusic()
+        End If
     End Sub
 
     Private Sub btstopbattle_Click(sender As Object, e As EventArgs) Handles btStopBattle.Click
-        MainModule.StopBattleFunctions()
+        MainModule.StopBattleFunctions(True)
         btStopBattle.Enabled = False
     End Sub
 
@@ -285,7 +274,7 @@ Public Class ControlModule
 
     Private Sub CheckBox2_CheckedChanged(sender As Object, e As EventArgs) Handles chshufflemusic.CheckedChanged
         cbMusicList.Enabled = IIf(chshufflemusic.Checked, False, True)
-        Ms.SaveSetting("chshufflemusic", IIf(cbMusicList.Enabled, "1", "0"))
+        Ms.SaveSetting("chshufflemusic", IIf(chshufflemusic.Checked, "1", "0"))
         Try
             Fn.LoadMusic()
         Catch
@@ -460,16 +449,25 @@ Public Class ControlModule
     End Sub
 
     Private Sub Button4_Click(sender As Object, e As EventArgs) Handles Button4.Click
-        MainModule.TimerWord.Start()
-        btStartWords.Enabled = False
-        btNextWord.Enabled = True
-        StartBattle("semimanual")
+        'aqui no debería empezar mas que el tema
+        'Fn.PlayMusic()
+        'MainModule.TimerWord.Start()
+        'btStartWords.Enabled = False
+        'btNextWord.Enabled = True
+        'StartBattle("semimanual")
+        Vars.SongDuration = Fn.PlayMusic()
+        MainModule.LbWord.Text = ""
+        MainModule.LbCountDown.Text = ""
         Button4.Enabled = False
     End Sub
 
     Private Sub Button3_Click_1(sender As Object, e As EventArgs) Handles Button3.Click
-        MainModule.GetWord()
+        StartBattle("semimanual", False)
+        ''MainModule.GetWord()
+        'MainModule.iniciarCustomProgressBar1()
+        MainModule.iniciarCustomProgressBar1()
         MainModule.TimerWord.Start()
+        'MainModule.TimerWord.Start()
         Button3.Enabled = False
         If chkMinimize.Checked Then
             Me.WindowState = FormWindowState.Minimized
@@ -487,6 +485,29 @@ Public Class ControlModule
         If (MsgBox("¿Salir del programa?", MsgBoxStyle.YesNo) = MsgBoxResult.Yes) Then
             Application.Exit()
         End If
+
+    End Sub
+
+    Private Sub CbBattleType_SelectedIndexChanged(sender As Object, e As EventArgs) Handles CbBattleType.SelectedIndexChanged
+        EscribirTipoBatalla()
+
+    End Sub
+
+    Sub EscribirTipoBatalla()
+        Select Case CbBattleType.SelectedItem.ToString
+            Case "Easy Mode (10)"
+                MainModule.lbTipoBatalla.Text = "Easy Mode"
+                MainModule.lbCaractBatalla.Text = "Palabra cada 10''"
+            Case "Hard Mode (5)"
+                MainModule.lbTipoBatalla.Text = "Hard Mode"
+                MainModule.lbCaractBatalla.Text = "Palabra cada 5''"
+            Case "Extreme Mode (2)"
+                MainModule.lbTipoBatalla.Text = "Extreme Mode"
+                MainModule.lbCaractBatalla.Text = "Palabra cada 2''"
+            Case "4 Words each 10''"
+                MainModule.lbTipoBatalla.Text = "Multiple Mode"
+                MainModule.lbCaractBatalla.Text = "4 Palabras cada 10''"
+        End Select
 
     End Sub
 
