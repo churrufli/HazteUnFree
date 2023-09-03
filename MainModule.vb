@@ -55,6 +55,12 @@ Public Class MainModule
         ' Llama a EnableDragAndDrop para habilitar el drag and drop en controles específicos.
         EnableDragAndDrop(lbCaractBatalla) ' Cambia Button1 al control que quieras habilitar.
         EnableDragAndDrop(lbTipoBatalla)  ' Cambia Label1 al control que quieras habilitar.
+        If Ms.ReadSetting("chshufflemusic") = "1" Then
+            ControlModule.chshufflemusic.Checked = True
+        Else
+            ControlModule.chshufflemusic.Checked = False
+
+        End If
     End Sub
 
     Sub PlayVideo()
@@ -87,6 +93,13 @@ Public Class MainModule
             Me.FormBorderStyle = FormBorderStyle.None
         End If
 
+        If Ms.ReadSetting("chshufflemusic") = "1" Then
+            ControlModule.chkShuffle.Checked = True
+        Else
+            ControlModule.chkShuffle.Checked = False
+
+        End If
+
         'Me.FormBorderStyle = FormBorderStyle.None
     End Sub
 
@@ -94,6 +107,8 @@ Public Class MainModule
         ControlModule.CbBattleType.SelectedIndex = 1
         ControlModule.CbDuration.SelectedIndex = 0
         ControlModule.EscribirTipoBatalla()
+        ControlModule.TbWordsWaittoStart.Text = Ms.ReadSetting("TbWordsWaittoStart")
+        ControlModule.tbmusicdir.Text = Ms.ReadSetting("MusicDirectory")
         Me.Show()
 
     End Sub
@@ -450,6 +465,8 @@ Public Class MainModule
         Ms.SaveSetting("LbWordPositionY", LbWord.Top)
         Ms.SaveSetting("ProgressBar1PositionX", CustomProgressBar1.Location.X)
         Ms.SaveSetting("ProgressBar1PositionY", CustomProgressBar1.Location.Y)
+        Ms.SaveSetting("chshufflemusic", IIf(ControlModule.chshufflemusic.Checked = True, "1", "0"))
+
     End Sub
 
     Public Shared Function ReadWeb(myUrl As String)

@@ -240,27 +240,79 @@ Public Class Fn
         End Try
     End Sub
 
-    Public Shared Function PlayMusic()
+    Public Shared Function PlayMusic() As Integer
         Try
-            If ControlModule.chPlayMusic.Checked = False Then Exit Function
-
+            If Not ControlModule.chPlayMusic.Checked Then
+                Return 0
+            End If
+            Dim selectedValue As String
             If ControlModule.chshufflemusic.Checked Then
-                LoadMusic()
+
+                Dim random As New Random()
+                Dim randomIndex As Integer = random.Next(Vars.Files.Length)
+
+                If randomIndex >= 0 AndAlso randomIndex < Vars.Files.Length Then
+                    Dim randomFile As String = Vars.Files(randomIndex)
+                    selectedValue = randomFile
+
+                    ' Recorrer los elementos del ComboBox
+                    ' Obtener el valor de randomFile
+                    Dim valueToFind As String = randomFile
+
+                    ' Recorrer los elementos del ComboBox
+                    For Each pair As KeyValuePair(Of String, String) In ControlModule.cbMusicList.Items
+                        Dim key As String = pair.Key
+                        Dim value As String = pair.Value
+
+                        ' Comprobar si el valor es igual a valueToFind
+                        If key = valueToFind Then
+                            ' Establecer el elemento seleccionado en el ComboBox
+                            ControlModule.cbMusicList.SelectedItem = pair
+                            Exit For ' Salir del bucle después de encontrar una coincidencia
+                        End If
+                    Next
+
+                    ' Ahora, "randomFile" contiene un valor aleatorio de la matriz "Files"
+                    Console.WriteLine($"Valor aleatorio: {randomFile}")
+                Else
+                    Console.WriteLine("La matriz Files está vacía.")
+                End If
+            Else
+                selectedValue = ControlModule.cbMusicList.SelectedValue
             End If
-            '///// MUSIC //////
-            Dim vidhhmmss As String
-            Dim u = ControlModule.cbMusicList.SelectedValue
-            Vars.Player.URL = u
+
+            If String.IsNullOrEmpty(selectedValue) Then
+                Fn.WriteLog("No se ha encontrado música para reproducir")
+                Return 0
+            End If
+
+            ' Verificar si el reproductor ya está en uso
+            If Vars.Player IsNot Nothing AndAlso Vars.Player.playState = WMPLib.WMPPlayState.wmppsPlaying Then
+                Vars.Player.controls.stop()
+            End If
+
+            ' Configurar el reproductor
+            Vars.Player = New WMPLib.WindowsMediaPlayer()
+
+            ' Reproducir música
+            Vars.Player.URL = selectedValue
             Vars.Player.controls.play()
-            Dim vidSecs As Integer = Math.Round(GetMediaDuration(u.ToString)) 'Get total seconds
+
+            ' Obtener la duración del video en segundos
+            Dim videoDurationSecs As Integer = CInt(Math.Round(GetMediaDuration(selectedValue)))
+
+            ' Configurar el contador de tiempo regresivo si es necesario
             If ControlModule.CbBattleType.SelectedIndex = 3 Then
-                vidhhmmss = TimeSpan.FromSeconds(Math.Round(GetMediaDuration(u))).ToString("mm\:ss") ' Format hh:mm:ss
-                MainModule.CountDownFrom = TimeSpan.FromSeconds(vidSecs)
+                MainModule.CountDownFrom = TimeSpan.FromSeconds(videoDurationSecs)
             End If
-            WriteLog("Reproduciendo " & Replace(u, Directory.GetCurrentDirectory() & "\", ""))
-            Return vidSecs
-        Catch
-            Fn.WriteLog("No se ha encontrado música para reproducir")
+
+            ' Registrar la reproducción
+            WriteLog($"Reproduciendo {selectedValue.Replace(Directory.GetCurrentDirectory() & "\", "")}")
+
+            Return videoDurationSecs
+        Catch ex As Exception
+            Fn.WriteLog($"Error al reproducir música: {ex.Message}")
+            Return 0
         End Try
     End Function
 

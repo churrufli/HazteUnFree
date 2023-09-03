@@ -7,10 +7,8 @@ Public Class ControlModule
         'Me.Location = New Point(0, 30)
         'MainModule.Show()
         Fn.SetMySettings()
-
         LoadDictionaries()
         LoadWords()
-        Me.InitStates()
         MainModule.InitStates()
         Fn.LoadMusic()
         EscribirTipoBatalla()
@@ -18,8 +16,7 @@ Public Class ControlModule
     End Sub
 
     Sub InitStates()
-        TbWordsWaittoStart.Text = Ms.ReadSetting("TbWordsWaittoStart")
-        tbmusicdir.Text = Ms.ReadSetting("MusicDirectory")
+
     End Sub
 
     Sub LoadDictionaries()
@@ -54,7 +51,7 @@ Public Class ControlModule
         Dim arr = Split(fileReader, vbNewLine)
         Dim arrout As String = ""
         For Each w In arr
-            w = RTrim(LTrim(w))
+            w = LCase(RTrim(LTrim(w)))
             If Len(w) > 2 Then
                 If InStr(arrout, vbNewLine & w & vbNewLine, CompareMethod.Text) = 0 Then
                     arrout = arrout & w & vbNewLine
@@ -215,10 +212,22 @@ Public Class ControlModule
     End Sub
 
     Private Sub btstartwords_Click_1(sender As Object, e As EventArgs) Handles btStartWords.Click
-        MainModule.TimerWord.Start()
-        btStartWords.Enabled = False
-        btNextWord.Enabled = True
-        StartBattle("manual")
+        'MainModule.TimerWord.Start()
+        'btStartWords.Enabled = False
+        'btNextWord.Enabled = True
+        'StartBattle("manual")
+
+        'aqui no debería empezar mas que el tema
+        'Fn.PlayMusic()
+        'MainModule.TimerWord.Start()
+        'btStartWords.Enabled = False
+        'btNextWord.Enabled = True
+        'StartBattle("semimanual")
+        Vars.SongDuration = Fn.PlayMusic()
+        MainModule.LbWord.Text = ""
+        MainModule.LbCountDown.Text = ""
+        Button4.Enabled = False
+        btStopBattle.Enabled = True
     End Sub
 
     Private Sub btstartbattle_Click(sender As Object, e As EventArgs) Handles BtStartBattle.Click
@@ -245,11 +254,31 @@ Public Class ControlModule
             Me.WindowState = FormWindowState.Minimized
         End If
 
-        ' Iniciar la batalla con el modo y la reproducción de música según sea necesario
         MainModule.SetBattle(mode)
+
+        ' Comprobar si se debe reproducir música antes de iniciar la batalla
         If startsong Then
-            Vars.SongDuration = Fn.PlayMusic()
+            Dim songDuration As Integer = 0
+
+            Dim playMusicAction As New Action(
+            Sub()
+                songDuration = Fn.PlayMusic()
+            End Sub
+        )
+
+            ' Invocar la reproducción de música en un hilo separado
+            Me.Invoke(playMusicAction)
+
+            ' Esperar a que se complete la reproducción de música
+            While songDuration = 0
+                Application.DoEvents()
+                System.Threading.Thread.Sleep(100) ' Añade un pequeño retraso para evitar el uso excesivo de la CPU
+            End While
+
+            Vars.SongDuration = songDuration
         End If
+
+        ' Iniciar la batalla con el modo y la reproducción de música según sea necesario
     End Sub
 
     Private Sub btstopbattle_Click(sender As Object, e As EventArgs) Handles btStopBattle.Click
@@ -273,12 +302,7 @@ Public Class ControlModule
     End Sub
 
     Private Sub CheckBox2_CheckedChanged(sender As Object, e As EventArgs) Handles chshufflemusic.CheckedChanged
-        cbMusicList.Enabled = IIf(chshufflemusic.Checked, False, True)
-        Ms.SaveSetting("chshufflemusic", IIf(chshufflemusic.Checked, "1", "0"))
-        Try
-            Fn.LoadMusic()
-        Catch
-        End Try
+        Ms.SaveSetting("chshufflemusic", If(chshufflemusic.Checked, "1", "0"))
     End Sub
 
     Private Sub PictureBox6_Click(sender As Object, e As EventArgs)
@@ -370,6 +394,7 @@ Public Class ControlModule
     End Sub
 
     Private Sub btNextWord_Click_2(sender As Object, e As EventArgs) Handles btNextWord.Click
+        'MainModule.TimerVisualCountDown.Start()
         MainModule.GetWord()
     End Sub
 
@@ -398,38 +423,6 @@ Public Class ControlModule
 
     Private Sub chkminimize_CheckedChanged(sender As Object, e As EventArgs) Handles chkMinimize.CheckedChanged
         Ms.SaveSetting("chkMinimize", IIf(chkMinimize.Checked = True, "1", "0"))
-    End Sub
-
-    'Private Sub rbManualMode_CheckedChanged(sender As Object, e As EventArgs)
-    '    If rbManualMode.Checked = True Then
-    '        gbManualMode.Enabled = True
-    '        gbAutoMode.Enabled = False
-    '        btNextWord.Enabled = False
-    '    End If
-    '    MainModule.StopBattleFunctions()
-    'End Sub
-
-    'Private Sub rbAutoMode_CheckedChanged(sender As Object, e As EventArgs)
-    '    If rbAutoMode.Checked = True Then
-    '        gbManualMode.Enabled = False
-    '        gbAutoMode.Enabled = True
-    '    End If
-    '    MainModule.StopBattleFunctions()
-    'End Sub
-
-    Private Sub chPlayMusic_CheckedChanged(sender As Object, e As EventArgs) Handles chPlayMusic.CheckedChanged
-        Ms.SaveSetting("chPlayMusic", IIf(chPlayMusic.Checked = True, "1", "0"))
-        If chPlayMusic.Checked Then
-            tbmusicdir.Enabled = True
-            btmusicdir.Enabled = True
-            chshufflemusic.Enabled = True
-            cbMusicList.Enabled = True
-        Else
-            tbmusicdir.Enabled = False
-            btmusicdir.Enabled = False
-            chshufflemusic.Enabled = False
-            cbMusicList.Enabled = False
-        End If
     End Sub
 
     Private Sub GithubToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles GithubToolStripMenuItem.Click
@@ -498,6 +491,7 @@ Public Class ControlModule
             Case "Easy Mode (10)"
                 MainModule.lbTipoBatalla.Text = "Easy Mode"
                 MainModule.lbCaractBatalla.Text = "Palabra cada 10''"
+
             Case "Hard Mode (5)"
                 MainModule.lbTipoBatalla.Text = "Hard Mode"
                 MainModule.lbCaractBatalla.Text = "Palabra cada 5''"
@@ -509,6 +503,25 @@ Public Class ControlModule
                 MainModule.lbCaractBatalla.Text = "4 Palabras cada 10''"
         End Select
 
+    End Sub
+
+    Private Sub TabMode_SelectedIndexChanged(sender As Object, e As EventArgs) Handles TabMode.SelectedIndexChanged
+        ' El índice de la pestaña seleccionada se encuentra en TabControl1.SelectedIndex
+        Dim selectedTabIndex As Integer = TabMode.SelectedIndex
+
+        ' Realiza acciones en función de la pestaña seleccionada
+        Select Case selectedTabIndex
+            Case 0
+                MainModule.CustomProgressBar1.Visible = True
+            Case 1
+                ' Código para la segunda pestaña
+                MainModule.CustomProgressBar1.Visible = True
+
+            Case Else
+                ' Código para otras pestañas
+                MainModule.CustomProgressBar1.Visible = False
+
+        End Select
     End Sub
 
 End Class

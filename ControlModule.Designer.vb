@@ -173,10 +173,11 @@ Partial Class ControlModule
         Me.TbWordsWaittoStart.TabIndex = 32
         Me.TbWordsWaittoStart.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         Me.ToolTip1.SetToolTip(Me.TbWordsWaittoStart, "segundos")
+        Me.TbWordsWaittoStart.Visible = False
         '
         'chkDepureDic
         '
-        Me.chkDepureDic.AutoSize = true
+        Me.chkDepureDic.AutoSize = True
         Me.chkDepureDic.Location = New System.Drawing.Point(16, 147)
         Me.chkDepureDic.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
         Me.chkDepureDic.Name = "chkDepureDic"
@@ -184,13 +185,13 @@ Partial Class ControlModule
         Me.chkDepureDic.TabIndex = 36
         Me.chkDepureDic.Text = "Depurar diccionarios al cargar eliminando términos repetidos"
         Me.ToolTip1.SetToolTip(Me.chkDepureDic, "Marca y desmarca los diccionarios para depurarlos")
-        Me.chkDepureDic.UseVisualStyleBackColor = true
+        Me.chkDepureDic.UseVisualStyleBackColor = True
         '
         'CbBattleType
         '
         Me.CbBattleType.Cursor = System.Windows.Forms.Cursors.Hand
         Me.CbBattleType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.CbBattleType.FormattingEnabled = true
+        Me.CbBattleType.FormattingEnabled = True
         Me.CbBattleType.Items.AddRange(New Object() {"Easy Mode (10)", "Hard Mode (5)", "Extreme Mode (2)", "4 Words each 10''"})
         Me.CbBattleType.Location = New System.Drawing.Point(16, 42)
         Me.CbBattleType.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
@@ -203,7 +204,7 @@ Partial Class ControlModule
         '
         Me.btNextWord.BackColor = System.Drawing.Color.Gainsboro
         Me.btNextWord.DialogResult = System.Windows.Forms.DialogResult.Cancel
-        Me.btNextWord.Font = New System.Drawing.Font("Segoe UI", 12!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0,Byte))
+        Me.btNextWord.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btNextWord.Location = New System.Drawing.Point(227, 36)
         Me.btNextWord.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
         Me.btNextWord.Name = "btNextWord"
@@ -211,13 +212,13 @@ Partial Class ControlModule
         Me.btNextWord.TabIndex = 38
         Me.btNextWord.Text = "PALABRA"
         Me.ToolTip1.SetToolTip(Me.btNextWord, "muestra una nueva palabra en pantalla")
-        Me.btNextWord.UseVisualStyleBackColor = false
+        Me.btNextWord.UseVisualStyleBackColor = False
         '
         'CbDuration
         '
         Me.CbDuration.Cursor = System.Windows.Forms.Cursors.Hand
         Me.CbDuration.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.CbDuration.FormattingEnabled = true
+        Me.CbDuration.FormattingEnabled = True
         Me.CbDuration.Items.AddRange(New Object() {"1'", "1'20''", "2'", "All"})
         Me.CbDuration.Location = New System.Drawing.Point(330, 42)
         Me.CbDuration.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
@@ -230,13 +231,13 @@ Partial Class ControlModule
         '
         Me.ListBoxDictionaries.BackColor = System.Drawing.Color.WhiteSmoke
         Me.ListBoxDictionaries.BorderStyle = System.Windows.Forms.BorderStyle.None
-        Me.ListBoxDictionaries.CheckOnClick = true
+        Me.ListBoxDictionaries.CheckOnClick = True
         Me.ListBoxDictionaries.ColumnWidth = 250
-        Me.ListBoxDictionaries.Font = New System.Drawing.Font("Segoe UI", 9!)
-        Me.ListBoxDictionaries.FormattingEnabled = true
+        Me.ListBoxDictionaries.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.ListBoxDictionaries.FormattingEnabled = True
         Me.ListBoxDictionaries.Location = New System.Drawing.Point(21, 29)
         Me.ListBoxDictionaries.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
-        Me.ListBoxDictionaries.MultiColumn = true
+        Me.ListBoxDictionaries.MultiColumn = True
         Me.ListBoxDictionaries.Name = "ListBoxDictionaries"
         Me.ListBoxDictionaries.Size = New System.Drawing.Size(409, 90)
         Me.ListBoxDictionaries.TabIndex = 35
@@ -244,32 +245,32 @@ Partial Class ControlModule
         '
         'chkMinimize
         '
-        Me.chkMinimize.AutoSize = true
+        Me.chkMinimize.AutoSize = True
         Me.chkMinimize.Location = New System.Drawing.Point(14, 305)
         Me.chkMinimize.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
         Me.chkMinimize.Name = "chkMinimize"
         Me.chkMinimize.Size = New System.Drawing.Size(412, 21)
         Me.chkMinimize.TabIndex = 40
-        Me.chkMinimize.Text = "Modo Una Pantalla: Minimizar esta ventana al comenzar la batalla"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)
+        Me.chkMinimize.Text = "Modo Una Pantalla: Minimizar esta ventana al comenzar la batalla" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10)
         Me.ToolTip1.SetToolTip(Me.chkMinimize, "(excepto en modo manual)")
-        Me.chkMinimize.UseVisualStyleBackColor = true
+        Me.chkMinimize.UseVisualStyleBackColor = True
         '
         'BtStartBattle
         '
         Me.BtStartBattle.BackColor = System.Drawing.Color.Gainsboro
-        Me.BtStartBattle.Font = New System.Drawing.Font("Segoe UI", 12!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0,Byte))
-        Me.BtStartBattle.Location = New System.Drawing.Point(69, 33)
+        Me.BtStartBattle.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.BtStartBattle.Location = New System.Drawing.Point(71, 43)
         Me.BtStartBattle.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
         Me.BtStartBattle.Name = "BtStartBattle"
         Me.BtStartBattle.Size = New System.Drawing.Size(285, 45)
         Me.BtStartBattle.TabIndex = 39
         Me.BtStartBattle.Text = "COMENZAR BATALLA"
         Me.ToolTip1.SetToolTip(Me.BtStartBattle, "Comienza instrumental y palabras")
-        Me.BtStartBattle.UseVisualStyleBackColor = false
+        Me.BtStartBattle.UseVisualStyleBackColor = False
         '
         'MenuStrip1
         '
-        Me.MenuStrip1.Font = New System.Drawing.Font("Segoe UI", 9!)
+        Me.MenuStrip1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.MenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ConfiguraciónToolStripMenuItem, Me.SobreHazteUnFreeAAPToolStripMenuItem, Me.MostrarPantallaPrincipalToolStripMenuItem})
         Me.MenuStrip1.Location = New System.Drawing.Point(0, 0)
         Me.MenuStrip1.Name = "MenuStrip1"
@@ -425,7 +426,7 @@ Partial Class ControlModule
         Me.GroupBox1.Name = "GroupBox1"
         Me.GroupBox1.Size = New System.Drawing.Size(442, 175)
         Me.GroupBox1.TabIndex = 48
-        Me.GroupBox1.TabStop = false
+        Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "Diccionarios"
         '
         'GroupBox4
@@ -440,19 +441,19 @@ Partial Class ControlModule
         Me.GroupBox4.Padding = New System.Windows.Forms.Padding(3, 4, 3, 4)
         Me.GroupBox4.Size = New System.Drawing.Size(445, 122)
         Me.GroupBox4.TabIndex = 47
-        Me.GroupBox4.TabStop = false
+        Me.GroupBox4.TabStop = False
         Me.GroupBox4.Text = "Música"
         '
         'chkSoundFx
         '
-        Me.chkSoundFx.AutoSize = true
+        Me.chkSoundFx.AutoSize = True
         Me.chkSoundFx.Location = New System.Drawing.Point(19, 76)
         Me.chkSoundFx.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
         Me.chkSoundFx.Name = "chkSoundFx"
         Me.chkSoundFx.Size = New System.Drawing.Size(294, 21)
         Me.chkSoundFx.TabIndex = 52
         Me.chkSoundFx.Text = "Reproducir SoundFx.mp3 al finalizar la batalla"
-        Me.chkSoundFx.UseVisualStyleBackColor = true
+        Me.chkSoundFx.UseVisualStyleBackColor = True
         '
         'tbmusicdir
         '
@@ -471,18 +472,18 @@ Partial Class ControlModule
         Me.btmusicdir.Size = New System.Drawing.Size(90, 32)
         Me.btmusicdir.TabIndex = 49
         Me.btmusicdir.Text = "Examinar..."
-        Me.btmusicdir.UseVisualStyleBackColor = false
+        Me.btmusicdir.UseVisualStyleBackColor = False
         '
         'chPlayMusic
         '
-        Me.chPlayMusic.AutoSize = true
+        Me.chPlayMusic.AutoSize = True
         Me.chPlayMusic.Location = New System.Drawing.Point(19, 22)
         Me.chPlayMusic.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
         Me.chPlayMusic.Name = "chPlayMusic"
         Me.chPlayMusic.Size = New System.Drawing.Size(136, 21)
         Me.chPlayMusic.TabIndex = 47
         Me.chPlayMusic.Text = "Reproducir música"
-        Me.chPlayMusic.UseVisualStyleBackColor = true
+        Me.chPlayMusic.UseVisualStyleBackColor = True
         '
         'TabPage1
         '
@@ -505,7 +506,7 @@ Partial Class ControlModule
         '
         'Label1
         '
-        Me.Label1.AutoSize = true
+        Me.Label1.AutoSize = True
         Me.Label1.BackColor = System.Drawing.Color.Transparent
         Me.Label1.ForeColor = System.Drawing.Color.Black
         Me.Label1.Location = New System.Drawing.Point(326, 13)
@@ -540,13 +541,14 @@ Partial Class ControlModule
         '
         'Label2
         '
-        Me.Label2.AutoSize = true
-        Me.Label2.Font = New System.Drawing.Font("Segoe UI", 8!)
+        Me.Label2.AutoSize = True
+        Me.Label2.Font = New System.Drawing.Font("Segoe UI", 8.0!)
         Me.Label2.Location = New System.Drawing.Point(87, 92)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(254, 13)
         Me.Label2.TabIndex = 48
         Me.Label2.Text = "Iniciar palabras tras los primeros          segundos"
+        Me.Label2.Visible = False
         '
         'TabPage4
         '
@@ -563,26 +565,26 @@ Partial Class ControlModule
         'Button3
         '
         Me.Button3.BackColor = System.Drawing.Color.Gainsboro
-        Me.Button3.Font = New System.Drawing.Font("Segoe UI", 12!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0,Byte))
+        Me.Button3.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Button3.Location = New System.Drawing.Point(227, 36)
         Me.Button3.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
         Me.Button3.Name = "Button3"
         Me.Button3.Size = New System.Drawing.Size(188, 54)
         Me.Button3.TabIndex = 41
         Me.Button3.Text = "COMENZAR PALABRAS"
-        Me.Button3.UseVisualStyleBackColor = false
+        Me.Button3.UseVisualStyleBackColor = False
         '
         'Button4
         '
         Me.Button4.BackColor = System.Drawing.Color.Gainsboro
-        Me.Button4.Font = New System.Drawing.Font("Segoe UI", 12!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0,Byte))
+        Me.Button4.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Button4.Location = New System.Drawing.Point(19, 36)
         Me.Button4.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
         Me.Button4.Name = "Button4"
         Me.Button4.Size = New System.Drawing.Size(183, 54)
         Me.Button4.TabIndex = 40
         Me.Button4.Text = "COMENZAR INSTRUMENTAL"
-        Me.Button4.UseVisualStyleBackColor = false
+        Me.Button4.UseVisualStyleBackColor = False
         '
         'TabPage5
         '
@@ -599,20 +601,20 @@ Partial Class ControlModule
         '
         Me.btStartWords.BackColor = System.Drawing.Color.Gainsboro
         Me.btStartWords.DialogResult = System.Windows.Forms.DialogResult.Cancel
-        Me.btStartWords.Font = New System.Drawing.Font("Segoe UI", 12!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0,Byte))
+        Me.btStartWords.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btStartWords.Location = New System.Drawing.Point(27, 36)
         Me.btStartWords.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
         Me.btStartWords.Name = "btStartWords"
         Me.btStartWords.Size = New System.Drawing.Size(183, 51)
         Me.btStartWords.TabIndex = 33
         Me.btStartWords.Text = "COMENZAR INSTRUMENTAL"
-        Me.btStartWords.UseVisualStyleBackColor = false
+        Me.btStartWords.UseVisualStyleBackColor = False
         '
         'cbMusicList
         '
         Me.cbMusicList.Cursor = System.Windows.Forms.Cursors.Hand
         Me.cbMusicList.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.cbMusicList.FormattingEnabled = true
+        Me.cbMusicList.FormattingEnabled = True
         Me.cbMusicList.Items.AddRange(New Object() {"Easy Mode (10)", "Hard Mode (5)", "Extreme Mode (2)", "4 Words each 10''"})
         Me.cbMusicList.Location = New System.Drawing.Point(16, 106)
         Me.cbMusicList.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
@@ -623,15 +625,15 @@ Partial Class ControlModule
         'btStopBattle
         '
         Me.btStopBattle.BackColor = System.Drawing.Color.Gainsboro
-        Me.btStopBattle.Enabled = false
-        Me.btStopBattle.Font = New System.Drawing.Font("Segoe UI", 12!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0,Byte))
+        Me.btStopBattle.Enabled = False
+        Me.btStopBattle.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btStopBattle.Location = New System.Drawing.Point(10, 411)
         Me.btStopBattle.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
         Me.btStopBattle.Name = "btStopBattle"
         Me.btStopBattle.Size = New System.Drawing.Size(459, 45)
         Me.btStopBattle.TabIndex = 40
         Me.btStopBattle.Text = "PARAR BATALLA"
-        Me.btStopBattle.UseVisualStyleBackColor = false
+        Me.btStopBattle.UseVisualStyleBackColor = False
         '
         'TabBattle
         '
@@ -646,8 +648,8 @@ Partial Class ControlModule
         '
         'LbCountDown
         '
-        Me.LbCountDown.AutoSize = true
-        Me.LbCountDown.Font = New System.Drawing.Font("Segoe UI", 20!)
+        Me.LbCountDown.AutoSize = True
+        Me.LbCountDown.Font = New System.Drawing.Font("Segoe UI", 20.0!)
         Me.LbCountDown.Location = New System.Drawing.Point(2, 0)
         Me.LbCountDown.Name = "LbCountDown"
         Me.LbCountDown.Size = New System.Drawing.Size(47, 37)
