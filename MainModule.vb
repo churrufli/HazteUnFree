@@ -295,20 +295,21 @@ Public Class MainModule
     Sub GetWord()
         Try
             If ControlModule.CbBattleType.SelectedIndex <> 3 Then
-                Dim word = UCase(Vars.Arr(CountWords).ToString)
-
-                If Not InStr("%" & Vars.WordsShowed & "%", "%" & word & "%") <> 0 Then
-                    LbWord.Text = word
-                    ControlModule.LbWord.Text = word
-
-                    If Vars.WordsShowed = "" Then
-                        Vars.WordsShowed = "%" & LbWord.Text & "%"
-                    Else
-                        Vars.WordsShowed &= LbWord.Text & "%"
-                    End If
-                Else
+                ' Bucle en vez de recursión: evita un StackOverflowException (no capturable)
+                ' cuando ya se han mostrado casi todas las palabras del diccionario.
+                Dim word As String
+                Do
+                    word = UCase(Vars.Arr(CountWords).ToString)
                     CountWords += 1
-                    GetWord()
+                Loop While InStr("%" & Vars.WordsShowed & "%", "%" & word & "%") <> 0
+
+                LbWord.Text = word
+                ControlModule.LbWord.Text = word
+
+                If Vars.WordsShowed = "" Then
+                    Vars.WordsShowed = "%" & LbWord.Text & "%"
+                Else
+                    Vars.WordsShowed &= LbWord.Text & "%"
                 End If
             Else
                 If IsNothing(Vars.Arr4Words) Then
@@ -317,9 +318,8 @@ Public Class MainModule
 
                 LbWord.Text = UCase(Vars.Arr4Words(CountWords).ToString)
                 ControlModule.LbWord.Text = Replace(LbWord.Text, vbCrLf, "/")
+                CountWords += 1
             End If
-
-            CountWords += 1
         Catch
             CountWords = 0
             Vars.WordsShowed = ""
@@ -469,21 +469,18 @@ Public Class MainModule
 
     End Sub
 
-    Public Shared Function ReadWeb(myUrl As String)
-        Dim reply As String
+    Public Shared Function ReadWeb(myUrl As String) As String
         myUrl = Replace(myUrl, "'", "")
         myUrl = Replace(myUrl, """", "")
-        Dim res As String
-        If myUrl = "" Then Exit Function
+        If myUrl = "" Then Return ""
         Try
-            Dim client = New WebClient()
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12
-            reply = client.DownloadString(myUrl)
-            Return reply
-            Exit Function
+            Using client As New WebClient()
+                Return client.DownloadString(myUrl)
+            End Using
         Catch ex As Exception
+            Return ""
         End Try
-        ReadWeb = res
     End Function
 
     Dim _dragging

@@ -286,9 +286,16 @@ Public Class Fn
                 Return 0
             End If
 
-            ' Verificar si el reproductor ya está en uso
-            If Vars.Player IsNot Nothing AndAlso Vars.Player.playState = WMPLib.WMPPlayState.wmppsPlaying Then
-                Vars.Player.controls.stop()
+            ' Detener y liberar el reproductor anterior antes de crear uno nuevo,
+            ' para no acumular objetos COM de WindowsMediaPlayer sin liberar.
+            If Vars.Player IsNot Nothing Then
+                Try
+                    If Vars.Player.playState = WMPLib.WMPPlayState.wmppsPlaying Then
+                        Vars.Player.controls.stop()
+                    End If
+                    Vars.Player.close()
+                Catch
+                End Try
             End If
 
             ' Configurar el reproductor

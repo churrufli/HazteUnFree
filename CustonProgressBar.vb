@@ -4,7 +4,10 @@
     Protected Overrides Sub OnPaint(e As PaintEventArgs)
         Dim g As Graphics = e.Graphics
         Dim progressBarRectangle As New Rectangle(0, 0, Width, Height)
-        Dim progressBarFillWidth As Integer = CInt((Value / Maximum) * Width)
+        Dim progressBarFillWidth As Integer = 0
+        If Maximum > 0 Then
+            progressBarFillWidth = CInt((Value / Maximum) * Width)
+        End If
 
         ' Dibujar el fondo de la ProgressBar
         Using bgBrush As New SolidBrush(BackColor)
