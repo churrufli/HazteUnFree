@@ -47,7 +47,6 @@ Public Class Ms
         t = t & AddSetting("chPlayMusic", "1")
         t = t & AddSetting("chkMinimize", "0")
 
-        File.Create(Vars.MySettingsFileName).Dispose()
         File.WriteAllText(Vars.MySettingsFileName, t)
     End Sub
 
@@ -68,6 +67,7 @@ Public Class Ms
     End Sub
 
     Public Shared Function ReadSetting(setting)
+        If MySettings Is Nothing Then Return ""
         Return Fn.GetDelimitedText(MySettings, "<" & setting & ">", "</" & setting & ">")
     End Function
 
