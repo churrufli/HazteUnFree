@@ -3,6 +3,8 @@
 Descargar versión 1.0.1.
 https://github.com/churrufli/HazteUnFree/releases/tag/1.0.1
 *****
+**Versión web** (desde el navegador del móvil o del ordenador): https://churrufli.github.io/HazteUnFree/ · código en [`web/`](web/)
+*****
 ## Requisitos mínimos 
 Windows 7, .NET Framework (4.5.2) 1GB RAM
 ## Discord
